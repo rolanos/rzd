@@ -6,7 +6,7 @@ customSnackBar(BuildContext context, final String text, {Color? color}) {
   Size size = MediaQuery.of(context).size;
   return SnackBar(
     behavior: SnackBarBehavior.floating,
-    backgroundColor: color ?? ColorsUI.lightOrange,
+    backgroundColor: ColorsUI.textWhite,
     margin: EdgeInsets.only(
         left: size.width * 0.25,
         right: size.width * 0.25,
@@ -22,7 +22,7 @@ customSnackBar(BuildContext context, final String text, {Color? color}) {
           style: Theme.of(context)
               .textTheme
               .bodyMedium!
-              .copyWith(color: ColorsUI.textWhite),
+              .copyWith(color: ColorsUI.activeRed),
         ),
       ),
     ),

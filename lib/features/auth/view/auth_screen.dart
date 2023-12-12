@@ -87,7 +87,7 @@ class _AuthScreenState extends State<AuthScreen> {
         }
       },
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
+        resizeToAvoidBottomInset: true,
         body: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -136,6 +136,7 @@ class _AuthScreenState extends State<AuthScreen> {
                         hintText: 'Почта',
                         controller: emailController,
                         color: ColorsUI.containerLightGrey,
+                        textInputType: TextInputType.visiblePassword,
                       ),
                       const SizedBox(
                         height: 8.0,
@@ -161,6 +162,7 @@ class _AuthScreenState extends State<AuthScreen> {
                           }
                         },
                         child: Container(
+                          height: 64,
                           padding: const EdgeInsets.symmetric(vertical: 16.0),
                           decoration: BoxDecoration(
                             color: isActiveButton
