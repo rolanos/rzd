@@ -5,3 +5,9 @@ const String loginUrl = '$baseUrl/login/';
 
 ///POST
 const String logoutUrl = '$baseUrl/logout/';
+
+///GET Льготы
+const String privilegesUrl = '$baseUrl/privileges_list/';
+
+///GET История
+const String historyUrl = '$baseUrl/user_requests/';

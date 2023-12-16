@@ -21,8 +21,9 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         final String? email = sharedPreferences.getString("email");
         final String? password = sharedPreferences.getString("password");
         final String? uuid = sharedPreferences.getString("uuid");
+        log("uuid - $uuid");
         if (uuid != null && email != null && password != null) {
-          emit(AuthSuccess(uuid: uuid, email: email, password: password));
+          add(LogInEvent(email: email, password: password));
         } else {
           emit(AuthEmpty());
         }

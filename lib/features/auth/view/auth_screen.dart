@@ -2,12 +2,13 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 
 import 'package:rzd/features/auth/view/widget/input_form.dart';
 import 'package:rzd/features/core/colors.dart';
 import 'package:rzd/features/core/widget/snack_bar.dart';
-import 'package:rzd/features/main/main_screen.dart';
+import 'package:rzd/features/home/view/home_screen.dart';
 
 ///Экран авторизации
 class AuthScreen extends StatefulWidget {
@@ -70,11 +71,7 @@ class _AuthScreenState extends State<AuthScreen> {
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         if (state is AuthSuccess) {
-          Navigator.of(context).push(
-            MaterialPageRoute(
-              builder: (context) => const MainScreen(),
-            ),
-          );
+          context.go('/home');
         }
         if (state is AuthErrorLogIn) {
           ScaffoldMessenger.of(context).showSnackBar(

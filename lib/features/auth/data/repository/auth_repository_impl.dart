@@ -25,10 +25,15 @@ class AuthRepositoryImpl extends AuthRepository {
         },
       );
       final String? uuid = response.data['uuid'];
+      final String? cookie = response.headers['Set-Cookie']?.first;
+      log(cookie.toString());
       //Сохраняем наши Credentials в SharedPreferences
       SharedPreferences preferences = await SharedPreferences.getInstance();
       await preferences.setString('email', email);
       await preferences.setString('password', password);
+      if (cookie != null) {
+        await preferences.setString('cookie', cookie);
+      }
 
       if (uuid != null) {
         await preferences.setString('uuid', uuid);

@@ -16,7 +16,7 @@ class AuthEmpty extends AuthState {
 //Состояние загрузки
 class AuthLoading extends AuthState {
   @override
-  List<Object?> get props => throw UnimplementedError();
+  List<Object?> get props => [];
 }
 
 class AuthErrorLogIn extends AuthState {

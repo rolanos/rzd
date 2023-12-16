@@ -12,6 +12,11 @@ ThemeData getTheme() {
         color: ColorsUI.mainText,
         fontSize: 24,
       ),
+      titleSmall: TextStyle(
+        fontWeight: FontWeight.w700,
+        color: ColorsUI.mainText,
+        fontSize: 20,
+      ),
       bodyLarge: TextStyle(
         fontWeight: FontWeight.w400,
         color: ColorsUI.secondaryText,
@@ -21,6 +26,11 @@ ThemeData getTheme() {
         fontWeight: FontWeight.w400,
         color: ColorsUI.mainText,
         fontSize: 18,
+      ),
+      bodySmall: TextStyle(
+        fontWeight: FontWeight.w400,
+        color: ColorsUI.mainText,
+        fontSize: 16,
       ),
     ),
   );
