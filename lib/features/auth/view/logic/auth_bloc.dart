@@ -3,8 +3,9 @@ import 'dart:developer';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rzd/features/auth/data/repository/auth_repository_impl.dart';
+import 'package:rzd/features/auth/domain/entity/user_model.dart';
 import 'package:rzd/features/auth/domain/repository/auth_repository.dart';
-import 'package:rzd/features/core/api_error.dart';
+import 'package:rzd/core/api_error.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 part 'auth_event.dart';
@@ -32,12 +33,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<LogInEvent>((event, emit) async {
       emit(AuthLoading());
       try {
-        final String? uuid =
+        final UserProfile? profile =
             await authRepository.login(event.email, event.password);
-        if (uuid != null) {
+        if (profile != null) {
           emit(
             AuthSuccess(
-              uuid: uuid,
+              profile: profile,
               email: event.email,
               password: event.password,
             ),

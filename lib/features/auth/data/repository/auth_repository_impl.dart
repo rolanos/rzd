@@ -1,14 +1,16 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
+import 'package:rzd/features/auth/data/model/user_api.dart';
+import 'package:rzd/features/auth/domain/entity/user_model.dart';
 import 'package:rzd/features/auth/domain/repository/auth_repository.dart';
-import 'package:rzd/features/core/api_error.dart';
-import 'package:rzd/features/core/endpoints.dart';
+import 'package:rzd/core/api_error.dart';
+import 'package:rzd/core/endpoints.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AuthRepositoryImpl extends AuthRepository {
   @override
-  Future<String?> login(String email, String password) async {
+  Future<UserProfile?> login(String email, String password) async {
     Dio dio = Dio(
       BaseOptions(
         headers: {
@@ -38,7 +40,24 @@ class AuthRepositoryImpl extends AuthRepository {
       if (uuid != null) {
         await preferences.setString('uuid', uuid);
       }
-      return uuid;
+      dio = Dio(
+        BaseOptions(
+          headers: {
+            'Cookie': cookie,
+          },
+        ),
+      );
+      final userResponse = await dio.get(
+        userProfile,
+        queryParameters: {
+          'uuid': uuid,
+        },
+      );
+      if (userResponse.data != null) {
+        UserProfile userProfile =
+            UserProfileApi.fromMap(userResponse.data as Map<String, dynamic>);
+        return userProfile;
+      }
     } on DioException catch (e) {
       log(e.response.toString());
       throw ApiError(message: "Ошибка авторизации!");

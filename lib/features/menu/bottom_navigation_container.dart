@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rzd/features/core/colors.dart';
+import 'package:rzd/core/colors.dart';
 
 ///Кастомный BottomNavigationBar
 ///[navigationShell] - объект пакета go_router предназначенный для удобной навигации по вкладкам BottomNavigationBar

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:rzd/features/core/colors.dart';
+import 'package:rzd/core/colors.dart';
 
 class ContainerButton extends StatelessWidget {
   final Color? color;

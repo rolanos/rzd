@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
-import '../core/colors.dart';
+import '../../core/colors.dart';
 import 'bottom_navigation_container.dart';
 
 class MenuScreen extends StatefulWidget {
@@ -21,7 +21,6 @@ class _MenuScreenState extends State<MenuScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
       backgroundColor: ColorsUI.mainScaffoldColor,
       bottomNavigationBar: BottomNavigationContainer(
         navigationShell: widget.navigationShell,

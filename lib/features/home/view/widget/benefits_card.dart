@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:rzd/features/core/colors.dart';
-import 'package:rzd/features/core/widget/container_button.dart';
+import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
 
 import 'topic_card.dart';
@@ -14,7 +14,7 @@ class BenifitsCard extends StatelessWidget {
   final Function()? onTap;
 
   final bool? seeAll;
-
+  final bool removeButton;
   final List<CardData> cardData;
 
   const BenifitsCard(
@@ -23,7 +23,8 @@ class BenifitsCard extends StatelessWidget {
       required this.secondTitle,
       required this.cardData,
       this.onTap,
-      this.seeAll});
+      this.seeAll,
+      this.removeButton = false});
 
   @override
   Widget build(BuildContext context) {
@@ -70,10 +71,11 @@ class BenifitsCard extends StatelessWidget {
           const SizedBox(
             height: 24.0,
           ),
-          ContainerButton(
-            text: seeAll == true ? 'Скрыть' : 'Смотреть все',
-            onTap: onTap,
-          ),
+          if (removeButton == false)
+            ContainerButton(
+              text: seeAll == true ? 'Скрыть' : 'Смотреть все',
+              onTap: onTap,
+            ),
         ],
       ),
     );

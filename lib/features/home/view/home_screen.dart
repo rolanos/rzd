@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
-import 'package:rzd/features/core/colors.dart';
-import 'package:rzd/features/core/enums.dart';
+import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/enums.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
 import 'package:rzd/features/home/data/model/history_data.dart';
 import 'package:rzd/features/home/view/bloc/history_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:rzd/features/home/view/widget/tab_row.dart';
+import 'package:rzd/features/menu/app_bar.dart';
 
 import 'widget/benefits_card.dart';
 import 'widget/history_card.dart';
@@ -25,7 +28,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   double preveousOffset = 0.0;
-  late CustomTabController controller;
+  double offset = 0.0;
+  CustomTabController? controller;
 
   bool seeAllPrivileges = false;
   bool seeAllHistory = false;
@@ -34,120 +38,139 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     controller = Provider.of<CustomTabController>(context, listen: false);
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        controller.scrollController.addListener(
-          () {
-            if (controller.scrollController.hasClients) {
-              if (controller.scrollController.offset > 100.0 &&
-                  preveousOffset < 100.0) {
-                setState(() {
-                  preveousOffset = controller.scrollController.offset;
-                });
-              }
-              if (controller.scrollController.offset < 100.0 &&
-                  preveousOffset > 100.0) {
-                setState(() {
-                  preveousOffset = controller.scrollController.offset;
-                });
-              }
-            }
-          },
-        );
-      },
-    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        controller: controller.scrollController,
-        physics: BouncingScrollPhysics(
-            decelerationRate: ScrollDecelerationRate.fast),
-        child: Column(
-          children: [
-            if (preveousOffset < 100)
-              const SizedBox(
-                height: 8.0,
+    return BlocBuilder<AuthBloc, AuthState>(
+      builder: (context, state) {
+        return CustomScrollView(
+          controller: controller!.scrollController,
+          slivers: [
+            SliverAppBar(
+              shape: const ContinuousRectangleBorder(
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(42),
+                  bottomRight: Radius.circular(
+                    42,
+                  ),
+                ),
               ),
-            if (preveousOffset < 100)
-              const Padding(
-                padding: EdgeInsets.only(left: 8.0),
-                child: TabRow(),
+              backgroundColor: ColorsUI.mainScaffoldColor,
+              pinned: true,
+              shadowColor: Colors.transparent,
+              foregroundColor: Colors.transparent,
+              surfaceTintColor: Colors.transparent,
+              expandedHeight: AppBar().preferredSize.height * 2.5 + 8.0 + 16,
+              flexibleSpace: FlexibleSpaceBar(
+                titlePadding: EdgeInsets.zero,
+                expandedTitleScale: 1,
+                title: Column(
+                  children: [
+                    Spacer(),
+                    TabRow(),
+                  ],
+                ),
+                background: Column(
+                  children: [
+                    CustomAppBar(
+                      appbarText: (state is AuthSuccess &&
+                              state.profile.name != null &&
+                              state.profile.otch != null)
+                          ? "${state.profile.name!} ${state.profile.otch!}"
+                          : "",
+                    ),
+                    SizedBox(
+                      height: 8.0,
+                    ),
+                  ],
+                ),
               ),
-            const SizedBox(
-              height: 8.0,
             ),
-            BlocBuilder<PrivilegesBloc, PrivilegesState>(
-              builder: (context, state) {
-                return BenifitsCard(
-                  key: controller.benefits,
-                  seeAll: seeAllPrivileges,
-                  mainTitle: 'Ваши льготы, гарантии и компенсации',
-                  secondTitle: 'Вы можете воспользоваться этими сервисами',
-                  onTap: () =>
-                      setState(() => seeAllPrivileges = !seeAllPrivileges),
-                  cardData: List.generate(
-                    countToShow(state.privileges.length, seeAllPrivileges),
-                    (index) => CardData(
-                      title: state.privileges[index].description,
-                      assetPath: null,
-                    ),
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  BlocBuilder<PrivilegesBloc, PrivilegesState>(
+                    builder: (context, state) {
+                      return BenifitsCard(
+                        key: controller?.benefits,
+                        seeAll: seeAllPrivileges,
+                        mainTitle: 'Ваши льготы, гарантии и компенсации',
+                        secondTitle:
+                            'Вы можете воспользоваться этими сервисами',
+                        onTap: () => setState(
+                            () => seeAllPrivileges = !seeAllPrivileges),
+                        cardData: List.generate(
+                          countToShow(
+                              state.privileges.length, seeAllPrivileges),
+                          (index) => CardData(
+                            title: state.privileges[index].description,
+                            assetPath: null,
+                          ),
+                        ),
+                      );
+                    },
                   ),
-                );
-              },
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            BenifitsCard(
-              key: controller.references,
-              mainTitle: 'Справки и обращения',
-              secondTitle: 'Их вы можете направить в БФ «Почет» online',
-              cardData: [
-                CardData(
-                  title: 'Форма заказа справок',
-                  assetPath: 'asset/images/books.png',
-                ),
-                CardData(
-                  title: 'Обращение в комиссию по благотворительной помощи',
-                  assetPath: 'asset/images/pen.png',
-                ),
-                CardData(
-                  title: 'Обращение в БФ Почет',
-                  assetPath: 'asset/images/hand.png',
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 8.0,
-            ),
-            BlocBuilder<HistoryBloc, HistoryState>(
-              builder: (context, state) {
-                return HistoryCard(
-                  key: controller.history,
-                  seeAll: seeAllHistory,
-                  onTap: () => setState(
-                    () => seeAllHistory = !seeAllHistory,
+                  const SizedBox(
+                    height: 8.0,
                   ),
-                  historyData: List.generate(
-                    countToShow(state.history.length, seeAllHistory),
-                    (index) => HistoryData(
-                      date: formatDate(state.history[index].moment),
-                      name: state.history[index].subject,
-                      iconPath: AppIcon.heart.iconPath,
-                    ),
+                  BenifitsCard(
+                    key: controller?.references,
+                    removeButton: true,
+                    mainTitle: 'Справки и обращения',
+                    secondTitle: 'Их вы можете направить в БФ «Почет» online',
+                    cardData: [
+                      CardData(
+                        title: 'Форма заказа справок',
+                        assetPath: 'asset/images/books.png',
+                      ),
+                      CardData(
+                        title:
+                            'Обращение в комиссию по благотворительной помощи',
+                        assetPath: 'asset/images/pen.png',
+                      ),
+                      CardData(
+                        title: 'Обращение в БФ Почет',
+                        assetPath: 'asset/images/hand.png',
+                      ),
+                    ],
                   ),
-                );
-              },
-            ),
-            SizedBox(
-              height: MediaQuery.of(context).size.width * 0.22,
+                  const SizedBox(
+                    height: 8.0,
+                  ),
+                  BlocBuilder<HistoryBloc, HistoryState>(
+                    builder: (context, state) {
+                      return HistoryCard(
+                        key: controller?.history,
+                        seeAll: seeAllHistory,
+                        onTap: () => setState(
+                          () => seeAllHistory = !seeAllHistory,
+                        ),
+                        historyData: List.generate(
+                          countToShow(state.history.length, seeAllHistory),
+                          (index) => HistoryData(
+                            date: formatDate(state.history[index].moment),
+                            name: state.history[index].subject,
+                            iconPath: AppIcon.heart.iconPath,
+                          ),
+                        ),
+                      );
+                    },
+                  ),
+                  SizedBox(
+                    height: MediaQuery.of(context).size.width * 0.22,
+                  ),
+                ],
+              ),
             ),
           ],
-        ),
-      ),
+        );
+      },
     );
   }
 }
@@ -155,11 +178,11 @@ class _HomeScreenState extends State<HomeScreen> {
 formatDate(DateTime date) {
   String day = date.day.toString();
   if (day.length == 1) {
-    day = '0' + day;
+    day = '0$day';
   }
   String month = date.month.toString();
   if (month.length == 1) {
-    month = '0' + day;
+    month = '0$month';
   }
   return '$day.$month.${date.year}';
 }

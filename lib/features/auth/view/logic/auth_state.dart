@@ -28,13 +28,13 @@ class AuthErrorLogIn extends AuthState {
 }
 
 class AuthSuccess extends AuthState {
-  final String uuid;
+  final UserProfile profile;
   final String email;
   final String password;
 
   AuthSuccess(
-      {required this.uuid, required this.email, required this.password});
+      {required this.profile, required this.email, required this.password});
 
   @override
-  List<Object?> get props => [uuid, email, password];
+  List<Object?> get props => [profile, email, password];
 }

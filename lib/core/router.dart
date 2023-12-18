@@ -21,7 +21,7 @@ GoRouter getRouter(BuildContext context) {
             routes: [
               GoRoute(
                 path: '/home',
-                name: '/home',
+                name: 'home',
                 builder: (context, state) {
                   return HomeScreen();
                 },

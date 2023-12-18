@@ -1,7 +1,7 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:rzd/features/core/colors.dart';
-import 'package:rzd/features/core/widget/container_button.dart';
+import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/home/data/model/history_data.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

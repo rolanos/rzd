@@ -1,6 +1,6 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
-import 'package:rzd/features/core/colors.dart';
+import 'package:rzd/core/colors.dart';
 
 ///Карта с топиком, например "Медицинские услуги"
 ///[title] - название услуги

@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:rzd/features/core/endpoints.dart';
+import 'package:rzd/core/endpoints.dart';
 import 'package:rzd/features/home/data/model/history_api.dart';
 import 'package:rzd/features/home/domain/entity/history.dart';
 import 'package:rzd/features/home/domain/repository/history_repository.dart';

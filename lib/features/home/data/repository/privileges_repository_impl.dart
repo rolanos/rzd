@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
-import 'package:rzd/features/core/endpoints.dart';
+import 'package:rzd/core/endpoints.dart';
 import 'package:rzd/features/home/data/model/privileges_api.dart';
 import 'package:rzd/features/home/domain/entity/privileges.dart';
 import 'package:rzd/features/home/domain/repository/privileges_repository.dart';

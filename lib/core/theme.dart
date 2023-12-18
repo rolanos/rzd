@@ -5,7 +5,6 @@ import 'colors.dart';
 ThemeData getTheme() {
   return ThemeData(
     fontFamily: 'SF',
-    scaffoldBackgroundColor: ColorsUI.scaffoldColor,
     textTheme: const TextTheme(
       titleMedium: TextStyle(
         fontWeight: FontWeight.w700,

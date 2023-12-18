@@ -11,3 +11,6 @@ const String privilegesUrl = '$baseUrl/privileges_list/';
 
 ///GET История
 const String historyUrl = '$baseUrl/user_requests/';
+
+///GET Профиль
+const String userProfile = '$baseUrl/profile/';
