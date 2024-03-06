@@ -31,7 +31,13 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
       decoration: const BoxDecoration(
         color: ColorsUI.mainWhite,
         borderRadius: BorderRadius.vertical(top: Radius.circular(16.0)),
-        boxShadow: [BoxShadow(color: Color.fromRGBO(53, 56, 65, 0.12))],
+        boxShadow: [
+          BoxShadow(
+            color: Color.fromRGBO(53, 56, 65, 0.12),
+            blurRadius: 27,
+            offset: Offset(0, -4),
+          ),
+        ],
       ),
       child: ClipRRect(
         borderRadius: const BorderRadius.vertical(top: Radius.circular(16.0)),
@@ -49,7 +55,7 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 13,
+                        height: 19,
                         child: SvgPicture.asset(
                           "asset/icons/home.svg",
                           colorFilter: ColorFilter.mode(
@@ -61,12 +67,13 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                         ),
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 4,
                       ),
                       Text(
                         "Главная",
                         style: TextStyle(
-                          fontSize: 11,
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
                           color: (widget.navigationShell.currentIndex == 0)
                               ? ColorsUI.darkText
                               : ColorsUI.lightText,
@@ -80,7 +87,7 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  widget.navigationShell.goBranch(0, initialLocation: true);
+                  widget.navigationShell.goBranch(1, initialLocation: true);
                   setState(() {});
                 },
                 child: Container(
@@ -88,7 +95,7 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 13,
+                        height: 18,
                         child: SvgPicture.asset(
                           "asset/icons/notify.svg",
                           colorFilter: ColorFilter.mode(
@@ -100,13 +107,14 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                         ),
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 4,
                       ),
                       Text(
-                        "Уведомления",
+                        "История",
                         style: TextStyle(
-                          fontSize: 11,
-                          color: (widget.navigationShell.currentIndex == 0)
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: (widget.navigationShell.currentIndex == 1)
                               ? ColorsUI.darkText
                               : ColorsUI.lightText,
                         ),
@@ -119,7 +127,7 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
             Expanded(
               child: InkWell(
                 onTap: () {
-                  widget.navigationShell.goBranch(0, initialLocation: true);
+                  widget.navigationShell.goBranch(2, initialLocation: true);
                   setState(() {});
                 },
                 child: Container(
@@ -127,11 +135,11 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                   child: Column(
                     children: [
                       SizedBox(
-                        height: 13,
+                        height: 18,
                         child: SvgPicture.asset(
                           "asset/icons/profil.svg",
                           colorFilter: ColorFilter.mode(
-                            (widget.navigationShell.currentIndex == 0)
+                            (widget.navigationShell.currentIndex == 2)
                                 ? ColorsUI.darkText
                                 : ColorsUI.lightText,
                             BlendMode.srcIn,
@@ -139,13 +147,14 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                         ),
                       ),
                       SizedBox(
-                        height: 2,
+                        height: 4,
                       ),
                       Text(
-                        "Аккаунт",
+                        "Профиль",
                         style: TextStyle(
-                          fontSize: 11,
-                          color: (widget.navigationShell.currentIndex == 0)
+                          fontSize: 12,
+                          fontWeight: FontWeight.w500,
+                          color: (widget.navigationShell.currentIndex == 2)
                               ? ColorsUI.darkText
                               : ColorsUI.lightText,
                         ),

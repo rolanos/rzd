@@ -14,3 +14,13 @@ const String historyUrl = '$baseUrl/user_requests/';
 
 ///GET Профиль
 const String userProfile = '$baseUrl/profile/';
+
+//GET Статус
+const String checkStatusUrl = '$baseUrl/status/';
+
+//POST регистрация
+const String registerUrl = '$baseUrl/register/';
+
+const String sentOtpUrl = '$baseUrl/code/request/';
+
+const String checkCode = '$baseUrl/code/check/';

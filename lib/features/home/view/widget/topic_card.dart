@@ -8,8 +8,10 @@ import 'package:rzd/core/colors.dart';
 class TopicCard extends StatelessWidget {
   final String title;
   final String? assetPath;
+  final Color? color;
 
-  const TopicCard({super.key, required this.title, required this.assetPath});
+  const TopicCard(
+      {super.key, required this.title, required this.assetPath, this.color});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +21,7 @@ class TopicCard extends StatelessWidget {
       width: size.width,
       height: size.height * 0.12,
       decoration: BoxDecoration(
-        color: ColorsUI.containerGrey,
+        color: color ?? ColorsUI.containerGrey,
         borderRadius: BorderRadius.circular(16.0),
       ),
       child: Stack(
@@ -36,13 +38,14 @@ class TopicCard extends StatelessWidget {
             top: 16.0,
             left: 16.0,
             right: size.width * 0.30,
-            child: AutoSizeText(
+            child: Text(
               title,
-              maxLines: 2,
+              maxLines: 3,
+              overflow: TextOverflow.ellipsis,
               style: Theme.of(context)
                   .textTheme
                   .titleSmall!
-                  .copyWith(fontSize: 14.0),
+                  .copyWith(fontSize: 16.0),
             ),
           ),
         ],

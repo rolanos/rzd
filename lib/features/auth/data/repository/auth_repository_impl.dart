@@ -94,4 +94,150 @@ class AuthRepositoryImpl extends AuthRepository {
     }
     return false;
   }
+
+  @override
+  Future<void> checkStatus(String fam, String name, String otch,
+      DateTime birthday, String passSeries, String passNumber) async {
+    Dio dio;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    String? cookie = await preferences.getString('cookie');
+
+    String? uuid = await preferences.getString('uuid');
+
+    dio = Dio();
+    try {
+      final response = await dio.get(
+        checkStatusUrl,
+        queryParameters: {
+          'fam': fam,
+          'name': name,
+          'otch': otch,
+          'birthday': birthday,
+          'pass_series': passSeries,
+          'pass_number': passNumber,
+        },
+      );
+      final String? cookie = response.headers['Set-Cookie']?.first;
+      log(cookie.toString());
+      //Сохраняем наши Credentials в SharedPreferences
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      if (cookie != null) {
+        await preferences.setString('cookie', cookie);
+      }
+      if (response.data['status'] != null) {
+        if (response.data['status'] != 0) {
+          throw Exception();
+        } else {
+          String? uuid = response.data['uuid'];
+          if (uuid != null) {
+            await preferences.setString('uuid', uuid);
+          }
+        }
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<void> register(
+      String login, String password, String rePassword, String uuid) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final cookie = preferences.getString('cookie');
+    Dio dio = Dio(
+      BaseOptions(
+        headers: {
+          "Cookie": cookie,
+          "Content-Type": "multipart/form-data",
+        },
+      ),
+    );
+    try {
+      await dio.post(
+        registerUrl,
+        data: FormData.fromMap(
+          {
+            'login': login,
+            'password': password,
+            're_password': rePassword,
+            'uuid': uuid,
+          },
+        ),
+      );
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
+
+  @override
+  Future<bool?> checkOtp(String uuid, String otp) async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    final cookie = preferences.getString('cookie');
+    final uid = preferences.getString('uid');
+    Dio dio = Dio(
+      BaseOptions(
+        queryParameters: {
+          'uuid': uuid,
+        },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          "Cookie": cookie,
+        },
+      ),
+    );
+
+    try {
+      final response = await dio.post(
+        checkCode,
+        data: FormData.fromMap({
+          'uid': uid,
+          'code': otp,
+        }),
+      );
+      if (response.data['result'] != null) {
+        return response.data['result'] as bool;
+      }
+    } catch (e) {
+      log(e.toString());
+    }
+    return null;
+  }
+
+  @override
+  Future<void> sentOtp(String uuid, String phone) async {
+    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+    final cookie = sharedPreferences.getString('cookie');
+    Dio dio = Dio(
+      BaseOptions(
+        queryParameters: {
+          'uuid': uuid,
+        },
+        headers: {
+          "Cookie": cookie,
+          "Content-Type": "multipart/form-data",
+        },
+      ),
+    );
+    try {
+      final response = await dio.post(sentOtpUrl,
+          data: FormData.fromMap({
+            'phone': phone,
+          }));
+
+      if (response.data['code'] != null) {
+        log("Code - ${response.data['code']}");
+      }
+      if (response.data['uid'] != null) {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        preferences.setString('uid', response.data['uid'] as String);
+        return response.data['uid'];
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+  }
 }

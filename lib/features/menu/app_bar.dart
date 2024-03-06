@@ -79,10 +79,8 @@ class _CustomAppBarState extends State<CustomAppBar> {
                         widget.appbarText,
                         style: Theme.of(context).textTheme.bodyMedium,
                       ),
-                      SizedBox(
-                        width: 4.0,
-                      ),
-                      SvgPicture.asset("asset/icons/arrow_right_2.svg"),
+                      Spacer(),
+                      SvgPicture.asset("asset/icons/notification.svg"),
                     ],
                   ),
           ],

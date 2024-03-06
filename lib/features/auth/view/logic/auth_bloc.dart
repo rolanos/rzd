@@ -79,5 +79,72 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         emit(AuthErrorLogIn(message: "Ошибка авторизации"));
       }
     });
+    on<CheckUserRegistration>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        await authRepository.checkStatus(event.fam, event.name, event.otch,
+            event.birthday, event.passSeries, event.passNumber);
+        emit(StatusCheckedSuccessfully());
+      } catch (e) {
+        emit(AuthStatusError());
+      }
+    });
+    on<RegisterEvent>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        String? uuid = preferences.getString('uuid');
+        if (uuid != null) {
+          await authRepository.register(
+            event.login,
+            event.password,
+            event.rePassword,
+            uuid,
+          );
+          add(
+            LogInEvent(
+              email: event.login,
+              password: event.password,
+            ),
+          );
+        }
+      } catch (e) {
+        emit(AuthError(message: 'Ошибка регистрации пользователя'));
+      }
+    });
+    on<SentOtp>((event, emit) async {
+      SharedPreferences preferences = await SharedPreferences.getInstance();
+      String? uuid = preferences.getString('uuid');
+      if (uuid != null) {
+        try {
+          await authRepository.sentOtp(
+              uuid, event.phone.replaceAll(' ', '').replaceAll('-', ''));
+          emit(OtpSented());
+        } catch (e) {
+          log(e.toString());
+          emit(AuthError(message: 'Произошла ошибка отправки кода'));
+        }
+      }
+    });
+    on<CheckOtp>((event, emit) async {
+      try {
+        SharedPreferences preferences = await SharedPreferences.getInstance();
+        String? uuid = preferences.getString('uuid');
+        if (uuid != null) {
+          bool? result = await authRepository.checkOtp(uuid, event.otp);
+          if (result == null) {
+            emit(AuthError(message: 'Произошла ошибка проверки кода'));
+          }
+          if (result == true) {
+            emit(OtpChecked());
+          } else {
+            emit(AuthError(message: 'Неправильный код'));
+          }
+        }
+      } catch (e) {
+        log(e.toString());
+        emit(AuthError(message: 'Произошла ошибка проверки кода'));
+      }
+    });
   }
 }

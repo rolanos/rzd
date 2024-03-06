@@ -10,6 +10,8 @@ abstract class ColorsUI {
 
   static const Color inactiveRed = Color.fromRGBO(255, 192, 188, 1);
 
+  static const Color inactiveRedLight = Color.fromRGBO(253, 240, 239, 1);
+
   static const Color backgroundRed = Color.fromRGBO(255, 242, 241, 1);
   //for error text and textbutton
   static const Color activeRed = Color.fromRGBO(235, 65, 55, 1);
@@ -29,4 +31,10 @@ abstract class ColorsUI {
   static const Color textWhite = Colors.white;
 
   static const Color mainWhite = Colors.white;
+
+  static const Color borderColor = Color.fromRGBO(166, 170, 177, 1);
+
+  static const Color containerBackground = Color.fromRGBO(247, 247, 247, 1);
+
+  static const Color otpBorder = Color.fromRGBO(3, 46, 65, 1);
 }

@@ -7,7 +7,8 @@ import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
-
+import 'package:intl/intl.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'features/home/data/repository/privileges_repository_impl.dart';
 import 'features/home/view/bloc/history_bloc.dart';
 
@@ -41,6 +42,10 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp.router(
           theme: getTheme(),
+          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
+          supportedLocales: [
+            const Locale('ru', 'RU'),
+          ],
           debugShowCheckedModeBanner: false,
           routerConfig: router,
         ),

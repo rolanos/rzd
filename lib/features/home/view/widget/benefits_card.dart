@@ -49,12 +49,12 @@ class BenifitsCard extends StatelessWidget {
           const SizedBox(
             height: 8.0,
           ),
-          AutoSizeText(
-            "Вы можете воспользоваться этими сервисами",
-            style: textTheme.bodySmall!.copyWith(color: ColorsUI.secondaryText),
-          ),
-          const SizedBox(
-            height: 24.0,
+          Text(
+            secondTitle,
+            overflow: TextOverflow.ellipsis,
+            maxLines: 3,
+            style: textTheme.bodySmall!
+                .copyWith(color: ColorsUI.secondaryText, fontSize: 16.0),
           ),
           ListView.separated(
             shrinkWrap: true,

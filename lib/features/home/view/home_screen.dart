@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: EdgeInsets.zero,
                 expandedTitleScale: 1,
-                title: Column(
+                title: const Column(
                   children: [
                     Spacer(),
                     TabRow(),
@@ -85,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ? "${state.profile.name!} ${state.profile.otch!}"
                           : "",
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 8.0,
                     ),
                   ],

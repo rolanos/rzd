@@ -38,3 +38,32 @@ class AuthSuccess extends AuthState {
   @override
   List<Object?> get props => [profile, email, password];
 }
+
+class StatusCheckedSuccessfully extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class AuthError extends AuthState {
+  final String message;
+
+  AuthError({required this.message});
+
+  @override
+  List<Object?> get props => [message];
+}
+
+class AuthStatusError extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class OtpSented extends AuthState {
+  @override
+  List<Object?> get props => [];
+}
+
+class OtpChecked extends AuthState {
+  @override
+  List<Object?> get props => [];
+}

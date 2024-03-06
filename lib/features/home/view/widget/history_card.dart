@@ -117,10 +117,12 @@ class HistoryDataRow extends StatelessWidget {
                 const SizedBox(
                   height: 2.0,
                 ),
-                Text(
-                  historyData.name,
-                  maxLines: 2,
-                  style: textTheme.bodySmall,
+                Expanded(
+                  child: Text(
+                    historyData.name,
+                    maxLines: 2,
+                    style: textTheme.bodySmall,
+                  ),
                 ),
               ],
             ),

@@ -190,10 +190,72 @@ class _AuthScreenState extends State<AuthScreen> {
                               ),
                             ),
                           ),
+                          const SizedBox(
+                            height: 14,
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              context.goNamed('register');
+                            },
+                            child: Container(
+                              height: 64,
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 16.0),
+                              decoration: BoxDecoration(
+                                color: ColorsUI.inactiveRedLight,
+                                borderRadius: BorderRadius.circular(
+                                  16.0,
+                                ),
+                              ),
+                              child: Center(
+                                child: (state is! AuthLoading)
+                                    ? const AutoSizeText(
+                                        'Зарегистрироваться',
+                                        maxLines: 1,
+                                        style: TextStyle(
+                                          color: ColorsUI.activeRed,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      )
+                                    : const CircularProgressIndicator(
+                                        color: ColorsUI.textWhite,
+                                      ),
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     );
                   }),
+                  const SizedBox(
+                    height: 14,
+                  ),
+                  GestureDetector(
+                      onTap: () => context.goNamed('register'),
+                      child: const Column(
+                        children: [
+                          Text(
+                            'Не помните логин или пароль?',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 16, color: ColorsUI.borderColor),
+                          ),
+                          SizedBox(
+                            height: 4,
+                          ),
+                          Text(
+                            'Пройдите регистрацию снова',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: ColorsUI.borderColor,
+                              decoration: TextDecoration.underline,
+                              decorationColor: ColorsUI.borderColor,
+                            ),
+                          ),
+                        ],
+                      )),
+
                   const Spacer(),
                 ],
               ),
