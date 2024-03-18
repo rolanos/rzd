@@ -4,8 +4,12 @@ import 'package:rzd/features/auth/view/accept_otp_screen.dart';
 import 'package:rzd/features/auth/view/auth_screen.dart';
 import 'package:rzd/features/auth/view/create_user.dart';
 import 'package:rzd/features/auth/view/register_screen.dart';
+import 'package:rzd/features/history/view/history_screen.dart';
 import 'package:rzd/features/home/view/home_screen.dart';
 import 'package:rzd/features/menu/menu.dart';
+import 'package:rzd/features/messages/model/message.dart';
+import 'package:rzd/core/widget/details_screen.dart';
+import 'package:rzd/features/messages/view/message_screen.dart';
 import 'package:rzd/features/profile/view/profile_screen.dart';
 
 GoRouter getRouter(BuildContext context) {
@@ -57,11 +61,9 @@ GoRouter getRouter(BuildContext context) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: '/placeholder',
-                name: 'placeholder',
-                builder: (context, state) {
-                  return const Placeholder();
-                },
+                path: '/history',
+                name: 'history',
+                builder: (context, state) => const HistoryScreen(),
               ),
             ],
           ),
@@ -73,6 +75,22 @@ GoRouter getRouter(BuildContext context) {
                 builder: (context, state) {
                   return const ProfileScreen();
                 },
+                routes: [
+                  GoRoute(
+                    path: 'notifications',
+                    name: 'notifications',
+                    builder: (context, state) => const MessagesScreen(),
+                    routes: [
+                      GoRoute(
+                        path: 'notification',
+                        name: 'notification',
+                        builder: (context, state) => DetailsScreen(
+                          data: state.extra as DetailScreenData,
+                        ),
+                      )
+                    ],
+                  ),
+                ],
               ),
             ],
           )

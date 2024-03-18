@@ -99,7 +99,7 @@ class _BottomNavigationContainerState extends State<BottomNavigationContainer> {
                         child: SvgPicture.asset(
                           "asset/icons/notify.svg",
                           colorFilter: ColorFilter.mode(
-                            (widget.navigationShell.currentIndex == 0)
+                            (widget.navigationShell.currentIndex == 1)
                                 ? ColorsUI.darkText
                                 : ColorsUI.lightText,
                             BlendMode.srcIn,

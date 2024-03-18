@@ -37,4 +37,6 @@ abstract class ColorsUI {
   static const Color containerBackground = Color.fromRGBO(247, 247, 247, 1);
 
   static const Color otpBorder = Color.fromRGBO(3, 46, 65, 1);
+
+  static const Color boxLightBorder = Color.fromRGBO(223, 225, 229, 1);
 }

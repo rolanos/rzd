@@ -67,8 +67,10 @@ class TabRow extends StatelessWidget {
 class TabContainer extends StatefulWidget {
   final String name;
   final bool isSelected;
+  final Function? onTap;
 
-  const TabContainer({super.key, required this.name, required this.isSelected});
+  const TabContainer(
+      {super.key, required this.name, required this.isSelected, this.onTap});
 
   @override
   State<TabContainer> createState() => _TabContainerState();
@@ -82,18 +84,25 @@ class _TabContainerState extends State<TabContainer> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
-      decoration: BoxDecoration(
-        color: widget.isSelected ? ColorsUI.darkText : ColorsUI.mainWhite,
-        borderRadius: BorderRadius.circular(16.0),
-      ),
-      child: Center(
-        child: Text(
-          widget.name,
-          style: TextStyle(
-            color: widget.isSelected ? ColorsUI.mainWhite : ColorsUI.darkText,
-            fontSize: 16.0,
+    return GestureDetector(
+      onTap: () {
+        if (widget.onTap != null) {
+          widget.onTap!();
+        }
+      },
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        decoration: BoxDecoration(
+          color: widget.isSelected ? ColorsUI.darkText : ColorsUI.mainWhite,
+          borderRadius: BorderRadius.circular(16.0),
+        ),
+        child: Center(
+          child: Text(
+            widget.name,
+            style: TextStyle(
+              color: widget.isSelected ? ColorsUI.mainWhite : ColorsUI.darkText,
+              fontSize: 16.0,
+            ),
           ),
         ),
       ),

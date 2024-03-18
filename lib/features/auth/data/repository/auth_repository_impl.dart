@@ -14,17 +14,17 @@ class AuthRepositoryImpl extends AuthRepository {
     Dio dio = Dio(
       BaseOptions(
         headers: {
-          "Content-Type": "application/x-www-form-urlencoded",
+          "Content-Type": "multipart/form-data",
         },
       ),
     );
     try {
       final response = await dio.post(
         loginUrl,
-        data: {
+        data: FormData.fromMap({
           'login': email,
           'password': password,
-        },
+        }),
       );
       final String? uuid = response.data['uuid'];
       final String? cookie = response.headers['Set-Cookie']?.first;

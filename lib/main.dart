@@ -5,12 +5,13 @@ import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/router.dart';
 import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
+import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
-import 'package:intl/intl.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'features/home/data/repository/privileges_repository_impl.dart';
 import 'features/home/view/bloc/history_bloc.dart';
+import 'features/messages/view/bloc/message_bloc.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,6 +40,12 @@ class MyApp extends StatelessWidget {
           BlocProvider(
             create: (BuildContext context) => HistoryBloc()..add(GetHistory()),
           ),
+          BlocProvider(create: (context) => MessageBloc()..add(GetMessages())),
+          BlocProvider(
+              create: (context) =>
+                  UsedPrivilegeBloc()..add(GetUsedPrivilegesEvent())),
+          BlocProvider(
+              create: (context) => AppealBloc()..add(GetAppealsEvent())),
         ],
         child: MaterialApp.router(
           theme: getTheme(),
