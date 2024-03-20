@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:rzd/core/colors.dart';
 
 class FaqExpansion extends StatelessWidget {
@@ -12,13 +13,28 @@ class FaqExpansion extends StatelessWidget {
     return Theme(
       data: Theme.of(context).copyWith(dividerColor: Colors.transparent),
       child: ExpansionTile(
-        title: Text(
-          title,
-          style: const TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.w500,
-            color: ColorsUI.otpBorder,
-          ),
+        trailing: SizedBox(),
+        tilePadding: EdgeInsets.only(left: 8.0),
+        title: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Flexible(
+              flex: 10,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: ColorsUI.otpBorder,
+                ),
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(top: 8.0),
+              child: SvgPicture.asset('asset/icons/arrow_bottom.svg'),
+            ),
+          ],
         ),
         children: [
           ListTile(
