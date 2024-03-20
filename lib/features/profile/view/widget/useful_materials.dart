@@ -39,10 +39,17 @@ class UsefulMaterials extends StatelessWidget {
             padding: EdgeInsets.zero,
             itemCount: cardData.length,
             physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => TopicCard(
-              title: cardData[index].title,
-              assetPath: cardData[index].assetPath,
-              color: ColorsUI.containerBackground,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                if (cardData[index].onTap != null) {
+                  cardData[index].onTap!();
+                }
+              },
+              child: TopicCard(
+                title: cardData[index].title,
+                assetPath: cardData[index].assetPath,
+                color: ColorsUI.containerBackground,
+              ),
             ),
             separatorBuilder: (context, _) => const SizedBox(
               height: 16.0,

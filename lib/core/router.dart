@@ -10,11 +10,12 @@ import 'package:rzd/features/menu/menu.dart';
 import 'package:rzd/features/messages/model/message.dart';
 import 'package:rzd/core/widget/details_screen.dart';
 import 'package:rzd/features/messages/view/message_screen.dart';
+import 'package:rzd/features/profile/faq_screen.dart';
 import 'package:rzd/features/profile/view/profile_screen.dart';
 
 GoRouter getRouter(BuildContext context) {
   final GoRouter router = GoRouter(
-    initialLocation: '/auth',
+    initialLocation: '/profile/faq',
     routes: [
       GoRoute(
         path: '/auth',
@@ -89,6 +90,11 @@ GoRouter getRouter(BuildContext context) {
                         ),
                       )
                     ],
+                  ),
+                  GoRoute(
+                    path: 'faq',
+                    name: 'faq',
+                    builder: (context, state) => const FaqScreen(),
                   ),
                 ],
               ),

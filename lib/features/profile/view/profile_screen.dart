@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
@@ -108,6 +109,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   mainTitle: 'Полезные материалы',
                   cardData: [
                     CardData(
+                      onTap: () => context.goNamed('faq'),
                       title: 'Ответы на частые вопросы ',
                       assetPath: 'asset/images/human_5.png',
                     ),
