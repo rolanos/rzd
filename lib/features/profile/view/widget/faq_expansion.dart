@@ -26,6 +26,7 @@ class FaqExpansion extends StatelessWidget {
                   fontSize: 16,
                   fontWeight: FontWeight.w500,
                   color: ColorsUI.otpBorder,
+                  fontFamily: 'Inter',
                 ),
               ),
             ),
@@ -40,7 +41,11 @@ class FaqExpansion extends StatelessWidget {
           ListTile(
             title: Text(
               content,
-              style: const TextStyle(fontSize: 14, color: ColorsUI.otpBorder),
+              style: const TextStyle(
+                fontSize: 14,
+                color: ColorsUI.otpBorder,
+                fontFamily: 'Inter',
+              ),
             ),
           ),
         ],
