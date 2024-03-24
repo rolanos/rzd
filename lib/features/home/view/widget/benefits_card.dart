@@ -60,9 +60,16 @@ class BenifitsCard extends StatelessWidget {
             shrinkWrap: true,
             itemCount: cardData.length,
             physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => TopicCard(
-              title: cardData[index].title,
-              assetPath: cardData[index].assetPath,
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                if (cardData[index].onTap != null) {
+                  cardData[index].onTap!();
+                }
+              },
+              child: TopicCard(
+                title: cardData[index].title,
+                assetPath: cardData[index].assetPath,
+              ),
             ),
             separatorBuilder: (context, _) => const SizedBox(
               height: 16.0,

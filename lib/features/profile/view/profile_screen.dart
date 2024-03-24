@@ -114,6 +114,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       assetPath: 'asset/images/human_5.png',
                     ),
                     CardData(
+                      onTap: () => context.goNamed('support'),
                       title: 'Форма для обратной связи',
                       assetPath: 'asset/images/notes.png',
                     ),

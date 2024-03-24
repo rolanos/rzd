@@ -5,9 +5,11 @@ import 'package:rzd/features/auth/view/auth_screen.dart';
 import 'package:rzd/features/auth/view/create_user.dart';
 import 'package:rzd/features/auth/view/register_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
+import 'package:rzd/features/home/view/appeal_bf_screen.dart';
 import 'package:rzd/features/home/view/home_screen.dart';
+import 'package:rzd/features/home/view/order_information_screen.dart';
+import 'package:rzd/features/home/view/support_screen.dart';
 import 'package:rzd/features/menu/menu.dart';
-import 'package:rzd/features/messages/model/message.dart';
 import 'package:rzd/core/widget/details_screen.dart';
 import 'package:rzd/features/messages/view/message_screen.dart';
 import 'package:rzd/features/profile/faq_screen.dart';
@@ -15,7 +17,7 @@ import 'package:rzd/features/profile/view/profile_screen.dart';
 
 GoRouter getRouter(BuildContext context) {
   final GoRouter router = GoRouter(
-    initialLocation: '/profile/faq',
+    initialLocation: '/auth',
     routes: [
       GoRoute(
         path: '/auth',
@@ -56,6 +58,18 @@ GoRouter getRouter(BuildContext context) {
                 builder: (context, state) {
                   return const HomeScreen();
                 },
+                routes: [
+                  GoRoute(
+                    path: 'order',
+                    name: 'order',
+                    builder: (context, state) => const OrderInformationScreen(),
+                  ),
+                  GoRoute(
+                    path: 'bf',
+                    name: 'bf',
+                    builder: (context, state) => const AppealBfScreen(),
+                  ),
+                ],
               ),
             ],
           ),
@@ -95,6 +109,11 @@ GoRouter getRouter(BuildContext context) {
                     path: 'faq',
                     name: 'faq',
                     builder: (context, state) => const FaqScreen(),
+                  ),
+                  GoRoute(
+                    path: 'support',
+                    name: 'support',
+                    builder: (context, state) => const SupportScreen(),
                   ),
                 ],
               ),

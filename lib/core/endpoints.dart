@@ -32,3 +32,11 @@ const String tickAllMessagesUrl = '$baseUrl/messages/mark_read_all/';
 const String getAppealsUrl = '$baseUrl/user_requests/';
 
 const String getPrivilegesUrl = '$baseUrl/privileges_used/';
+
+const String formSend = '$baseUrl/form/send/';
+
+const String formValidate = '$baseUrl/form/validate/';
+
+const String formDescription = '$baseUrl/form/description/';
+
+const String formList = '$baseUrl/form/list/';

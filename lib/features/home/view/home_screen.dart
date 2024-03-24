@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/enums.dart';
@@ -126,6 +127,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     secondTitle: 'Их вы можете направить в БФ «Почет» online',
                     cardData: [
                       CardData(
+                        onTap: () => context.goNamed('order'),
                         title: 'Форма заказа справок',
                         assetPath: 'asset/images/books.png',
                       ),
@@ -135,6 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         assetPath: 'asset/images/pen.png',
                       ),
                       CardData(
+                        onTap: () => context.goNamed('bf'),
                         title: 'Обращение в БФ Почет',
                         assetPath: 'asset/images/hand.png',
                       ),

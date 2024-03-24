@@ -101,9 +101,9 @@ class AuthRepositoryImpl extends AuthRepository {
     Dio dio;
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    String? cookie = await preferences.getString('cookie');
+    String? cookie = preferences.getString('cookie');
 
-    String? uuid = await preferences.getString('uuid');
+    String? uuid = preferences.getString('uuid');
 
     dio = Dio();
     try {

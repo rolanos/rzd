@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
-import 'package:rzd/core/widget/snack_bar.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 
 import 'widget/otp_input.dart';

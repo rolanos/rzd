@@ -115,6 +115,16 @@ flutter:
         weight: 600
       - asset: asset/fonts/WorkSans-Bold.ttf
         weight: 700
+    - family: Inter
+      fonts:
+      - asset: asset/fonts/Inter/Inter-Regular.ttf
+        weight: 400
+      - asset: asset/fonts/Inter/Inter-Medium.ttf
+        weight: 500
+      - asset: asset/fonts/Inter/Inter-SemiBold.ttf
+        weight: 600
+      - asset: asset/fonts/Inter/Inter-Bold.ttf
+        weight: 700
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages

@@ -194,7 +194,10 @@ class _CustomAppBarState extends State<CustomAppBar> {
                       ),
                       Text(
                         widget.appbarText,
-                        style: Theme.of(context).textTheme.bodyMedium,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyMedium
+                            ?.copyWith(fontFamily: 'Inter'),
                       ),
                       const Spacer(),
                       IconButton(

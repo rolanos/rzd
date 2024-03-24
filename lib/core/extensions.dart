@@ -4,7 +4,6 @@ import 'package:rzd/core/colors.dart';
 
 extension DataFormat on DateTime {
   String format() {
-    String res = '';
     String monthStr = '';
     switch (month) {
       case 1:

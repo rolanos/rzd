@@ -3,10 +3,11 @@ import 'package:rzd/core/colors.dart';
 
 class ContainerButton extends StatelessWidget {
   final Color? color;
+  final Color? textColor;
   final String text;
   final Function()? onTap;
   const ContainerButton(
-      {super.key, this.color, required this.text, this.onTap});
+      {super.key, this.color, this.textColor, required this.text, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +27,7 @@ class ContainerButton extends StatelessWidget {
           child: Text(
             text,
             style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: ColorsUI.activeRed,
+                  color: textColor ?? ColorsUI.activeRed,
                 ),
           ),
         ),
