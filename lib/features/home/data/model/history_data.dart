@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:rzd/core/widget/details_screen.dart';
 
 class HistoryData {
   final String date;

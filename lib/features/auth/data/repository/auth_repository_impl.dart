@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:dio/dio.dart';
 import 'package:rzd/features/auth/data/model/user_api.dart';
 import 'package:rzd/features/auth/domain/entity/user_model.dart';
@@ -73,10 +72,10 @@ class AuthRepositoryImpl extends AuthRepository {
     try {
       final response = await dio.post(
         logoutUrl,
-        data: {
+        data: FormData.fromMap({
           'login': email,
           'password': password,
-        },
+        }),
       );
       if (response.statusCode == 200) {
         //Удаляем наши Credentials в SharedPreferences
@@ -101,9 +100,9 @@ class AuthRepositoryImpl extends AuthRepository {
     Dio dio;
     SharedPreferences preferences = await SharedPreferences.getInstance();
 
-    String? cookie = preferences.getString('cookie');
+    String? cookie = await preferences.getString('cookie');
 
-    String? uuid = preferences.getString('uuid');
+    String? uuid = await preferences.getString('uuid');
 
     dio = Dio();
     try {

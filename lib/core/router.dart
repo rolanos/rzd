@@ -6,6 +6,7 @@ import 'package:rzd/features/auth/view/create_user.dart';
 import 'package:rzd/features/auth/view/register_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
 import 'package:rzd/features/home/view/appeal_bf_screen.dart';
+import 'package:rzd/features/home/view/form_screen.dart';
 import 'package:rzd/features/home/view/home_screen.dart';
 import 'package:rzd/features/home/view/order_information_screen.dart';
 import 'package:rzd/features/home/view/support_screen.dart';
@@ -60,14 +61,9 @@ GoRouter getRouter(BuildContext context) {
                 },
                 routes: [
                   GoRoute(
-                    path: 'order',
-                    name: 'order',
-                    builder: (context, state) => const OrderInformationScreen(),
-                  ),
-                  GoRoute(
-                    path: 'bf',
-                    name: 'bf',
-                    builder: (context, state) => const AppealBfScreen(),
+                    path: 'form',
+                    name: 'form',
+                    builder: (context, state) => const FormScreen(),
                   ),
                 ],
               ),

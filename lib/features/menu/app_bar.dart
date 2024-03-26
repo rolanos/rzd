@@ -58,21 +58,23 @@ class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-            GestureDetector(
-              onTap: () {
-                if (context.canPop()) {
-                  context.pop();
-                }
-              },
-              child: Container(
-                height: 14,
-                width: 18,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-                child: SvgPicture.asset("asset/icons/back_arrow.svg"),
-              ),
-            ),
+            context.canPop() == true
+                ? GestureDetector(
+                    onTap: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      }
+                    },
+                    child: Container(
+                      height: 18,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: SvgPicture.asset("asset/icons/back_arrow.svg"),
+                    ),
+                  )
+                : SizedBox(),
             const SizedBox(
               width: 22.0,
             ),

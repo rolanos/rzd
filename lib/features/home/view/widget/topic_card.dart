@@ -10,8 +10,7 @@ class TopicCard extends StatelessWidget {
   final String? assetPath;
   final Color? color;
 
-  const TopicCard(
-      {super.key, required this.title, required this.assetPath, this.color});
+  const TopicCard({super.key, required this.title, this.assetPath, this.color});
 
   @override
   Widget build(BuildContext context) {

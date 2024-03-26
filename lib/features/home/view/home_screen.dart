@@ -1,21 +1,15 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:go_router/go_router.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/colors.dart';
-import 'package:rzd/core/enums.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
-import 'package:rzd/features/home/data/model/history_data.dart';
-import 'package:rzd/features/home/view/bloc/history_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:rzd/features/home/view/widget/tab_row.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
 import 'widget/benefits_card.dart';
-import 'widget/history_card.dart';
+
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -125,45 +119,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     removeButton: true,
                     mainTitle: 'Справки и обращения',
                     secondTitle: 'Их вы можете направить в БФ «Почет» online',
-                    cardData: [
-                      CardData(
-                        onTap: () => context.goNamed('order'),
-                        title: 'Форма заказа справок',
-                        assetPath: 'asset/images/books.png',
-                      ),
-                      CardData(
-                        title:
-                            'Обращение в комиссию по благотворительной помощи',
-                        assetPath: 'asset/images/pen.png',
-                      ),
-                      CardData(
-                        onTap: () => context.goNamed('bf'),
-                        title: 'Обращение в БФ Почет',
-                        assetPath: 'asset/images/hand.png',
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 8.0,
-                  ),
-                  BlocBuilder<HistoryBloc, HistoryState>(
-                    builder: (context, state) {
-                      return HistoryCard(
-                        key: controller?.history,
-                        seeAll: seeAllHistory,
-                        onTap: () => setState(
-                          () => seeAllHistory = !seeAllHistory,
-                        ),
-                        historyData: List.generate(
-                          countToShow(state.history.length, seeAllHistory),
-                          (index) => HistoryData(
-                            date: formatDate(state.history[index].moment),
-                            name: state.history[index].subject,
-                            iconPath: AppIcon.heart.iconPath,
-                          ),
-                        ),
-                      );
-                    },
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.width * 0.22,

@@ -1,8 +1,11 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
+import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
 
 import 'topic_card.dart';
 
@@ -15,13 +18,13 @@ class BenifitsCard extends StatelessWidget {
 
   final bool? seeAll;
   final bool removeButton;
-  final List<CardData> cardData;
+  final List<CardData>? cardData;
 
   const BenifitsCard(
       {super.key,
       required this.mainTitle,
       required this.secondTitle,
-      required this.cardData,
+      this.cardData,
       this.onTap,
       this.seeAll,
       this.removeButton = false});
@@ -56,25 +59,48 @@ class BenifitsCard extends StatelessWidget {
             style: textTheme.bodySmall!
                 .copyWith(color: ColorsUI.secondaryText, fontSize: 16.0),
           ),
-          ListView.separated(
-            shrinkWrap: true,
-            itemCount: cardData.length,
-            physics: NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) => GestureDetector(
-              onTap: () {
-                if (cardData[index].onTap != null) {
-                  cardData[index].onTap!();
-                }
-              },
-              child: TopicCard(
-                title: cardData[index].title,
-                assetPath: cardData[index].assetPath,
+          if (cardData != null)
+            ListView.separated(
+              shrinkWrap: true,
+              itemCount: cardData!.length,
+              physics: NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) => GestureDetector(
+                onTap: () {},
+                child: TopicCard(
+                  title: cardData![index].title,
+                  assetPath: cardData![index].assetPath,
+                ),
+              ),
+              separatorBuilder: (context, _) => const SizedBox(
+                height: 16.0,
               ),
             ),
-            separatorBuilder: (context, _) => const SizedBox(
-              height: 16.0,
+          if (cardData == null)
+            BlocBuilder<FormBloc, FormBlocState>(
+              builder: (context, state) {
+                if (state is FormInitial) {
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: state.forms.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        context.read<FormBloc>().add(
+                            GetFormInfo(formKey: state.forms[index].formKey));
+                        context.goNamed('form');
+                      },
+                      child: TopicCard(
+                        title: state.forms[index].formName,
+                      ),
+                    ),
+                    separatorBuilder: (context, _) => const SizedBox(
+                      height: 16.0,
+                    ),
+                  );
+                }
+                return const SizedBox();
+              },
             ),
-          ),
           const SizedBox(
             height: 24.0,
           ),

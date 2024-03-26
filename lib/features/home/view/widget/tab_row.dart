@@ -13,12 +13,12 @@ class TabRow extends StatelessWidget {
     return SingleChildScrollView(
       controller: controller.tabScrollController,
       scrollDirection: Axis.horizontal,
-      physics: BouncingScrollPhysics(),
+      physics: const BouncingScrollPhysics(),
       child: Container(
-        padding: EdgeInsets.only(
+        padding: const EdgeInsets.only(
           left: 8.0,
         ),
-        margin: EdgeInsets.only(bottom: 12.0),
+        margin: const EdgeInsets.only(bottom: 12.0),
         child: Row(
           children: [
             GestureDetector(
@@ -30,7 +30,7 @@ class TabRow extends StatelessWidget {
                     controller.category == Category.benefits ? true : false,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
             GestureDetector(
@@ -42,7 +42,7 @@ class TabRow extends StatelessWidget {
                     controller.category == Category.references ? true : false,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
             GestureDetector(
@@ -54,11 +54,65 @@ class TabRow extends StatelessWidget {
                     controller.category == Category.history ? true : false,
               ),
             ),
-            SizedBox(
+            const SizedBox(
               width: 8.0,
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class TabRowHistory extends StatelessWidget {
+  const TabRowHistory({
+    required this.isAppeals,
+    super.key,
+    required this.changeFirst,
+    required this.changeSecond,
+  });
+
+  final bool isAppeals;
+  final Function() changeFirst;
+  final Function() changeSecond;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.only(
+        left: 8.0,
+      ),
+      margin: const EdgeInsets.only(bottom: 12.0),
+      child: Row(
+        children: [
+          const SizedBox(
+            width: 8.0,
+          ),
+          Expanded(
+            child: TabContainer(
+              onTap: () {
+                changeFirst();
+              },
+              name: 'Обращения',
+              isSelected: isAppeals,
+            ),
+          ),
+          const SizedBox(
+            width: 8.0,
+          ),
+          Expanded(
+            child: TabContainer(
+              onTap: () {
+                changeSecond();
+              },
+              name: 'Льготы',
+              isSelected: !isAppeals,
+            ),
+          ),
+          const SizedBox(
+            width: 8.0,
+          ),
+        ],
       ),
     );
   }

@@ -7,6 +7,7 @@ import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
+import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -46,6 +47,7 @@ class MyApp extends StatelessWidget {
                   UsedPrivilegeBloc()..add(GetUsedPrivilegesEvent())),
           BlocProvider(
               create: (context) => AppealBloc()..add(GetAppealsEvent())),
+          BlocProvider(create: (context) => FormBloc()..add(GetForms())),
         ],
         child: MaterialApp.router(
           theme: getTheme(),
