@@ -11,3 +11,9 @@ class GetFormInfo extends FormEvent {
 
   const GetFormInfo({required this.formKey});
 }
+
+class SendForm extends FormEvent {
+  final FormDataClass data;
+
+  SendForm({required this.data});
+}

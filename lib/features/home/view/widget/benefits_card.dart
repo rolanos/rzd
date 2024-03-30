@@ -69,6 +69,7 @@ class BenifitsCard extends StatelessWidget {
                 child: TopicCard(
                   title: cardData![index].title,
                   assetPath: cardData![index].assetPath,
+                  onTap: cardData![index].onTap,
                 ),
               ),
               separatorBuilder: (context, _) => const SizedBox(

@@ -1,5 +1,5 @@
 import 'dart:ui';
-
+import 'package:html/parser.dart';
 import 'package:rzd/core/colors.dart';
 
 extension DataFormat on DateTime {
@@ -58,6 +58,15 @@ extension DataFormat on DateTime {
 }
 
 extension GetColor on String {
+  //here goes the function
+  String? parseHtmlString() {
+    final document = parse(this);
+    final String? parsedString =
+        parse(document.body?.text).documentElement?.text;
+
+    return parsedString;
+  }
+
   Color getStatusColorText() {
     switch (this) {
       case 'Принято':

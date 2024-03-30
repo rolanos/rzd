@@ -46,6 +46,7 @@ class UsefulMaterials extends StatelessWidget {
                 }
               },
               child: TopicCard(
+                onTap: cardData[index].onTap,
                 title: cardData[index].title,
                 assetPath: cardData[index].assetPath,
                 color: ColorsUI.containerBackground,

@@ -4,7 +4,7 @@ import 'colors.dart';
 
 ThemeData getTheme() {
   return ThemeData(
-    fontFamily: 'SF',
+    fontFamily: 'Inter',
     textTheme: const TextTheme(
       titleMedium: TextStyle(
         fontWeight: FontWeight.w700,

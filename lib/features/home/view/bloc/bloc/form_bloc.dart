@@ -31,5 +31,25 @@ class FormBloc extends Bloc<FormEvent, FormBlocState> {
         log(e.toString());
       }
     });
+    on<SendForm>((event, emit) async {
+      try {
+        final copyState = state;
+        final validate = await formRepository.validateForm(
+            event.data.formKey ?? '',
+            FormDescription.toMapFromList(event.data.formDescription));
+        if (validate) {
+          final result = await formRepository.sendForm(
+            event.data.formKey ?? '',
+            FormDescription.toMapFromList(event.data.formDescription),
+          );
+          if (result) {
+            emit(FormSended());
+            emit(copyState);
+          }
+        }
+      } catch (e) {
+        log(e.toString());
+      }
+    });
   }
 }

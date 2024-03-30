@@ -20,7 +20,7 @@ abstract class ColorsUI {
   static const Color lightOrange = Color.fromRGBO(255, 239, 234, 1);
 
   //TEXT
-  static const Color mainText = Color.fromRGBO(39, 54, 75, 1);
+  static const Color mainText = Color.fromRGBO(3, 46, 65, 1);
 
   static const Color darkText = Color.fromRGBO(13, 43, 65, 1);
 

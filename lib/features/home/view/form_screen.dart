@@ -2,14 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:go_router/go_router.dart';
 import 'package:intl/intl.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/model/form_data_class.dart';
 import 'package:rzd/core/validators.dart';
+import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/auth/view/widget/input_form.dart';
 import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
+import 'package:rzd/features/home/view/widget/bottom_select.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
 import 'widget/title_text.dart';
@@ -31,7 +34,21 @@ class _FormScreenState extends State<FormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<FormBloc, FormBlocState>(
+    return BlocConsumer<FormBloc, FormBlocState>(
+      listener: (context, state) {
+        if (state is FormSended) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Center(
+                child: Text('Форма отправлена успешно'),
+              ),
+            ),
+          );
+          if (context.canPop()) {
+            context.pop();
+          }
+        }
+      },
       builder: (context, state) {
         if (state is FormInitial) {
           return SingleChildScrollView(
@@ -54,60 +71,14 @@ class _FormScreenState extends State<FormScreen> {
                     children: [
                       const TitleText('Заполните форму'),
                       const SizedBox(height: 10),
-                      Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 12, vertical: 18),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(12),
-                          color: ColorsUI.containerBackground,
-                        ),
-                        child: Row(
-                          children: [
-                            Flexible(
-                              child: RichText(
-                                text: const TextSpan(
-                                  text:
-                                      'Если у Вас возникли вопросы, обратитесь на Горячую линию (ИКЦ) по телефонам ',
-                                  children: [
-                                    TextSpan(
-                                      text: '8 800 775 95 97',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: ColorsUI.otpBorder,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text: ' и ',
-                                    ),
-                                    TextSpan(
-                                      text: '1810',
-                                      style: TextStyle(
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: ColorsUI.otpBorder,
-                                      ),
-                                    ),
-                                    TextSpan(
-                                      text:
-                                          ' (с мобильного телефона). Звонок бесплатный. Режим работы: с 02:00 до 18:00 пн-пт (мск).',
-                                    ),
-                                  ],
-                                  style: TextStyle(
-                                    fontFamily: 'Inter',
-                                    fontSize: 14,
-                                    color: ColorsUI.otpBorder,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
+                      const AdditionalInfoContainer(),
                       const SizedBox(height: 20),
                       ListView.separated(
                         shrinkWrap: true,
                         padding: EdgeInsets.zero,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) => TextInput(
+                            choose: state.form?.choose,
                             formDescription:
                                 state.form?.formDescription[index]),
                         separatorBuilder: (context, index) => const SizedBox(
@@ -146,7 +117,14 @@ class _FormScreenState extends State<FormScreen> {
                           ],
                         ),
                       const SizedBox(height: 20),
-                      const ContainerButton(
+                      ContainerButton(
+                        onTap: () {
+                          if (state.form != null) {
+                            context
+                                .read<FormBloc>()
+                                .add(SendForm(data: state.form!));
+                          }
+                        },
                         text: 'Отправить',
                         textColor: ColorsUI.mainWhite,
                         color: ColorsUI.activeRed,
@@ -165,9 +143,10 @@ class _FormScreenState extends State<FormScreen> {
 }
 
 class TextInput extends StatelessWidget {
-  const TextInput({super.key, required this.formDescription});
+  const TextInput({super.key, required this.formDescription, this.choose});
 
   final FormDescription? formDescription;
+  final List<FormChoose>? choose;
 
   @override
   Widget build(BuildContext context) {
@@ -178,16 +157,21 @@ class TextInput extends StatelessWidget {
         TitleText(formDescription?.title ?? '-'),
         const SizedBox(height: 10),
         if (formDescription?.type != null)
-          SelectInput(formDescription: formDescription, context: context),
+          SelectInput(
+              formDescription: formDescription,
+              choose: choose,
+              context: context),
       ],
     );
   }
 }
 
 class SelectInput extends StatefulWidget {
-  const SelectInput({super.key, this.formDescription, required this.context});
+  const SelectInput(
+      {super.key, this.formDescription, required this.context, this.choose});
 
   final FormDescription? formDescription;
+  final List<FormChoose>? choose;
   final BuildContext context;
 
   @override
@@ -201,6 +185,24 @@ class _SelectInputState extends State<SelectInput> {
       case 'select':
         return InputForm(
           hintText: 'Выберите',
+          trailing: GestureDetector(
+            onTap: () async {
+              FormChoose? choose = widget.choose?.firstWhere((element) =>
+                  element.titleName == widget.formDescription?.titleName);
+              if (choose != null) {
+                final value = await showBottomSelect(
+                  context,
+                  choose.choose ?? [],
+                );
+                setState(() {
+                  widget.formDescription?.controller.text = value;
+                });
+              }
+            },
+            child: SvgPicture.asset(
+              'asset/icons/arrow_bottom.svg',
+            ),
+          ),
           controller:
               widget.formDescription?.controller ?? TextEditingController(),
         );

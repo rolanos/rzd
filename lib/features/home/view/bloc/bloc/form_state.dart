@@ -12,3 +12,5 @@ final class FormInitial extends FormBlocState {
 }
 
 class FormError extends FormBlocState {}
+
+class FormSended extends FormBlocState {}

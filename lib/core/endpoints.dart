@@ -40,3 +40,34 @@ const String formValidate = '$baseUrl/form/validate/';
 const String formDescription = '$baseUrl/form/description/';
 
 const String formList = '$baseUrl/form/list/';
+
+////////////////////////////////ЛЬГОТЫ///////////////////////////
+
+const String sankurCheckUrl = '$baseUrl/sankur/check/';
+
+const String sankurSanprofListUrl = '$baseUrl/sankur/sanprof_list/';
+
+const String sankurRequestUrl = '$baseUrl/sankur/request/';
+
+const String teethCheckUrl = '$baseUrl/teeth/check/';
+
+const String teethNuzListUrl = '$baseUrl/teeth/nuz_list/';
+
+const String teethRequestUrl = '$baseUrl/teeth/request/';
+
+const String fuelCheckUrl = '$baseUrl/fuel/check/';
+
+const String fuelListUrl = '$baseUrl/fuel/salepoint_list/';
+
+const String fuelRequestUrl = '$baseUrl/fuel/request/';
+
+const String privilegesDetail = '$baseUrl/privileges_detail/';
+
+const String privilegesDetailImage = '$baseUrl/privileges_detail/image/';
+
+const String faqListUrl = '$baseUrl/faq/';
+
+//NEWS
+const String newsUrl = '$baseUrl/news/';
+
+const String newImageUrl = '$baseUrl/news/thumb/';

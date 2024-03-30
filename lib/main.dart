@@ -5,12 +5,20 @@ import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/router.dart';
 import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:rzd/features/benifits/model/fuel_form.dart';
+import 'package:rzd/features/benifits/model/sankur_form.dart';
+import 'package:rzd/features/benifits/repository/sankur_repository.dart';
+import 'package:rzd/features/benifits/repository/teeth_repository.dart';
 import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:rzd/features/news/repository/news_repository.dart';
+import 'package:rzd/features/news/view/bloc/new_bloc.dart';
+import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
+import 'features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'features/home/view/bloc/history_bloc.dart';
 import 'features/messages/view/bloc/message_bloc.dart';
 
@@ -32,6 +40,12 @@ class MyApp extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
+            create: (BuildContext context) => NewBloc()..add(GetNews()),
+          ),
+          BlocProvider(
+            create: (BuildContext context) => FaqBloc()..add(GetFaqs()),
+          ),
+          BlocProvider(
             create: (BuildContext context) => AuthBloc()..add(InitEvent()),
           ),
           BlocProvider(
@@ -48,6 +62,9 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) => AppealBloc()..add(GetAppealsEvent())),
           BlocProvider(create: (context) => FormBloc()..add(GetForms())),
+          BlocProvider(
+            create: (context) => PrivilegeBloc(),
+          ),
         ],
         child: MaterialApp.router(
           theme: getTheme(),

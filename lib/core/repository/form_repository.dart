@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:developer';
 
 import 'package:dio/dio.dart';
@@ -69,5 +70,73 @@ class FormRepository {
       log(e.toString());
       rethrow;
     }
+  }
+
+  Future<bool> validateForm(String formKey, Map<String, dynamic> data) async {
+    Dio dio;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    String? cookie = preferences.getString('cookie');
+
+    String? uuid = preferences.getString('uuid');
+
+    dio = Dio(
+      BaseOptions(
+        headers: {
+          "Cookie": cookie,
+          "Content-Type": "multipart/form-data",
+        },
+      ),
+    );
+    try {
+      final response = await dio.post(formValidate,
+          queryParameters: {
+            'uuid': uuid,
+          },
+          data: FormData.fromMap(
+              {"form_key": formKey, "form_data": json.encode(data)}));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+    return false;
+  }
+
+  Future<bool> sendForm(String formKey, Map<String, dynamic> data) async {
+    Dio dio;
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+
+    String? cookie = preferences.getString('cookie');
+
+    String? uuid = preferences.getString('uuid');
+
+    dio = Dio(
+      BaseOptions(
+        headers: {
+          "Cookie": cookie,
+          "Content-Type": "multipart/form-data",
+        },
+      ),
+    );
+    try {
+      final response = await dio.post(formSend,
+          queryParameters: {
+            'uuid': uuid,
+          },
+          data: FormData.fromMap(
+              {"form_key": formKey, "form_data": json.encode(data)}));
+
+      if (response.statusCode == 200) {
+        return true;
+      }
+    } catch (e) {
+      log(e.toString());
+      rethrow;
+    }
+    return false;
   }
 }
