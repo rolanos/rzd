@@ -6,7 +6,8 @@ import 'package:provider/provider.dart';
 enum Category {
   benefits,
   references,
-  history,
+  faq,
+  news,
 }
 
 class CustomTabController extends ChangeNotifier {
@@ -17,11 +18,13 @@ class CustomTabController extends ChangeNotifier {
 
   GlobalKey benefits = GlobalKey();
   GlobalKey references = GlobalKey();
-  GlobalKey history = GlobalKey();
+  GlobalKey news = GlobalKey();
+  GlobalKey faq = GlobalKey();
 
   GlobalKey benefitsTab = GlobalKey();
   GlobalKey referencesTab = GlobalKey();
-  GlobalKey historyTab = GlobalKey();
+  GlobalKey newsTab = GlobalKey();
+  GlobalKey faqTab = GlobalKey();
 
   CustomTabController({
     required this.tabScrollController,
@@ -50,8 +53,8 @@ class CustomTabController extends ChangeNotifier {
       }
       if (scrollController.offset >
               scrollController.position.maxScrollExtent * 2 / 3 &&
-          category != Category.history) {
-        category = Category.history;
+          category != Category.news) {
+        category = Category.news;
         tabScrollController.animateTo(
           tabScrollController.position.maxScrollExtent,
           duration: Duration(milliseconds: 256),
@@ -91,14 +94,26 @@ class CustomTabController extends ChangeNotifier {
     }
   }
 
-  goToHistory() async {
+  goToFaqs() async {
     if (scrollController.hasClients) {
       double offset = scrollController.position.pixels;
-      RenderBox? box = history.currentContext?.findRenderObject() as RenderBox?;
+      RenderBox? box =
+          benefits.currentContext?.findRenderObject() as RenderBox?;
 
-      Scrollable.ensureVisible(history.currentContext!);
-      Scrollable.ensureVisible(historyTab.currentContext!);
-      category = Category.history;
+      Scrollable.ensureVisible(faq.currentContext!);
+      category = Category.faq;
+      notifyListeners();
+    }
+  }
+
+  goToNews() async {
+    if (scrollController.hasClients) {
+      double offset = scrollController.position.pixels;
+      RenderBox? box = news.currentContext?.findRenderObject() as RenderBox?;
+
+      Scrollable.ensureVisible(news.currentContext!);
+      Scrollable.ensureVisible(news.currentContext!);
+      category = Category.news;
       notifyListeners();
     }
   }

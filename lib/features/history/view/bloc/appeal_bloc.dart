@@ -13,6 +13,7 @@ class AppealBloc extends Bloc<AppealEvent, AppealState> {
   AppealBloc() : super(AppealInitial()) {
     on<GetAppealsEvent>((event, emit) async {
       try {
+        emit(AppealLoading());
         final result = await appealRepository.getAppeals();
         emit(AppealInitial(appeals: result));
       } catch (e) {

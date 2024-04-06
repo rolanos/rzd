@@ -4,9 +4,9 @@ import 'package:rzd/features/benifits/view/sankur/widget/order_container.dart';
 import 'package:rzd/features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
-import 'widget/info_container.dart';
-import 'widget/title_container.dart';
-import 'widget/warning_container.dart';
+import 'sankur/widget/info_container.dart';
+import 'sankur/widget/title_container.dart';
+import 'sankur/widget/warning_container.dart';
 
 class PrivilegeScreen extends StatelessWidget {
   const PrivilegeScreen({super.key});

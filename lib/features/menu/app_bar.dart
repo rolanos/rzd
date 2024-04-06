@@ -78,14 +78,18 @@ class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {
             const SizedBox(
               width: 22.0,
             ),
-            Text(
-              widget.appbarText,
-              style: Theme.of(context)
-                  .textTheme
-                  .bodyMedium
-                  ?.copyWith(fontWeight: FontWeight.w500),
+            Flexible(
+              child: Text(
+                widget.appbarText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
             ),
-            const Spacer(),
+            if (widget.withButton) const Spacer(),
             if (widget.withButton)
               BlocBuilder<MessageBloc, MessageState>(
                 builder: (context, state) {

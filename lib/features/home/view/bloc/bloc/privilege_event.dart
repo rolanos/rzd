@@ -1,10 +1,7 @@
 part of 'privilege_bloc.dart';
 
-sealed class PrivilegeEvent extends Equatable {
+sealed class PrivilegeEvent {
   const PrivilegeEvent();
-
-  @override
-  List<Object> get props => [];
 }
 
 class GetPrivilegeInfo extends PrivilegeEvent {

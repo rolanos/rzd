@@ -18,3 +18,5 @@ class UsedPrivilegesError extends UsedPrivilegeState {
 
   const UsedPrivilegesError({required this.message});
 }
+
+class UsedPrivilegeLoading extends UsedPrivilegeState {}

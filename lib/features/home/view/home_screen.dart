@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/colors.dart';
+import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
 import 'package:rzd/features/home/domain/entity/privilege_info.dart';
 import 'package:rzd/features/home/view/bloc/bloc/privilege_bloc.dart';
@@ -12,6 +14,8 @@ import 'package:rzd/features/home/view/widget/tab_row.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 import 'package:rzd/features/news/view/bloc/new_bloc.dart';
 import 'package:rzd/features/news/view/widget/news_content.dart';
+import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
+import 'package:rzd/features/profile/view/widget/faq_expansion.dart';
 
 import 'widget/benefits_card.dart';
 
@@ -132,9 +136,57 @@ class _HomeScreenState extends State<HomeScreen> {
                     secondTitle: 'Их вы можете направить в БФ «Почет» online',
                   ),
                   const SizedBox(
+                    height: 8.0,
+                  ),
+                  Container(
+                    key: controller?.faq,
+                    padding: const EdgeInsets.all(20),
+                    decoration: BoxDecoration(
+                        color: ColorsUI.mainWhite,
+                        borderRadius: BorderRadius.circular(24)),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        const MainTitleText(text: 'Ответы на вопросы '),
+                        const SizedBox(
+                          height: 20,
+                        ),
+                        BlocBuilder<FaqBloc, FaqState>(
+                            builder: (context, state) {
+                          if (state is FaqInitial) {
+                            return ListView.separated(
+                              shrinkWrap: true,
+                              padding: EdgeInsets.zero,
+                              physics: const NeverScrollableScrollPhysics(),
+                              itemBuilder: (context, index) => FaqExpansion(
+                                title: state.faqs[index].question ?? "",
+                                content: state.faqs[index].answer ?? "",
+                              ),
+                              separatorBuilder: (context, index) =>
+                                  const SizedBox(
+                                height: 28,
+                              ),
+                              itemCount:
+                                  state.faqs.length > 3 ? 3 : state.faqs.length,
+                            );
+                          }
+                          return const SizedBox();
+                        }),
+                        const SizedBox(height: 20),
+                        ContainerButton(
+                          text: 'Все вопросы ',
+                          onTap: () => context.goNamed('faq'),
+                          color: ColorsUI.inactiveRedLight,
+                          textColor: ColorsUI.activeRed,
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
                     height: 8,
                   ),
                   Container(
+                    key: controller?.news,
                     padding: const EdgeInsets.all(20),
                     decoration: BoxDecoration(
                       color: ColorsUI.mainWhite,
@@ -143,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           'Новости и события',
                           style: TextStyle(
                             color: ColorsUI.mainText,
@@ -151,7 +203,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w700,
                           ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                         BlocBuilder<NewBloc, NewState>(
                           builder: (context, state) {
                             if (state is NewInitial) {
@@ -165,8 +217,42 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               );
                             }
-                            return SizedBox();
+                            return const SizedBox();
                           },
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(height: 0, thickness: 0.5),
+                        const SizedBox(height: 20),
+                        const SubTitleText(text: 'О портале'),
+                        const SizedBox(height: 6),
+                        const ContentText(
+                            text:
+                                'Инструкция по процедуре регистрации личного кабинета и пользованию им '),
+                        const SizedBox(height: 20),
+                        const ContainerButton(
+                          text: 'Узнать подробнее',
+                          color: ColorsUI.inactiveRedLight,
+                          textColor: ColorsUI.activeRed,
+                        ),
+                        const SizedBox(height: 20),
+                        const Divider(height: 0, thickness: 0.5),
+                        const SizedBox(height: 20),
+                        const SubTitleText(text: 'Полезные сайты'),
+                        const SizedBox(height: 6),
+                        const ContentText(
+                            text:
+                                'Новости, мероприятия и другая полезная информация'),
+                        const SizedBox(height: 20),
+                        const ContainerButton(
+                          text: 'БФ «Почет»',
+                          color: ColorsUI.inactiveRedLight,
+                          textColor: ColorsUI.activeRed,
+                        ),
+                        const SizedBox(height: 14),
+                        const ContainerButton(
+                          text: 'НПФ «Благосостояние»',
+                          color: ColorsUI.inactiveRedLight,
+                          textColor: ColorsUI.activeRed,
                         ),
                       ],
                     ),

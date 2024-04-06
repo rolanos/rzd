@@ -13,6 +13,7 @@ class UsedPrivilegeBloc extends Bloc<UsedPrivilegeEvent, UsedPrivilegeState> {
   UsedPrivilegeBloc() : super(UsedPrivilegeInitial()) {
     on<GetUsedPrivilegesEvent>((event, emit) async {
       try {
+        emit(UsedPrivilegeLoading());
         final result = await privilegeRepository.getUsedPrivileges();
         emit(UsedPrivilegeInitial(privileges: result));
       } catch (e) {

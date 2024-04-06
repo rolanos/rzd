@@ -5,19 +5,15 @@ import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/router.dart';
 import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
-import 'package:rzd/features/benifits/model/fuel_form.dart';
-import 'package:rzd/features/benifits/model/sankur_form.dart';
-import 'package:rzd/features/benifits/repository/sankur_repository.dart';
-import 'package:rzd/features/benifits/repository/teeth_repository.dart';
 import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:rzd/features/news/repository/news_repository.dart';
 import 'package:rzd/features/news/view/bloc/new_bloc.dart';
 import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
+import 'features/benifits/view/sankur/bloc/rest_objects_bloc.dart';
 import 'features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'features/home/view/bloc/history_bloc.dart';
 import 'features/messages/view/bloc/message_bloc.dart';
@@ -39,6 +35,9 @@ class MyApp extends StatelessWidget {
           tabScrollController: ScrollController()),
       child: MultiBlocProvider(
         providers: [
+          BlocProvider(
+              create: (BuildContext context) =>
+                  RestObjectsBloc()..add(GetSankurObjects())),
           BlocProvider(
             create: (BuildContext context) => NewBloc()..add(GetNews()),
           ),
@@ -68,9 +67,9 @@ class MyApp extends StatelessWidget {
         ],
         child: MaterialApp.router(
           theme: getTheme(),
-          localizationsDelegates: [GlobalMaterialLocalizations.delegate],
-          supportedLocales: [
-            const Locale('ru', 'RU'),
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate],
+          supportedLocales: const [
+            Locale('ru', 'RU'),
           ],
           debugShowCheckedModeBanner: false,
           routerConfig: router,

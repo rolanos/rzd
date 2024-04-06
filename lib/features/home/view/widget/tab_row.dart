@@ -45,6 +45,25 @@ class TabRow extends StatelessWidget {
             const SizedBox(
               width: 8.0,
             ),
+            GestureDetector(
+              onTap: () => controller.goToFaqs(),
+              child: TabContainer(
+                key: controller.faqTab,
+                name: 'Ответы на вопросы',
+                isSelected: controller.category == Category.faq ? true : false,
+              ),
+            ),
+            const SizedBox(
+              width: 8.0,
+            ),
+            GestureDetector(
+              onTap: () => controller.goToNews(),
+              child: TabContainer(
+                key: controller.newsTab,
+                name: 'Новости и события',
+                isSelected: controller.category == Category.news ? true : false,
+              ),
+            ),
             const SizedBox(
               width: 8.0,
             ),

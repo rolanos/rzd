@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
@@ -34,7 +35,11 @@ class TitleContainerSankur extends StatelessWidget {
             text ?? '',
             style: textTheme.bodySmall?.copyWith(fontSize: 14),
           ),
-          const ContainerButton(
+          ContainerButton(
+            onTap: () {
+              if (title == 'Санаторно-курортное оздоровление и отдых')
+                context.goNamed('sankur');
+            },
             text: 'Получить услугу',
             textColor: ColorsUI.mainWhite,
             color: ColorsUI.activeRed,

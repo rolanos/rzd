@@ -27,7 +27,7 @@ class TopicCard extends StatelessWidget {
         width: size.width,
         height: size.height * 0.12,
         decoration: BoxDecoration(
-          color: color ?? ColorsUI.containerGrey,
+          color: color ?? ColorsUI.containerBackground,
           borderRadius: BorderRadius.circular(16.0),
         ),
         child: Stack(
@@ -36,19 +36,26 @@ class TopicCard extends StatelessWidget {
             if (assetPath != null)
               Align(
                 alignment: Alignment.centerRight,
-                child: SizedBox(
-                  height: size.height * 0.12,
-                  width: size.height * 0.12,
-                  child: ClipRRect(
-                      borderRadius: BorderRadius.circular(16.0),
-                      child: (assetPath!.substring(assetPath!.length - 3,
-                                      assetPath!.length) ==
-                                  'png' ||
-                              assetPath!.substring(assetPath!.length - 3,
-                                      assetPath!.length) ==
-                                  'jpg')
-                          ? Image.asset(assetPath!)
-                          : SvgPicture.string(assetPath!)),
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: SizedBox(),
+                    ),
+                    Expanded(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(16.0),
+                        child: (assetPath!.substring(assetPath!.length - 3,
+                                        assetPath!.length) ==
+                                    'png' ||
+                                assetPath!.substring(assetPath!.length - 3,
+                                        assetPath!.length) ==
+                                    'jpg')
+                            ? Image.asset(assetPath!)
+                            : SvgPicture.string(assetPath!),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             Positioned(

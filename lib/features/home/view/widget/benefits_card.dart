@@ -84,15 +84,13 @@ class BenifitsCard extends StatelessWidget {
                     shrinkWrap: true,
                     itemCount: state.forms.length,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => GestureDetector(
+                    itemBuilder: (context, index) => TopicCard(
                       onTap: () {
                         context.read<FormBloc>().add(
                             GetFormInfo(formKey: state.forms[index].formKey));
                         context.goNamed('form');
                       },
-                      child: TopicCard(
-                        title: state.forms[index].formName,
-                      ),
+                      title: state.forms[index].formName,
                     ),
                     separatorBuilder: (context, _) => const SizedBox(
                       height: 16.0,

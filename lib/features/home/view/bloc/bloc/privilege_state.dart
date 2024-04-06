@@ -1,10 +1,7 @@
 part of 'privilege_bloc.dart';
 
-sealed class PrivilegeState extends Equatable {
+sealed class PrivilegeState {
   const PrivilegeState();
-
-  @override
-  List<Object> get props => [];
 }
 
 class PrivilegeEmpty extends PrivilegeState {}

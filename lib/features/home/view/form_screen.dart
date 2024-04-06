@@ -195,7 +195,7 @@ class _SelectInputState extends State<SelectInput> {
                   choose.choose ?? [],
                 );
                 setState(() {
-                  widget.formDescription?.controller.text = value;
+                  widget.formDescription?.controller.text = value ?? '';
                 });
               }
             },

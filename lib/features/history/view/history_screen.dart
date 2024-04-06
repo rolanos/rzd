@@ -39,7 +39,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           shadowColor: Colors.transparent,
           foregroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          expandedHeight: AppBar().preferredSize.height * 2.5 + 12,
+          expandedHeight: AppBar().preferredSize.height * 2.5 + 8.0 + 16,
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: EdgeInsets.zero,
             expandedTitleScale: 1,
@@ -72,61 +72,81 @@ class _HistoryScreenState extends State<HistoryScreen> {
           ),
         ),
         SliverToBoxAdapter(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              if (selectedIndex == 0)
-                BlocBuilder<AppealBloc, AppealState>(
-                  builder: (context, state) {
-                    if (state is AppealInitial) {
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        padding: EdgeInsets.zero,
-                        itemCount: state.appeals.length,
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
-                        ),
-                        itemBuilder: (context, index) => MessageCard(
-                          data: DetailScreenData(
-                            appbarTitle: 'Обращение',
-                            status: state.appeals[index].state,
-                            date: state.appeals[index].moment,
-                            title: state.appeals[index].subject,
-                            body: state.appeals[index].comment,
+          child: ConstrainedBox(
+            constraints: BoxConstraints(
+              minHeight: MediaQuery.of(context).size.height * 0.6,
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const SizedBox(height: 10),
+                if (selectedIndex == 0)
+                  BlocBuilder<AppealBloc, AppealState>(
+                    builder: (context, state) {
+                      if (state is AppealInitial) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.zero,
+                          itemCount: state.appeals.length,
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 10,
                           ),
-                        ),
-                      );
-                    }
-                    return const SizedBox();
-                  },
-                ),
-              if (selectedIndex == 1)
-                BlocBuilder<UsedPrivilegeBloc, UsedPrivilegeState>(
-                  builder: (context, state) {
-                    if (state is UsedPrivilegeInitial) {
-                      return ListView.separated(
-                        shrinkWrap: true,
-                        padding: EdgeInsets.zero,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) => const SizedBox(
-                          height: 10,
-                        ),
-                        itemCount: state.privileges.length,
-                        itemBuilder: (context, index) => MessageCard(
-                          data: DetailScreenData(
-                            appbarTitle: 'Ваша заявка',
-                            date: state.privileges[index].date,
-                            title: state.privileges[index].privelegesType,
-                            body: state.privileges[index].description,
+                          itemBuilder: (context, index) => MessageCard(
+                            data: DetailScreenData(
+                              appbarTitle: 'Обращение',
+                              status: state.appeals[index].state,
+                              date: state.appeals[index].moment,
+                              title: state.appeals[index].subject,
+                              body: state.appeals[index].comment,
+                            ),
                           ),
-                        ),
-                      );
-                    }
-                    return const SizedBox();
-                  },
-                ),
-            ],
+                        );
+                      }
+                      if (state is AppealLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorsUI.activeRed,
+                          ),
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                  ),
+                if (selectedIndex == 1)
+                  BlocBuilder<UsedPrivilegeBloc, UsedPrivilegeState>(
+                    builder: (context, state) {
+                      if (state is UsedPrivilegeInitial) {
+                        return ListView.separated(
+                          shrinkWrap: true,
+                          padding: EdgeInsets.zero,
+                          physics: const NeverScrollableScrollPhysics(),
+                          separatorBuilder: (context, index) => const SizedBox(
+                            height: 10,
+                          ),
+                          itemCount: state.privileges.length,
+                          itemBuilder: (context, index) => MessageCard(
+                            data: DetailScreenData(
+                              appbarTitle: 'Ваша заявка',
+                              date: state.privileges[index].date,
+                              title: state.privileges[index].privelegesType,
+                              body: state.privileges[index].description,
+                            ),
+                          ),
+                        );
+                      }
+                      if (state is UsedPrivilegeLoading) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            color: ColorsUI.activeRed,
+                          ),
+                        );
+                      }
+                      return const SizedBox();
+                    },
+                  ),
+              ],
+            ),
           ),
         )
       ],

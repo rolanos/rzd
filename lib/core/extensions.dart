@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'dart:ui';
 import 'package:html/parser.dart';
 import 'package:rzd/core/colors.dart';
@@ -53,7 +54,7 @@ extension DataFormat on DateTime {
     if (hour < 10) {
       hourStr = '0$hourStr';
     }
-    return '$day $monthStr в $minStr:$hourStr';
+    return '$day $monthStr в $hourStr:$minStr';
   }
 }
 

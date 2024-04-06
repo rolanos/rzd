@@ -18,3 +18,5 @@ class MessageError extends AppealState {
 
   const MessageError({required this.message});
 }
+
+class AppealLoading extends AppealState {}
