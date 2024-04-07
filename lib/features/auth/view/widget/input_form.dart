@@ -25,6 +25,10 @@ class InputForm extends StatefulWidget {
 
   final GlobalKey? formKey;
 
+  final bool enabled;
+
+  final Function? onTap;
+
   const InputForm({
     super.key,
     this.errorText,
@@ -39,6 +43,8 @@ class InputForm extends StatefulWidget {
     this.trailing,
     this.onChanged,
     this.formKey,
+    this.enabled = true,
+    this.onTap,
   });
 
   @override
@@ -55,6 +61,12 @@ class _InputFormState extends State<InputForm> {
         children: [
           Expanded(
             child: TextFormField(
+              enabled: widget.enabled,
+              onTap: () {
+                if (widget.onTap != null) {
+                  widget.onTap!();
+                }
+              },
               inputFormatters: widget.inputFormatters,
               validator: (value) {
                 if (value == null) {

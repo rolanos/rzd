@@ -49,7 +49,7 @@ class DateValidator extends Validator {
         }
       }
       if (str.length == 10) {
-        if ((int.tryParse(str[6] + str[7] + str[8] + str[9]) ?? 0) > 2023) {
+        if ((int.tryParse(str[6] + str[7] + str[8] + str[9]) ?? 0) > 2024) {
           return false;
         }
       }

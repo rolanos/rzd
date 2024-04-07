@@ -7,6 +7,7 @@ import 'package:rzd/core/colors.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
 import 'package:rzd/features/home/domain/entity/privilege_info.dart';
+import 'package:rzd/features/home/view/bloc/bloc/app_info_bloc.dart';
 import 'package:rzd/features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/privileges_bloc.dart';
 import 'package:rzd/features/home/view/tab_controller.dart';
@@ -16,6 +17,8 @@ import 'package:rzd/features/news/view/bloc/new_bloc.dart';
 import 'package:rzd/features/news/view/widget/news_content.dart';
 import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
 import 'package:rzd/features/profile/view/widget/faq_expansion.dart';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 import 'widget/benefits_card.dart';
 
@@ -221,38 +224,79 @@ class _HomeScreenState extends State<HomeScreen> {
                           },
                         ),
                         const SizedBox(height: 20),
-                        const Divider(height: 0, thickness: 0.5),
-                        const SizedBox(height: 20),
-                        const SubTitleText(text: 'О портале'),
-                        const SizedBox(height: 6),
-                        const ContentText(
-                            text:
-                                'Инструкция по процедуре регистрации личного кабинета и пользованию им '),
-                        const SizedBox(height: 20),
-                        const ContainerButton(
-                          text: 'Узнать подробнее',
-                          color: ColorsUI.inactiveRedLight,
-                          textColor: ColorsUI.activeRed,
-                        ),
-                        const SizedBox(height: 20),
-                        const Divider(height: 0, thickness: 0.5),
-                        const SizedBox(height: 20),
-                        const SubTitleText(text: 'Полезные сайты'),
-                        const SizedBox(height: 6),
-                        const ContentText(
-                            text:
-                                'Новости, мероприятия и другая полезная информация'),
-                        const SizedBox(height: 20),
-                        const ContainerButton(
-                          text: 'БФ «Почет»',
-                          color: ColorsUI.inactiveRedLight,
-                          textColor: ColorsUI.activeRed,
-                        ),
-                        const SizedBox(height: 14),
-                        const ContainerButton(
-                          text: 'НПФ «Благосостояние»',
-                          color: ColorsUI.inactiveRedLight,
-                          textColor: ColorsUI.activeRed,
+                        BlocBuilder<AppInfoBloc, AppInfoState>(
+                          builder: (context, state) {
+                            if (state is AppInfoInitial) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SubTitleText(
+                                      text: state.appInfo.about?.title ?? ''),
+                                  const SizedBox(height: 6),
+                                  ContentText(
+                                      text: state.appInfo.about?.description ??
+                                          ''),
+                                  const SizedBox(height: 6),
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemCount:
+                                        state.appInfo.about?.links?.length ?? 0,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(height: 14),
+                                    itemBuilder: (context, index) =>
+                                        ContainerButton(
+                                      onTap: () async => await launchUrlString(
+                                          state.appInfo.about?.links?[index]
+                                                  .link ??
+                                              'https://www.google.ru/'),
+                                      text: state.appInfo.about?.links?[index]
+                                              .title ??
+                                          '',
+                                      color: ColorsUI.inactiveRedLight,
+                                      textColor: ColorsUI.activeRed,
+                                    ),
+                                  ),
+                                  const SizedBox(height: 20),
+                                  const Divider(),
+                                  const SizedBox(height: 20),
+                                  SubTitleText(
+                                      text: state.appInfo.useful?.title ?? ''),
+                                  const SizedBox(height: 6),
+                                  ContentText(
+                                      text: state.appInfo.useful?.description ??
+                                          ''),
+                                  const SizedBox(height: 6),
+                                  ListView.separated(
+                                    shrinkWrap: true,
+                                    physics:
+                                        const NeverScrollableScrollPhysics(),
+                                    padding: EdgeInsets.zero,
+                                    itemCount:
+                                        state.appInfo.useful?.links?.length ??
+                                            0,
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(height: 14),
+                                    itemBuilder: (context, index) =>
+                                        ContainerButton(
+                                      onTap: () => launchUrlString(state.appInfo
+                                              .useful?.links?[index].link ??
+                                          'https://www.google.ru/'),
+                                      text: state.appInfo.useful?.links?[index]
+                                              .title ??
+                                          '',
+                                      color: ColorsUI.inactiveRedLight,
+                                      textColor: ColorsUI.activeRed,
+                                    ),
+                                  ),
+                                ],
+                              );
+                            } else {
+                              return const SizedBox();
+                            }
+                          },
                         ),
                       ],
                     ),

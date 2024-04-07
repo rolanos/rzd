@@ -71,3 +71,5 @@ const String faqListUrl = '$baseUrl/faq/';
 const String newsUrl = '$baseUrl/news/';
 
 const String newImageUrl = '$baseUrl/news/thumb/';
+
+const String infoUrl = '$baseUrl/info/';

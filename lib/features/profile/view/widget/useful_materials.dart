@@ -1,8 +1,12 @@
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:rzd/core/colors.dart';
+import 'package:rzd/features/home/data/model/app_info.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
+import 'package:rzd/features/home/view/bloc/bloc/app_info_bloc.dart';
 import 'package:rzd/features/home/view/widget/topic_card.dart';
+import 'package:url_launcher/url_launcher_string.dart';
 
 class UsefulMaterials extends StatelessWidget {
   final String mainTitle;
@@ -59,19 +63,34 @@ class UsefulMaterials extends StatelessWidget {
           const SizedBox(
             height: 20.0,
           ),
-          Align(
-            alignment: Alignment.center,
-            child: Text(
-              'Политика конфиденциальности',
-              overflow: TextOverflow.ellipsis,
-              textAlign: TextAlign.center,
-              style: textTheme.bodySmall!.copyWith(
-                color: ColorsUI.secondaryText,
-                fontSize: 14.0,
-                decoration: TextDecoration.underline,
-                decorationColor: ColorsUI.secondaryText,
-              ),
-            ),
+          BlocBuilder<AppInfoBloc, AppInfoState>(
+            builder: (context, state) {
+              if (state is AppInfoInitial) {
+                return GestureDetector(
+                  onTap: () async {
+                    await launchUrlString(
+                      state.appInfo.personal?.link ?? 'https://www.google.ru/',
+                    );
+                  },
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      state.appInfo.personal?.title ?? '',
+                      overflow: TextOverflow.ellipsis,
+                      textAlign: TextAlign.center,
+                      style: textTheme.bodySmall!.copyWith(
+                        color: ColorsUI.secondaryText,
+                        fontSize: 14.0,
+                        decoration: TextDecoration.underline,
+                        decorationColor: ColorsUI.secondaryText,
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return const SizedBox();
+              }
+            },
           ),
         ],
       ),

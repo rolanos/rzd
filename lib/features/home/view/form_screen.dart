@@ -38,7 +38,7 @@ class _FormScreenState extends State<FormScreen> {
       listener: (context, state) {
         if (state is FormSended) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
+            const SnackBar(
               content: Center(
                 child: Text('Форма отправлена успешно'),
               ),

@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/validators.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
+import 'package:rzd/features/benifits/model/fuel_form.dart';
 import 'package:rzd/features/benifits/view/form_widgets/check_boxs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/content_container.dart';
 import 'package:rzd/features/benifits/view/form_widgets/inputs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
+import 'package:rzd/features/benifits/view/fuel/bloc/fuel_bloc.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
 class FuelScreen extends StatefulWidget {
@@ -18,6 +24,7 @@ class FuelScreen extends StatefulWidget {
 
 class _FuelScreenState extends State<FuelScreen> {
   final TextEditingController fuelNumberType = TextEditingController();
+  final TextEditingController duration = TextEditingController();
   final TextEditingController wallMaterial = TextEditingController();
   final TextEditingController humanCount = TextEditingController();
   final TextEditingController heatedArea = TextEditingController();
@@ -27,6 +34,11 @@ class _FuelScreenState extends State<FuelScreen> {
 
   bool fuelTypeCheckbox1 = false;
   bool fuelTypeCheckbox2 = false;
+  bool fuelIsCheched = false;
+
+  bool placeForGettingCheckbox1 = false;
+  bool placeForGettingCheckbox2 = false;
+  bool placeForGettingCheched = false;
 
   bool usedForCheckbox1 = false;
   bool usedForCheckbox2 = false;
@@ -34,10 +46,13 @@ class _FuelScreenState extends State<FuelScreen> {
 
   bool notificationCheckbox1 = false;
   bool notificationCheckbox2 = false;
+  bool notificationChecked = false;
 
   bool approveCheckbox1 = false;
 
   bool approveCheckbox2 = false;
+
+  File? file;
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
@@ -80,66 +95,123 @@ class _FuelScreenState extends State<FuelScreen> {
                         onTap: () => setState(
                           () {
                             fuelTypeCheckbox1 = !fuelTypeCheckbox1;
+                            if (fuelTypeCheckbox2) {
+                              fuelTypeCheckbox2 = false;
+                            }
                           },
                         ),
                       ),
                       CircleCheckBox(
                         text: 'Дрова',
-                        isChecked: fuelTypeCheckbox1,
+                        isChecked: fuelTypeCheckbox2,
                         onTap: () => setState(
                           () {
-                            fuelTypeCheckbox1 = !fuelTypeCheckbox1;
+                            fuelTypeCheckbox2 = !fuelTypeCheckbox2;
+                            if (fuelTypeCheckbox1) {
+                              fuelTypeCheckbox1 = false;
+                            }
                           },
                         ),
                       ),
                     ],
-                  ),
-                  const SizedBox(height: 20),
-                  TextInput(
-                    errorText: '',
-                    hintText: 'Выберите',
-                    controller: fuelNumberType,
                   ),
                   const SizedBox(height: 20),
                   Wrap(
                     runSpacing: 10,
                     crossAxisAlignment: WrapCrossAlignment.start,
                     children: [
-                      SqareCheckBox(
-                        text: 'Отопление',
-                        isChecked: usedForCheckbox1,
+                      const SubTitleText(text: 'Место получения:'),
+                      CircleCheckBox(
+                        text: 'Склад ОАО «РЖД»',
+                        isChecked: placeForGettingCheckbox1,
                         onTap: () => setState(
                           () {
-                            fuelTypeCheckbox1 = !fuelTypeCheckbox1;
+                            placeForGettingCheckbox1 =
+                                !placeForGettingCheckbox1;
+                            if (placeForGettingCheckbox2) {
+                              placeForGettingCheckbox2 = false;
+                            }
                           },
                         ),
                       ),
-                      SqareCheckBox(
-                        text: 'Приготовление пищи',
-                        isChecked: usedForCheckbox1,
+                      CircleCheckBox(
+                        text: 'ГОРТОП',
+                        isChecked: placeForGettingCheckbox2,
                         onTap: () => setState(
                           () {
-                            fuelTypeCheckbox1 = !fuelTypeCheckbox1;
-                          },
-                        ),
-                      ),
-                      SqareCheckBox(
-                        text: 'ГВС',
-                        isChecked: usedForCheckbox1,
-                        onTap: () => setState(
-                          () {
-                            fuelTypeCheckbox1 = !fuelTypeCheckbox1;
+                            placeForGettingCheckbox2 =
+                                !placeForGettingCheckbox2;
+                            if (placeForGettingCheckbox1) {
+                              placeForGettingCheckbox1 = false;
+                            }
                           },
                         ),
                       ),
                     ],
                   ),
                   const SizedBox(height: 20),
-                  TextInputWithText(
+                  const SubTitleText(text: 'Вид топлива:'),
+                  const SizedBox(height: 10),
+                  ChooseInput(
+                    errorText: '',
+                    hintText: 'Выберите',
+                    controller: fuelNumberType,
+                    chooses: const [
+                      '92',
+                      '95',
+                      '98',
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  DateInputWithText(
+                    errorText: '',
+                    controller: duration,
+                    setState: setState,
+                    subtitle: 'Период получения услуги:',
+                  ),
+                  const SizedBox(height: 20),
+                  Wrap(
+                    runSpacing: 10,
+                    crossAxisAlignment: WrapCrossAlignment.start,
+                    children: [
+                      SubTitleText(text: 'Для чего используется:'),
+                      SqareCheckBox(
+                        text: 'Отопление',
+                        isChecked: usedForCheckbox1,
+                        onTap: () => setState(
+                          () {
+                            usedForCheckbox1 = !usedForCheckbox1;
+                          },
+                        ),
+                      ),
+                      SqareCheckBox(
+                        text: 'Приготовление пищи',
+                        isChecked: usedForCheckbox2,
+                        onTap: () => setState(
+                          () {
+                            usedForCheckbox2 = !usedForCheckbox2;
+                          },
+                        ),
+                      ),
+                      SqareCheckBox(
+                        text: 'ГВС',
+                        isChecked: usedForCheckbox3,
+                        onTap: () => setState(
+                          () {
+                            usedForCheckbox3 = !usedForCheckbox3;
+                          },
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 20),
+                  const SubTitleText(text: 'Материал стен:'),
+                  const SizedBox(height: 10),
+                  ChooseInput(
                     errorText: '',
                     controller: wallMaterial,
+                    chooses: ['Дерево', 'Крипич'],
                     hintText: 'Выберите',
-                    subtitle: 'Материал стен:',
                   ),
                   const SizedBox(height: 20),
                   TextInputWithText(
@@ -151,7 +223,7 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   TextInputWithText(
                     errorText: '',
-                    controller: humanCount,
+                    controller: heatedArea,
                     hintText: 'Укажите количество м2',
                     subtitle: 'Отапливаемая площадь:',
                   ),
@@ -167,6 +239,9 @@ class _FuelScreenState extends State<FuelScreen> {
                         onTap: () => setState(
                           () {
                             notificationCheckbox1 = !notificationCheckbox1;
+                            if (notificationCheckbox2) {
+                              notificationCheckbox2 = false;
+                            }
                           },
                         ),
                       ),
@@ -176,6 +251,9 @@ class _FuelScreenState extends State<FuelScreen> {
                         onTap: () => setState(
                           () {
                             notificationCheckbox2 = !notificationCheckbox2;
+                            if (notificationCheckbox1) {
+                              notificationCheckbox1 = false;
+                            }
                           },
                         ),
                       ),
@@ -186,7 +264,7 @@ class _FuelScreenState extends State<FuelScreen> {
                     runSpacing: 10,
                     crossAxisAlignment: WrapCrossAlignment.start,
                     children: [
-                      const SubTitleText(text: 'Уведомления'),
+                      const SubTitleText(text: 'Телефоны для связи'),
                       TextInput(
                         errorText: '',
                         hintText: 'Основной',
@@ -209,14 +287,20 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   const SubTitleText(text: 'Приложите документы'),
                   const SizedBox(height: 10),
-                  const ContainerButton(
-                    text: 'Выбрать файлы',
-                    color: ColorsUI.inactiveRedLight,
-                    textColor: ColorsUI.activeRed,
+                  FilePickerButton(
+                    file: file,
                   ),
                   const SizedBox(height: 10),
                   const ContentText(
-                    text: '',
+                    text:
+                        '''К заявке должны быть приложены копии официальных документов сроком действия не более 60 дней (за исключением документов без срока действия), подтверждающие следующие данные:
+постоянная регистрация (прописка) благополучателя;
+наличие индивидуальной системы отопления и (или) печного кухонного очага, и (или) индивидуальной системы горячего водоснабжения на твердом топливе по адресу постоянной регистрации благополучателя;
+сведения о материале стен дома (квартиры);
+размер общей отапливаемой площади жилого помещения дома (квартиры);
+сведения о членах семьи проживающих совместно с благополучателем;
+сведения о нахождении на учете по обеспечению бытовым топливом членов семьи (если они являются работниками, неработающими пенсионерами ОАО «РЖД» или работниками, неработающими пенсионерами РОСПРОФЖЕЛ).
+Рекомендуемые виды подтверждающих документов: выписка из домовой книги, справка из соответствующего органа муниципального образования, справка с места жительства, технический паспорт жилого помещения, другие официальные документы;''',
                     textColor: ColorsUI.borderColor,
                   ),
                   const SizedBox(height: 20),
@@ -230,17 +314,82 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   SqareCheckBox(
                     text:
-                        'Я подтверждаю свое согласие  на получение (в соответствии с действующим Колективным договором ОАО "РЖД") компенсации за бытовое топливо.',
-                    isChecked: approveCheckbox1,
+                        'Я подтверждаю свое согласие на получение (в соответствии с действующим Колективным договором ОАО "РЖД") компенсации за бытовое топливо.',
+                    isChecked: approveCheckbox2,
                     onTap: () =>
-                        setState(() => approveCheckbox1 = !approveCheckbox1),
+                        setState(() => approveCheckbox2 = !approveCheckbox2),
                   ),
                   const SizedBox(height: 20),
-                  ContainerButton(
-                    onTap: () {},
-                    text: 'Отправить',
-                    color: ColorsUI.activeRed,
-                    textColor: ColorsUI.mainWhite,
+                  BlocConsumer<FuelBloc, FuelState>(
+                    listener: (context, state) {
+                      if (state is FuelSended) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Center(
+                              child: Text('Форма отправлена успешно'),
+                            ),
+                          ),
+                        );
+                        context.pop();
+                      }
+                    },
+                    builder: (context, state) {
+                      return ContainerButton(
+                        onTap: () {
+                          if (fuelTypeCheckbox1 || fuelTypeCheckbox2) {
+                            fuelIsCheched = true;
+                          } else {
+                            fuelIsCheched = false;
+                          }
+                          if (placeForGettingCheckbox1 ||
+                              placeForGettingCheckbox2) {
+                            placeForGettingCheched = true;
+                          } else {
+                            placeForGettingCheched = false;
+                          }
+                          if (notificationCheckbox1 || notificationCheckbox1) {
+                            notificationChecked = true;
+                          } else {
+                            notificationChecked = false;
+                          }
+
+                          setState(() {});
+                          if (formKey.currentState?.validate() == true &&
+                              fuelIsCheched &&
+                              placeForGettingCheched &&
+                              notificationChecked) {
+                            FuelForm fuelForm = FuelForm(
+                              delivery: false,
+                              wall:
+                                  wallMaterial.text == 'Дерево' ? true : false,
+                              fuel_type: int.parse(fuelNumberType.text),
+                              person_count: int.parse(humanCount.text),
+                              area: int.parse(heatedArea.text),
+                              cooking: usedForCheckbox1,
+                              water: usedForCheckbox2,
+                              year: int.parse('2024'),
+                              address: '',
+                              mobile_phone: mainPhone.text,
+                              home_phone: additionalPhone.text,
+                              comment: comment.text,
+                              filename: file?.readAsStringSync(),
+                            );
+                            context
+                                .read<FuelBloc>()
+                                .add(FuelSend(fuelForm: fuelForm));
+                          }
+                        },
+                        text: state is! FuelSendLoading
+                            ? 'Отправить'
+                            : 'Отправка...',
+                        color: state is! FuelSendLoading
+                            ? ColorsUI.activeRed
+                            : ColorsUI.inactiveRedLight,
+                        textColor: state is! FuelSendLoading
+                            ? ColorsUI.mainWhite
+                            : ColorsUI.activeRed,
+                      );
+                    },
                   ),
                 ],
               ),

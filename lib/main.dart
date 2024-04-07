@@ -5,6 +5,8 @@ import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/router.dart';
 import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
+import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_form_bloc.dart';
+import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_objects_bloc.dart';
 import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/bloc/form_bloc.dart';
@@ -13,7 +15,9 @@ import 'package:rzd/features/home/view/tab_controller.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:rzd/features/news/view/bloc/new_bloc.dart';
 import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
+import 'features/benifits/view/fuel/bloc/fuel_bloc.dart';
 import 'features/benifits/view/sankur/bloc/rest_objects_bloc.dart';
+import 'features/home/view/bloc/bloc/app_info_bloc.dart';
 import 'features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'features/home/view/bloc/history_bloc.dart';
 import 'features/messages/view/bloc/message_bloc.dart';
@@ -63,6 +67,17 @@ class MyApp extends StatelessWidget {
           BlocProvider(create: (context) => FormBloc()..add(GetForms())),
           BlocProvider(
             create: (context) => PrivilegeBloc(),
+          ),
+          BlocProvider(
+              create: (context) => SankurObjectsBloc()..add(GetList())),
+          BlocProvider(
+            create: (context) => SankurFormBloc(),
+          ),
+          BlocProvider(
+            create: (context) => FuelBloc(),
+          ),
+          BlocProvider(
+            create: (context) => AppInfoBloc()..add(GetInfo()),
           ),
         ],
         child: MaterialApp.router(

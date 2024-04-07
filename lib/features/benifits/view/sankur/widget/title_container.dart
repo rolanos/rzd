@@ -38,22 +38,27 @@ class TitleContainerSankur extends StatelessWidget {
           ContainerButton(
             onTap: () {
               if (title == 'Санаторно-курортное оздоровление и отдых')
-                context.goNamed('sankur');
+                context.pushNamed('sankur');
+              if (title == 'Обеспечение бытовым топливом')
+                context.pushNamed('fuel');
             },
             text: 'Получить услугу',
             textColor: ColorsUI.mainWhite,
             color: ColorsUI.activeRed,
           ),
-          const ContainerButton(
-            text: 'Добавить документы',
-            textColor: ColorsUI.activeRed,
-            color: ColorsUI.inactiveRedLight,
-          ),
-          const ContainerButton(
-            text: 'Объекты для отдыха',
-            textColor: ColorsUI.activeRed,
-            color: ColorsUI.inactiveRedLight,
-          ),
+          if (title == 'Санаторно-курортное оздоровление и отдых')
+            const ContainerButton(
+              text: 'Добавить документы',
+              textColor: ColorsUI.activeRed,
+              color: ColorsUI.inactiveRedLight,
+            ),
+          if (title == 'Санаторно-курортное оздоровление и отдых')
+            ContainerButton(
+              text: 'Объекты для отдыха',
+              onTap: () => context.goNamed('sankur_list'),
+              textColor: ColorsUI.activeRed,
+              color: ColorsUI.inactiveRedLight,
+            ),
           const AdditionalInfoContainer(),
         ],
       ),

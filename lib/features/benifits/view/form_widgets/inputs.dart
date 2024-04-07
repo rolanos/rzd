@@ -1,12 +1,38 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:intl/intl.dart';
+import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/validators.dart';
+import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/auth/view/widget/input_form.dart';
 import 'package:rzd/features/home/view/widget/bottom_select.dart';
-
+import 'package:file_picker/file_picker.dart';
 import 'titles.dart';
+
+class FilePickerButton extends StatelessWidget {
+  FilePickerButton({super.key, required this.file});
+
+  File? file;
+
+  @override
+  Widget build(BuildContext context) {
+    return ContainerButton(
+      text: 'Выбрать файлы',
+      color: ColorsUI.inactiveRedLight,
+      textColor: ColorsUI.activeRed,
+      onTap: () async {
+        FilePickerResult? result = await FilePicker.platform.pickFiles(
+            type: FileType.custom, allowedExtensions: ['jpg', 'pdf', 'doc']);
+        if (result != null) {
+          file = File(result.files.single.path!);
+        }
+      },
+    );
+  }
+}
 
 class TextInputWithText extends StatelessWidget {
   const TextInputWithText(
@@ -159,6 +185,9 @@ class ChooseInput extends StatelessWidget {
       errorText: errorText,
       textInputType: type,
       validator: validator ?? NameValidator(),
+      onTap: () async {
+        controller.text = await showBottomSelect(context, chooses) ?? '';
+      },
       trailing: GestureDetector(
         onTap: () async {
           controller.text = await showBottomSelect(context, chooses) ?? '';

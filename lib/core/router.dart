@@ -6,6 +6,7 @@ import 'package:rzd/features/auth/view/create_user.dart';
 import 'package:rzd/features/auth/view/register_screen.dart';
 import 'package:rzd/features/benifits/view/fuel/fuel_screen.dart';
 import 'package:rzd/features/benifits/view/privilege_screen.dart';
+import 'package:rzd/features/benifits/view/sankur/sankur_obj_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
 import 'package:rzd/features/home/view/form_screen.dart';
@@ -23,6 +24,11 @@ GoRouter getRouter(BuildContext context) {
   final GoRouter router = GoRouter(
     initialLocation: '/auth',
     routes: [
+      GoRoute(
+        path: '/sankur_list',
+        name: 'sankur_list',
+        builder: (context, state) => SankurObjectsScreen(),
+      ),
       GoRoute(
         path: '/auth',
         builder: (context, state) => const AuthScreen(),

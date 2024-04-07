@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/validators.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
+import 'package:rzd/features/benifits/model/sankur_form.dart';
 import 'package:rzd/features/benifits/view/form_widgets/check_boxs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/content_container.dart';
 import 'package:rzd/features/benifits/view/form_widgets/inputs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
+import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_form_bloc.dart';
+import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_objects_bloc.dart';
 import 'package:rzd/features/benifits/view/sankur/bloc/rest_objects_bloc.dart';
 import 'package:rzd/features/menu/app_bar.dart';
 
@@ -245,6 +249,9 @@ class _SankurScreenState extends State<SankurScreen> {
                     onTap: () => setState(
                       () {
                         circleCheckbox1 = !circleCheckbox1;
+                        if (circleCheckbox2) {
+                          circleCheckbox2 = false;
+                        }
                       },
                     ),
                   ),
@@ -256,6 +263,9 @@ class _SankurScreenState extends State<SankurScreen> {
                     onTap: () => setState(
                       () {
                         circleCheckbox2 = !circleCheckbox2;
+                        if (circleCheckbox1) {
+                          circleCheckbox1 = false;
+                        }
                       },
                     ),
                   ),
@@ -292,35 +302,80 @@ class _SankurScreenState extends State<SankurScreen> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  ContainerButton(
-                    onTap: () {
-                      if (!sqareCheckbox1 &&
-                          !sqareCheckbox2 &&
-                          !sqareCheckbox3 &&
-                          !sqareCheckbox4) {
-                        isCheckedSqareGroup = false;
-                      } else {
-                        isCheckedSqareGroup = true;
-                      }
-                      if (!circleCheckbox1 && !circleCheckbox2) {
-                        isCheckedCircleGroup = false;
-                      } else {
-                        isCheckedCircleGroup = true;
-                      }
-                      if (agreementCheckbox == false) {
-                        isCheckedAgreement = false;
-                      } else {
-                        isCheckedAgreement = true;
-                      }
-                      setState(() {});
-                      if (formKey.currentState?.validate() == true &&
-                          isCheckedSqareGroup &&
-                          isCheckedCircleGroup &&
-                          isCheckedAgreement) {}
+                  BlocBuilder<SankurObjectsBloc, SankurObjectsState>(
+                    builder: (context, objState) {
+                      return BlocConsumer<SankurFormBloc, SankurFormState>(
+                        listener: (context, state) {
+                          if (state is SankurSended) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                content: Center(
+                                  child: Text('Форма отправлена успешно'),
+                                ),
+                              ),
+                            );
+                            context.pop();
+                          }
+                        },
+                        builder: (context, state) {
+                          return ContainerButton(
+                            onTap: () {
+                              if (!sqareCheckbox1 &&
+                                  !sqareCheckbox2 &&
+                                  !sqareCheckbox3 &&
+                                  !sqareCheckbox4) {
+                                isCheckedSqareGroup = false;
+                              } else {
+                                isCheckedSqareGroup = true;
+                              }
+                              if (!circleCheckbox1 && !circleCheckbox2) {
+                                isCheckedCircleGroup = false;
+                              } else {
+                                isCheckedCircleGroup = true;
+                              }
+                              if (agreementCheckbox == false) {
+                                isCheckedAgreement = false;
+                              } else {
+                                isCheckedAgreement = true;
+                              }
+                              setState(() {});
+                              if (formKey.currentState?.validate() == true &&
+                                  isCheckedSqareGroup &&
+                                  isCheckedCircleGroup &&
+                                  isCheckedAgreement &&
+                                  state is! SankurSendLoading) {
+                                SankurForm sankurForm = SankurForm(
+                                  period: int.parse(period.text),
+                                  year: int.parse('2024'),
+                                  days: int.parse(duration.text),
+                                  filename: '',
+                                  no_treatment: circleCheckbox1 ? true : false,
+                                  mobile_phone: mainPhone.text,
+                                  category: numberClass.text,
+                                  sanprof: objState is SankurObjectsInitial
+                                      ? objState.objects.indexWhere((element) =>
+                                          element.name == restObject.text)
+                                      : -1,
+                                  comment: comment.text,
+                                );
+                                context
+                                    .read<SankurFormBloc>()
+                                    .add(SankurSend(sankurForm: sankurForm));
+                              }
+                            },
+                            text: state is! SankurSendLoading
+                                ? 'Отправить'
+                                : 'Отправка...',
+                            color: state is! SankurSendLoading
+                                ? ColorsUI.activeRed
+                                : ColorsUI.inactiveRedLight,
+                            textColor: state is! SankurSendLoading
+                                ? ColorsUI.mainWhite
+                                : ColorsUI.activeRed,
+                          );
+                        },
+                      );
                     },
-                    text: 'Отправить',
-                    color: ColorsUI.activeRed,
-                    textColor: ColorsUI.mainWhite,
                   ),
                 ],
               ),
