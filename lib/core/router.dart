@@ -8,6 +8,7 @@ import 'package:rzd/features/benifits/view/fuel/fuel_screen.dart';
 import 'package:rzd/features/benifits/view/privilege_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_obj_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_screen.dart';
+import 'package:rzd/features/benifits/view/teeth/teeth_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
 import 'package:rzd/features/home/view/append_screen.dart';
 import 'package:rzd/features/home/view/form_screen.dart';
@@ -55,7 +56,7 @@ GoRouter getRouter(BuildContext context) {
                   GoRoute(
                     path: 'create_user',
                     name: 'create_user',
-                    builder: (context, state) => CreateUserScreen(),
+                    builder: (context, state) => const CreateUserScreen(),
                   ),
                 ],
               ),
@@ -90,12 +91,17 @@ GoRouter getRouter(BuildContext context) {
                       GoRoute(
                         path: 'sankur',
                         name: 'sankur',
-                        builder: (context, state) => SankurScreen(),
+                        builder: (context, state) => const SankurScreen(),
                       ),
                       GoRoute(
                         path: 'fuel',
                         name: 'fuel',
-                        builder: (context, state) => FuelScreen(),
+                        builder: (context, state) => const FuelScreen(),
+                      ),
+                      GoRoute(
+                        path: 'teeth',
+                        name: 'teeth',
+                        builder: (context, state) => const TeethScreen(),
                       ),
                     ],
                   ),

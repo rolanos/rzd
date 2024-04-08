@@ -44,9 +44,11 @@ class CircleCheckBox extends StatelessWidget {
           const SizedBox(
             width: 10,
           ),
-          ContentText(
-            text: text,
-            textColor: isRedText == true ? ColorsUI.activeRed : null,
+          Flexible(
+            child: ContentText(
+              text: text,
+              textColor: isRedText == true ? ColorsUI.activeRed : null,
+            ),
           ),
         ],
       ),

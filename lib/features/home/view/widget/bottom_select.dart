@@ -45,6 +45,8 @@ Future<String?> showBottomSelect(
                 builder: (context, setState) {
                   return ListView.separated(
                       shrinkWrap: true,
+                      physics: NeverScrollableScrollPhysics(),
+                      padding: EdgeInsets.zero,
                       itemBuilder: (context, index) => GestureDetector(
                             onTap: () {
                               setState(() {

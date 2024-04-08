@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:dio/dio.dart';
 import 'package:rzd/core/endpoints.dart';
 import 'package:rzd/core/shared_manager.dart';
-import 'package:rzd/features/benifits/model/sanprof.dart';
 import 'package:rzd/features/benifits/model/teeth_form.dart';
 
 class TeethRepository {
@@ -41,7 +40,7 @@ class TeethRepository {
     return false;
   }
 
-  Future<List<String?>> getNuzList() async {
+  Future<Map<String, dynamic>> getNuzList() async {
     Dio dio;
     String? cookie = await SharedManager.getCookie();
 
@@ -63,8 +62,7 @@ class TeethRepository {
         },
       );
       final data = response.data as Map<String, dynamic>;
-      return List.generate(data.values.length,
-          (index) => data.values.toList()[index] as String?);
+      return data;
     } catch (e) {
       log(e.toString());
       rethrow;
@@ -86,17 +84,15 @@ class TeethRepository {
       ),
     );
     try {
-      final response = await dio.get(sankurRequestUrl,
-          queryParameters: {
-            'uuid': uuid,
-          },
-          data: FormData.fromMap(form.toMap()));
-      final data = response.data as Map<String, dynamic>;
-      if ((response.data as Map<String, dynamic>).containsKey('status')) {
-        if (response.data['status'] == 0) {
-          return true;
-        }
-      }
+      await dio.post(
+        teethRequestUrl,
+        queryParameters: {
+          'uuid': uuid,
+        },
+        data: FormData.fromMap(
+          form.toMap(),
+        ),
+      );
     } catch (e) {
       log(e.toString());
       rethrow;

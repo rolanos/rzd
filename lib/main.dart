@@ -19,6 +19,7 @@ import 'package:rzd/features/profile/view/bloc/faq_bloc.dart';
 import 'features/benifits/view/fuel/bloc/cubit/fuel_type_cubit.dart';
 import 'features/benifits/view/fuel/bloc/fuel_bloc.dart';
 import 'features/benifits/view/sankur/bloc/rest_objects_bloc.dart';
+import 'features/benifits/view/teeth/bloc/teeth_bloc.dart';
 import 'features/home/view/bloc/bloc/app_info_bloc.dart';
 import 'features/home/view/bloc/bloc/privilege_bloc.dart';
 import 'features/home/view/bloc/bloc/support_bloc.dart';
@@ -88,6 +89,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => AppendBloc()..add(AppendGet()),
+          ),
+          BlocProvider(
+            create: (context) => TeethBloc()..add(const TeethGet()),
           ),
         ],
         child: MaterialApp.router(

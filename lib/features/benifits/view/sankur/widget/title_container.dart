@@ -42,10 +42,17 @@ class TitleContainerSankur extends StatelessWidget {
           ),
           ContainerButton(
             onTap: () {
-              if (title == 'Санаторно-курортное оздоровление и отдых')
-                context.pushNamed('sankur');
-              if (title == 'Обеспечение бытовым топливом')
-                context.pushNamed('fuel');
+              switch (title) {
+                case 'Санаторно-курортное оздоровление и отдых':
+                  context.pushNamed('sankur');
+                  break;
+                case 'Обеспечение бытовым топливом':
+                  context.pushNamed('fuel');
+                  break;
+                case 'Изготовление и ремонт зубных протезов':
+                  context.pushNamed('teeth');
+                  break;
+              }
             },
             text: 'Получить услугу',
             textColor: ColorsUI.mainWhite,
