@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:rzd/core/extensions.dart';
 
 class NewInfo {
@@ -10,7 +8,7 @@ class NewInfo {
   final String? description;
   final String? text;
   final bool? main;
-  final File? image;
+  final String? image;
 
   NewInfo({
     required this.contentId,
@@ -34,16 +32,6 @@ class NewInfo {
         description: (json["description"] as String?)?.parseHtmlString(),
         text: (json["text"] as String?)?.parseHtmlString(),
         main: json["main"],
+        image: json["image"],
       );
-  NewInfo copyWithImage({File? imageBinary}) {
-    return NewInfo(
-        contentId: contentId,
-        startDate: startDate,
-        endDate: endDate,
-        title: title,
-        description: description,
-        text: text,
-        main: main,
-        image: imageBinary);
-  }
 }

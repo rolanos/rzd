@@ -32,16 +32,7 @@ class PrivilegesRepositoryImpl extends PrivilegesRepository {
         final privileges = response.data as List<dynamic>;
         var list = List.generate(privileges.length,
             (index) => PrivilegesApi.fromMap(privileges[index]));
-        for (var i = 0; i < list.length; i++) {
-          final image = await dio.get(
-            privilegesDetailImage,
-            queryParameters: {
-              'uuid': uuid,
-              'type': list[i].id,
-            },
-          );
-          list[i] = list[i].copyWith(svg: image.data as String);
-        }
+
         return list;
       }
     } catch (e) {

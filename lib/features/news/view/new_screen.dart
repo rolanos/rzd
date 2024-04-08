@@ -56,11 +56,20 @@ class _NewScreenState extends State<NewScreen> {
                   decoration: BoxDecoration(
                       color: ColorsUI.mainWhite,
                       borderRadius: BorderRadius.circular(24)),
-                  child: ListView.builder(
+                  child: ListView.separated(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: bufferList.length,
+                    separatorBuilder: (context, index) => const Column(
+                      children: [
+                        SizedBox(height: 20),
+                        Divider(
+                          height: 0,
+                        ),
+                        SizedBox(height: 20),
+                      ],
+                    ),
                     itemBuilder: (context, index) => NewsContent(
                       onTap: () => controller.animateTo(0,
                           duration: const Duration(milliseconds: 700),

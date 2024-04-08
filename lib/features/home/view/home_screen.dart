@@ -117,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               state.privileges.length, seeAllPrivileges),
                           (index) => CardData(
                             title: state.privileges[index].description,
-                            assetPath: state.privileges[index].svg,
+                            assetPath: state.privileges[index].image,
                             onTap: () {
                               context.read<PrivilegeBloc>().add(
                                   GetPrivilegeInfo(
@@ -210,10 +210,20 @@ class _HomeScreenState extends State<HomeScreen> {
                         BlocBuilder<NewBloc, NewState>(
                           builder: (context, state) {
                             if (state is NewInitial) {
-                              return ListView.builder(
+                              return ListView.separated(
                                 shrinkWrap: true,
                                 itemCount: state.news.length,
                                 padding: EdgeInsets.zero,
+                                separatorBuilder: (context, index) =>
+                                    const Column(
+                                  children: [
+                                    SizedBox(height: 20),
+                                    Divider(
+                                      height: 0,
+                                    ),
+                                    SizedBox(height: 20),
+                                  ],
+                                ),
                                 physics: const NeverScrollableScrollPhysics(),
                                 itemBuilder: (context, index) => NewsContent(
                                   newInfo: state.news[index],

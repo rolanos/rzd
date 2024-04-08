@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
@@ -27,7 +28,23 @@ class NewsContent extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //if (newInfo.image != null) Image.memory(base64Decode(newInfo.image!)),
+          if (newInfo.image != null)
+            CachedNetworkImage(
+              imageUrl: 'https://${newInfo.image!}',
+              imageBuilder: (context, imageProvider) => Container(
+                constraints: BoxConstraints(
+                    maxHeight: MediaQuery.of(context).size.height * 0.28,
+                    minHeight: MediaQuery.of(context).size.height * 0.27),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  image: DecorationImage(
+                    image: imageProvider,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
           if (newInfo.image != null) const SizedBox(height: 12),
           Container(
             padding: isHomePage == false
@@ -70,13 +87,19 @@ class NewsContent extends StatelessWidget {
             ),
           ),
           if (isHomePage)
-            const Column(
+            Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ContainerButton(
                   text: 'Читать',
-                  borderColor: Color.fromRGBO(223, 225, 229, 1),
+                  onTap: () {
+                    if (onTap != null) {
+                      onTap!();
+                    }
+                    context.goNamed('news', extra: newInfo);
+                  },
+                  borderColor: const Color.fromRGBO(223, 225, 229, 1),
                   textColor: ColorsUI.mainText,
                   color: Colors.transparent,
                 ),

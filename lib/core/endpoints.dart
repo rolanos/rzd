@@ -1,5 +1,7 @@
 const String baseUrl = 'https://test-dev.pochet.ru/ru/api';
 
+const String fileUrl = 'portal.pochet.ru';
+
 ///POST
 const String loginUrl = '$baseUrl/login/';
 

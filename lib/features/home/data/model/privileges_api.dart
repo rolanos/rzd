@@ -5,6 +5,7 @@ class PrivilegesApi {
     return Privileges(
       id: map['id'] as String,
       description: map['description'] as String,
+      image: map['images']['medium'] as String,
     );
   }
 }

@@ -1,19 +1,19 @@
 class Privileges {
   final String id;
   final String description;
-  final String svg;
+  final String image;
 
   Privileges({
     required this.id,
     required this.description,
-    this.svg = '',
+    this.image = '',
   });
 
-  Privileges copyWith({String? id, String? description, String? svg}) {
+  Privileges copyWith({String? id, String? description, String? image}) {
     return Privileges(
       id: id ?? this.id,
       description: description ?? this.description,
-      svg: svg ?? this.svg,
+      image: image ?? this.image,
     );
   }
 }
