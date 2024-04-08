@@ -29,6 +29,10 @@ class InputForm extends StatefulWidget {
 
   final Function? onTap;
 
+  final bool isRequired;
+
+  final bool readOnly;
+
   const InputForm({
     super.key,
     this.errorText,
@@ -45,6 +49,8 @@ class InputForm extends StatefulWidget {
     this.formKey,
     this.enabled = true,
     this.onTap,
+    this.isRequired = false,
+    this.readOnly = false,
   });
 
   @override
@@ -62,6 +68,7 @@ class _InputFormState extends State<InputForm> {
           Expanded(
             child: TextFormField(
               enabled: widget.enabled,
+              readOnly: widget.readOnly,
               onTap: () {
                 if (widget.onTap != null) {
                   widget.onTap!();
@@ -72,6 +79,9 @@ class _InputFormState extends State<InputForm> {
                 if (value == null) {
                   isCorrect = false;
                   return '';
+                }
+                if (value.isEmpty && widget.isRequired == false) {
+                  return null;
                 }
                 if (value.isEmpty ||
                     widget.validator?.validate(value) == false) {

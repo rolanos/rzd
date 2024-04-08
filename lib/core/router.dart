@@ -9,6 +9,7 @@ import 'package:rzd/features/benifits/view/privilege_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_obj_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
+import 'package:rzd/features/home/view/append_screen.dart';
 import 'package:rzd/features/home/view/form_screen.dart';
 import 'package:rzd/features/home/view/home_screen.dart';
 import 'package:rzd/features/home/view/support_screen.dart';
@@ -27,7 +28,14 @@ GoRouter getRouter(BuildContext context) {
       GoRoute(
         path: '/sankur_list',
         name: 'sankur_list',
-        builder: (context, state) => SankurObjectsScreen(),
+        builder: (context, state) => const SankurObjectsScreen(),
+      ),
+      GoRoute(
+        path: '/append',
+        name: 'append',
+        builder: (context, state) => AppendScreen(
+          appBarTitle: state.extra as String,
+        ),
       ),
       GoRoute(
         path: '/auth',

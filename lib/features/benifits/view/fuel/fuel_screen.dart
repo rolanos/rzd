@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -8,12 +10,23 @@ import 'package:rzd/core/validators.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/benifits/model/fuel_form.dart';
+import 'package:rzd/features/benifits/model/fuel_type.dart';
 import 'package:rzd/features/benifits/view/form_widgets/check_boxs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/content_container.dart';
 import 'package:rzd/features/benifits/view/form_widgets/inputs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
+import 'package:rzd/features/benifits/view/fuel/bloc/cubit/fuel_type_cubit.dart';
 import 'package:rzd/features/benifits/view/fuel/bloc/fuel_bloc.dart';
 import 'package:rzd/features/menu/app_bar.dart';
+
+int searchfuelId(Map<int, String> values, String value) {
+  for (var i = 0; i < values.length; i++) {
+    if (values.values.toList()[i] == value) {
+      return values.keys.toList()[i];
+    }
+  }
+  return -1;
+}
 
 class FuelScreen extends StatefulWidget {
   const FuelScreen({super.key});
@@ -34,11 +47,11 @@ class _FuelScreenState extends State<FuelScreen> {
 
   bool fuelTypeCheckbox1 = false;
   bool fuelTypeCheckbox2 = false;
-  bool fuelIsCheched = false;
+  bool fuelIsCheched = true;
 
   bool placeForGettingCheckbox1 = false;
   bool placeForGettingCheckbox2 = false;
-  bool placeForGettingCheched = false;
+  bool placeForGettingCheched = true;
 
   bool usedForCheckbox1 = false;
   bool usedForCheckbox2 = false;
@@ -46,11 +59,13 @@ class _FuelScreenState extends State<FuelScreen> {
 
   bool notificationCheckbox1 = false;
   bool notificationCheckbox2 = false;
-  bool notificationChecked = false;
+  bool notificationChecked = true;
 
   bool approveCheckbox1 = false;
+  bool isApproved1 = true;
 
   bool approveCheckbox2 = false;
+  bool isApproved2 = true;
 
   File? file;
 
@@ -91,6 +106,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       const SubTitleText(text: 'Тип топлива:'),
                       CircleCheckBox(
                         text: 'Уголь',
+                        isRedText: !fuelIsCheched,
                         isChecked: fuelTypeCheckbox1,
                         onTap: () => setState(
                           () {
@@ -103,6 +119,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       ),
                       CircleCheckBox(
                         text: 'Дрова',
+                        isRedText: !fuelIsCheched,
                         isChecked: fuelTypeCheckbox2,
                         onTap: () => setState(
                           () {
@@ -123,6 +140,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       const SubTitleText(text: 'Место получения:'),
                       CircleCheckBox(
                         text: 'Склад ОАО «РЖД»',
+                        isRedText: !placeForGettingCheched,
                         isChecked: placeForGettingCheckbox1,
                         onTap: () => setState(
                           () {
@@ -137,6 +155,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       CircleCheckBox(
                         text: 'ГОРТОП',
                         isChecked: placeForGettingCheckbox2,
+                        isRedText: !placeForGettingCheched,
                         onTap: () => setState(
                           () {
                             placeForGettingCheckbox2 =
@@ -152,15 +171,19 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   const SubTitleText(text: 'Вид топлива:'),
                   const SizedBox(height: 10),
-                  ChooseInput(
-                    errorText: '',
-                    hintText: 'Выберите',
-                    controller: fuelNumberType,
-                    chooses: const [
-                      '92',
-                      '95',
-                      '98',
-                    ],
+                  BlocBuilder<FuelTypeCubit, FuelTypeState>(
+                    builder: (context, state) {
+                      if (state is FuelTypeInitial) {
+                        return ChooseInput(
+                          errorText: '',
+                          hintText: 'Выберите',
+                          controller: fuelNumberType,
+                          chooses: state.fuels.values.toList(),
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
+                    },
                   ),
                   const SizedBox(height: 20),
                   DateInputWithText(
@@ -174,7 +197,7 @@ class _FuelScreenState extends State<FuelScreen> {
                     runSpacing: 10,
                     crossAxisAlignment: WrapCrossAlignment.start,
                     children: [
-                      SubTitleText(text: 'Для чего используется:'),
+                      const SubTitleText(text: 'Для чего используется:'),
                       SqareCheckBox(
                         text: 'Отопление',
                         isChecked: usedForCheckbox1,
@@ -217,6 +240,7 @@ class _FuelScreenState extends State<FuelScreen> {
                   TextInputWithText(
                     errorText: '',
                     controller: humanCount,
+                    isRequired: true,
                     hintText: 'Количество человек',
                     subtitle: 'Всего проживает человек:',
                   ),
@@ -224,6 +248,7 @@ class _FuelScreenState extends State<FuelScreen> {
                   TextInputWithText(
                     errorText: '',
                     controller: heatedArea,
+                    isRequired: true,
                     hintText: 'Укажите количество м2',
                     subtitle: 'Отапливаемая площадь:',
                   ),
@@ -236,6 +261,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       CircleCheckBox(
                         text: 'Электронной почтой или по телефону',
                         isChecked: notificationCheckbox1,
+                        isRedText: !notificationChecked,
                         onTap: () => setState(
                           () {
                             notificationCheckbox1 = !notificationCheckbox1;
@@ -248,6 +274,7 @@ class _FuelScreenState extends State<FuelScreen> {
                       CircleCheckBox(
                         text: 'Через личный кабинет',
                         isChecked: notificationCheckbox2,
+                        isRedText: !notificationChecked,
                         onTap: () => setState(
                           () {
                             notificationCheckbox2 = !notificationCheckbox2;
@@ -287,8 +314,21 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   const SubTitleText(text: 'Приложите документы'),
                   const SizedBox(height: 10),
-                  FilePickerButton(
-                    file: file,
+                  if (file != null) ContentText(text: file?.path ?? '-'),
+                  ContainerButton(
+                    text: 'Выбрать файлы',
+                    color: ColorsUI.inactiveRedLight,
+                    textColor: ColorsUI.activeRed,
+                    onTap: () async {
+                      FilePickerResult? result = await FilePicker.platform
+                          .pickFiles(
+                              type: FileType.custom,
+                              allowedExtensions: ['jpg', 'pdf', 'doc']);
+                      if (result != null) {
+                        file = File(result.files.single.path!);
+                      }
+                      setState(() {});
+                    },
                   ),
                   const SizedBox(height: 10),
                   const ContentText(
@@ -305,6 +345,7 @@ class _FuelScreenState extends State<FuelScreen> {
                   ),
                   const SizedBox(height: 20),
                   SqareCheckBox(
+                    isRedText: !isApproved1,
                     text:
                         'Подтверждаю, что члены моей семьи не получают данную услугу',
                     isChecked: approveCheckbox1,
@@ -313,6 +354,7 @@ class _FuelScreenState extends State<FuelScreen> {
                   ),
                   const SizedBox(height: 20),
                   SqareCheckBox(
+                    isRedText: !isApproved2,
                     text:
                         'Я подтверждаю свое согласие на получение (в соответствии с действующим Колективным договором ОАО "РЖД") компенсации за бытовое топливо.',
                     isChecked: approveCheckbox2,
@@ -320,75 +362,104 @@ class _FuelScreenState extends State<FuelScreen> {
                         setState(() => approveCheckbox2 = !approveCheckbox2),
                   ),
                   const SizedBox(height: 20),
-                  BlocConsumer<FuelBloc, FuelState>(
-                    listener: (context, state) {
-                      if (state is FuelSended) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Center(
-                              child: Text('Форма отправлена успешно'),
-                            ),
-                          ),
-                        );
-                        context.pop();
-                      }
-                    },
-                    builder: (context, state) {
-                      return ContainerButton(
-                        onTap: () {
-                          if (fuelTypeCheckbox1 || fuelTypeCheckbox2) {
-                            fuelIsCheched = true;
-                          } else {
-                            fuelIsCheched = false;
-                          }
-                          if (placeForGettingCheckbox1 ||
-                              placeForGettingCheckbox2) {
-                            placeForGettingCheched = true;
-                          } else {
-                            placeForGettingCheched = false;
-                          }
-                          if (notificationCheckbox1 || notificationCheckbox1) {
-                            notificationChecked = true;
-                          } else {
-                            notificationChecked = false;
-                          }
+                  BlocBuilder<FuelTypeCubit, FuelTypeState>(
+                    builder: (context, fuelTypeState) {
+                      if (fuelTypeState is FuelTypeInitial) {
+                        return BlocConsumer<FuelBloc, FuelState>(
+                          listener: (context, state) {
+                            if (state is FuelSended) {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content: Center(
+                                    child: Text('Форма отправлена успешно'),
+                                  ),
+                                ),
+                              );
+                              context.pop();
+                            }
+                          },
+                          builder: (context, state) {
+                            return ContainerButton(
+                              onTap: () {
+                                if (approveCheckbox1) {
+                                  isApproved1 = true;
+                                } else {
+                                  isApproved1 = false;
+                                }
+                                if (approveCheckbox2) {
+                                  isApproved2 = true;
+                                } else {
+                                  isApproved2 = false;
+                                }
+                                if (fuelTypeCheckbox1 || fuelTypeCheckbox2) {
+                                  fuelIsCheched = true;
+                                } else {
+                                  fuelIsCheched = false;
+                                }
+                                if (placeForGettingCheckbox1 ||
+                                    placeForGettingCheckbox2) {
+                                  placeForGettingCheched = true;
+                                } else {
+                                  placeForGettingCheched = false;
+                                }
+                                if (notificationCheckbox1 ||
+                                    notificationCheckbox2) {
+                                  notificationChecked = true;
+                                } else {
+                                  notificationChecked = false;
+                                }
 
-                          setState(() {});
-                          if (formKey.currentState?.validate() == true &&
-                              fuelIsCheched &&
-                              placeForGettingCheched &&
-                              notificationChecked) {
-                            FuelForm fuelForm = FuelForm(
-                              delivery: false,
-                              wall:
-                                  wallMaterial.text == 'Дерево' ? true : false,
-                              fuel_type: int.parse(fuelNumberType.text),
-                              person_count: int.parse(humanCount.text),
-                              area: int.parse(heatedArea.text),
-                              cooking: usedForCheckbox1,
-                              water: usedForCheckbox2,
-                              year: int.parse('2024'),
-                              address: '',
-                              mobile_phone: mainPhone.text,
-                              home_phone: additionalPhone.text,
-                              comment: comment.text,
-                              filename: file?.readAsStringSync(),
+                                setState(() {});
+                                if (formKey.currentState?.validate() == true &&
+                                    fuelIsCheched &&
+                                    placeForGettingCheched &&
+                                    notificationChecked &&
+                                    isApproved1 &&
+                                    isApproved2) {
+                                  String resString = '';
+                                  final res = file?.readAsBytesSync();
+                                  if (res != null) {
+                                    resString = base64Encode(res.toList());
+                                  }
+
+                                  FuelForm fuelForm = FuelForm(
+                                    delivery: false,
+                                    wall: wallMaterial.text == 'Дерево'
+                                        ? true
+                                        : false,
+                                    fuel_type: searchfuelId(fuelTypeState.fuels,
+                                        fuelNumberType.text),
+                                    person_count: int.parse(humanCount.text),
+                                    area: int.parse(heatedArea.text),
+                                    cooking: usedForCheckbox1,
+                                    water: usedForCheckbox2,
+                                    year: int.parse('2024'),
+                                    address: '',
+                                    mobile_phone: mainPhone.text,
+                                    home_phone: additionalPhone.text,
+                                    comment: comment.text,
+                                    filename: resString,
+                                  );
+                                  context
+                                      .read<FuelBloc>()
+                                      .add(FuelSend(fuelForm: fuelForm));
+                                }
+                              },
+                              text: state is! FuelSendLoading
+                                  ? 'Отправить'
+                                  : 'Отправка...',
+                              color: state is! FuelSendLoading
+                                  ? ColorsUI.activeRed
+                                  : ColorsUI.inactiveRedLight,
+                              textColor: state is! FuelSendLoading
+                                  ? ColorsUI.mainWhite
+                                  : ColorsUI.activeRed,
                             );
-                            context
-                                .read<FuelBloc>()
-                                .add(FuelSend(fuelForm: fuelForm));
-                          }
-                        },
-                        text: state is! FuelSendLoading
-                            ? 'Отправить'
-                            : 'Отправка...',
-                        color: state is! FuelSendLoading
-                            ? ColorsUI.activeRed
-                            : ColorsUI.inactiveRedLight,
-                        textColor: state is! FuelSendLoading
-                            ? ColorsUI.mainWhite
-                            : ColorsUI.activeRed,
-                      );
+                          },
+                        );
+                      } else {
+                        return const SizedBox();
+                      }
                     },
                   ),
                 ],

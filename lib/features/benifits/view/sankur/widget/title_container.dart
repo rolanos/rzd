@@ -6,8 +6,13 @@ import 'package:rzd/core/widget/container_button.dart';
 
 class TitleContainerSankur extends StatelessWidget {
   const TitleContainerSankur(
-      {super.key, this.text, this.title, this.privilegeName});
+      {super.key,
+      this.text,
+      this.title,
+      this.privilegeName,
+      required this.appbarTitle});
 
+  final String appbarTitle;
   final String? title;
   final String? text;
   final String? privilegeName;
@@ -46,12 +51,12 @@ class TitleContainerSankur extends StatelessWidget {
             textColor: ColorsUI.mainWhite,
             color: ColorsUI.activeRed,
           ),
-          if (title == 'Санаторно-курортное оздоровление и отдых')
-            const ContainerButton(
-              text: 'Добавить документы',
-              textColor: ColorsUI.activeRed,
-              color: ColorsUI.inactiveRedLight,
-            ),
+          ContainerButton(
+            text: 'Добавить документы',
+            onTap: () => context.pushNamed('append', extra: appbarTitle),
+            textColor: ColorsUI.activeRed,
+            color: ColorsUI.inactiveRedLight,
+          ),
           if (title == 'Санаторно-курортное оздоровление и отдых')
             ContainerButton(
               text: 'Объекты для отдыха',

@@ -24,6 +24,7 @@ class PrivilegeScreen extends StatelessWidget {
               children: [
                 const CustomNotificationsAppBar(appbarText: "Услуга"),
                 TitleContainerSankur(
+                  appbarTitle: state.privilegeInfo.title ?? '',
                   text: state.privilegeInfo.chapters.firstOrNull?.description ??
                       '',
                   title: state.privilegeInfo.title,

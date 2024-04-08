@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:rzd/core/endpoints.dart';
 import 'package:rzd/core/shared_manager.dart';
 import 'package:rzd/features/benifits/model/fuel_form.dart';
+import 'package:rzd/features/benifits/model/fuel_type.dart';
 import 'package:rzd/features/benifits/model/sankur_form.dart';
 import 'package:rzd/features/benifits/model/sanprof.dart';
 
@@ -42,7 +43,7 @@ class FuelRepository {
     return false;
   }
 
-  Future<List<Sanprof>> getSanprofList() async {
+  Future<List<FuelType>> getFuelTypeList() async {
     Dio dio;
     String? cookie = await SharedManager.getCookie();
 
@@ -65,7 +66,7 @@ class FuelRepository {
       );
       final data = response.data as Map<String, dynamic>;
       return List.generate(data.values.length,
-          (index) => Sanprof.fromJson(data.values.toList()[index]));
+          (index) => FuelType.fromJson(data.values.toList()[index]));
     } catch (e) {
       log(e.toString());
       rethrow;

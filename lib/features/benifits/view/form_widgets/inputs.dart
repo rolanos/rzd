@@ -13,8 +13,9 @@ import 'package:file_picker/file_picker.dart';
 import 'titles.dart';
 
 class FilePickerButton extends StatelessWidget {
-  FilePickerButton({super.key, required this.file});
+  FilePickerButton({super.key, required this.file, required this.onTap});
 
+  final Function? onTap;
   File? file;
 
   @override
@@ -29,6 +30,9 @@ class FilePickerButton extends StatelessWidget {
         if (result != null) {
           file = File(result.files.single.path!);
         }
+        if (onTap != null) {
+          onTap!();
+        }
       },
     );
   }
@@ -42,6 +46,7 @@ class TextInputWithText extends StatelessWidget {
       required this.controller,
       this.hintText,
       this.validator,
+      this.isRequired = false,
       required this.subtitle});
 
   final String subtitle;
@@ -50,6 +55,7 @@ class TextInputWithText extends StatelessWidget {
   final TextEditingController controller;
   final String? hintText;
   final Validator? validator;
+  final bool isRequired;
 
   @override
   Widget build(BuildContext context) {
@@ -61,6 +67,7 @@ class TextInputWithText extends StatelessWidget {
           height: 8,
         ),
         InputForm(
+          isRequired: isRequired,
           hintText: hintText ?? "",
           controller: controller,
           errorText: errorText,
@@ -184,6 +191,7 @@ class ChooseInput extends StatelessWidget {
       controller: controller,
       errorText: errorText,
       textInputType: type,
+      readOnly: true,
       validator: validator ?? NameValidator(),
       onTap: () async {
         controller.text = await showBottomSelect(context, chooses) ?? '';

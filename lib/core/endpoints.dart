@@ -73,3 +73,11 @@ const String newsUrl = '$baseUrl/news/';
 const String newImageUrl = '$baseUrl/news/thumb/';
 
 const String infoUrl = '$baseUrl/info/';
+
+const String feedbackUrl = '$baseUrl/feedback/';
+
+/////////////////////////////documents
+
+const String appendListUrl = '$baseUrl/append/app_list/';
+
+const String appendRequestUrl = '$baseUrl/append/request/';
