@@ -83,3 +83,7 @@ const String feedbackUrl = '$baseUrl/feedback/';
 const String appendListUrl = '$baseUrl/append/app_list/';
 
 const String appendRequestUrl = '$baseUrl/append/request/';
+
+const String docsUrl = '$baseUrl/docs/';
+
+const String docsLinkUrl = '$baseUrl/docs/link/';

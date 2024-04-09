@@ -166,15 +166,18 @@ class TextInput extends StatelessWidget {
 }
 
 class ChooseInput extends StatelessWidget {
-  const ChooseInput(
-      {super.key,
-      this.type,
-      required this.errorText,
-      required this.controller,
-      this.hintText,
-      this.validator,
-      required this.chooses,
-      this.svgTrailing});
+  const ChooseInput({
+    super.key,
+    this.type,
+    required this.errorText,
+    required this.controller,
+    this.hintText,
+    this.validator,
+    required this.chooses,
+    this.svgTrailing,
+    this.bottomTitleText,
+    this.removeTrailing = false,
+  });
 
   final TextInputType? type;
   final String errorText;
@@ -183,6 +186,9 @@ class ChooseInput extends StatelessWidget {
   final Validator? validator;
   final List<String> chooses;
   final String? svgTrailing;
+
+  final String? bottomTitleText;
+  final bool removeTrailing;
 
   @override
   Widget build(BuildContext context) {
@@ -194,14 +200,20 @@ class ChooseInput extends StatelessWidget {
       readOnly: true,
       validator: validator ?? NameValidator(),
       onTap: () async {
-        controller.text = await showBottomSelect(context, chooses) ?? '';
+        controller.text =
+            await showBottomSelect(context, chooses, bottomTitleText) ?? '';
       },
-      trailing: GestureDetector(
-        onTap: () async {
-          controller.text = await showBottomSelect(context, chooses) ?? '';
-        },
-        child: SvgPicture.asset(svgTrailing ?? 'asset/icons/arrow_bottom.svg'),
-      ),
+      trailing: removeTrailing
+          ? GestureDetector(
+              onTap: () async {
+                controller.text =
+                    await showBottomSelect(context, chooses, bottomTitleText) ??
+                        '';
+              },
+              child: SvgPicture.asset(
+                  svgTrailing ?? 'asset/icons/arrow_bottom.svg'),
+            )
+          : null,
     );
   }
 }

@@ -68,6 +68,11 @@ extension GetColor on String {
     return parsedString;
   }
 
+  String parseDocumentPath() {
+    final result = split('/');
+    return result.last;
+  }
+
   Color getStatusColorText() {
     switch (this) {
       case 'Принято':

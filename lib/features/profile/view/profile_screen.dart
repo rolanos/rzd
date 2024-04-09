@@ -119,6 +119,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       assetPath: 'asset/images/notes.png',
                     ),
                     CardData(
+                      onTap: () => context.pushNamed('docs'),
                       title: 'Нормативные документы',
                       assetPath: 'asset/images/books.png',
                     ),

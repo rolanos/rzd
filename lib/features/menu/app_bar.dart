@@ -25,7 +25,7 @@ class CustomNotificationsAppBar extends StatefulWidget
 
   @override
   Size get preferredSize =>
-      Size(AppBar().preferredSize.width, AppBar().preferredSize.height * 1);
+      Size(AppBar().preferredSize.width, AppBar().preferredSize.height * 2.5);
 }
 
 class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {

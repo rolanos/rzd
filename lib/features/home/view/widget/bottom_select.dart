@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 
-Future<String?> showBottomSelect(
-    BuildContext context, List<String> select) async {
+Future<String?> showBottomSelect(BuildContext context, List<String> select,
+    [String? titleText]) async {
   int selectedIndex = -1;
   await showModalBottomSheet<String>(
     context: context,
@@ -22,9 +22,9 @@ Future<String?> showBottomSelect(
             children: [
               Row(
                 children: [
-                  const Text(
-                    "Выберите тему",
-                    style: TextStyle(
+                  Text(
+                    titleText ?? "Выберите тему",
+                    style: const TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w700,
                       fontFamily: 'Inter',

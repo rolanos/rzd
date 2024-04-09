@@ -9,6 +9,7 @@ import 'package:rzd/features/benifits/view/privilege_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_obj_screen.dart';
 import 'package:rzd/features/benifits/view/sankur/sankur_screen.dart';
 import 'package:rzd/features/benifits/view/teeth/teeth_screen.dart';
+import 'package:rzd/features/documents/view/documents_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
 import 'package:rzd/features/home/view/append_screen.dart';
 import 'package:rzd/features/home/view/form_screen.dart';
@@ -30,6 +31,11 @@ GoRouter getRouter(BuildContext context) {
         path: '/sankur_list',
         name: 'sankur_list',
         builder: (context, state) => const SankurObjectsScreen(),
+      ),
+      GoRoute(
+        path: '/docs',
+        name: 'docs',
+        builder: (context, state) => const DocumentsScreen(),
       ),
       GoRoute(
         path: '/append',

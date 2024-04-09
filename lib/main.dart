@@ -7,6 +7,7 @@ import 'package:rzd/core/theme.dart';
 import 'package:provider/provider.dart';
 import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_form_bloc.dart';
 import 'package:rzd/features/benifits/view/sankur/bloc/bloc/sankur_objects_bloc.dart';
+import 'package:rzd/features/documents/view/cubit/documents_cubit.dart';
 import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/history/view/bloc/used_privilege_bloc.dart';
 import 'package:rzd/features/home/view/bloc/bloc/append_bloc.dart';
@@ -92,6 +93,9 @@ class MyApp extends StatelessWidget {
           ),
           BlocProvider(
             create: (context) => TeethBloc()..add(const TeethGet()),
+          ),
+          BlocProvider(
+            create: (context) => DocumentsCubit()..getDocuments(),
           ),
         ],
         child: MaterialApp.router(

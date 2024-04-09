@@ -40,34 +40,40 @@ class TitleContainerSankur extends StatelessWidget {
             text ?? '',
             style: textTheme.bodySmall?.copyWith(fontSize: 14),
           ),
-          ContainerButton(
-            onTap: () {
-              switch (title) {
-                case 'Санаторно-курортное оздоровление и отдых':
-                  context.pushNamed('sankur');
-                  break;
-                case 'Обеспечение бытовым топливом':
-                  context.pushNamed('fuel');
-                  break;
-                case 'Изготовление и ремонт зубных протезов':
-                  context.pushNamed('teeth');
-                  break;
-              }
-            },
-            text: 'Получить услугу',
-            textColor: ColorsUI.mainWhite,
-            color: ColorsUI.activeRed,
-          ),
-          ContainerButton(
-            text: 'Добавить документы',
-            onTap: () => context.pushNamed('append', extra: appbarTitle),
-            textColor: ColorsUI.activeRed,
-            color: ColorsUI.inactiveRedLight,
-          ),
+          if (title == 'Санаторно-курортное оздоровление и отдых' ||
+              title == 'Обеспечение бытовым топливом' ||
+              title == 'Изготовление и ремонт зубных протезов')
+            ContainerButton(
+              onTap: () {
+                switch (title) {
+                  case 'Санаторно-курортное оздоровление и отдых':
+                    context.pushNamed('sankur');
+                    break;
+                  case 'Обеспечение бытовым топливом':
+                    context.pushNamed('fuel');
+                    break;
+                  case 'Изготовление и ремонт зубных протезов':
+                    context.pushNamed('teeth');
+                    break;
+                }
+              },
+              text: 'Получить услугу',
+              textColor: ColorsUI.mainWhite,
+              color: ColorsUI.activeRed,
+            ),
+          if (title == 'Санаторно-курортное оздоровление и отдых' ||
+              title == 'Обеспечение бытовым топливом' ||
+              title == 'Изготовление и ремонт зубных протезов')
+            ContainerButton(
+              text: 'Добавить документы',
+              onTap: () => context.pushNamed('append', extra: appbarTitle),
+              textColor: ColorsUI.activeRed,
+              color: ColorsUI.inactiveRedLight,
+            ),
           if (title == 'Санаторно-курортное оздоровление и отдых')
             ContainerButton(
               text: 'Объекты для отдыха',
-              onTap: () => context.goNamed('sankur_list'),
+              onTap: () => context.pushNamed('sankur_list'),
               textColor: ColorsUI.activeRed,
               color: ColorsUI.inactiveRedLight,
             ),

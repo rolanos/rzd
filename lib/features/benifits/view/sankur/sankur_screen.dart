@@ -50,20 +50,20 @@ class _SankurScreenState extends State<SankurScreen> {
 
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
-  final List<String> months = const [
-    '1',
-    '2',
-    '3',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10',
-    '11',
-    '12',
-  ];
+  final Map<String, String> months = const {
+    '1': 'Январь',
+    '2': 'Февраль',
+    '3': 'Март',
+    '4': 'Апрель',
+    '5': 'Май',
+    '6': 'Июнь',
+    '7': 'Июль',
+    '8': 'Август',
+    '9': 'Сентябрь',
+    '10': 'Октябрь',
+    '11': 'Ноябрь',
+    '12': 'Декабрь',
+  };
   final List<String> durationList = const [
     '7',
     '8',
@@ -126,8 +126,10 @@ class _SankurScreenState extends State<SankurScreen> {
                     controller: period,
                     svgTrailing: 'asset/icons/calendar_2.svg',
                     hintText: 'Выберите месяц',
+                    removeTrailing: true,
                     type: TextInputType.number,
-                    chooses: months,
+                    bottomTitleText: 'Выберите месяц',
+                    chooses: months.values.toList(),
                   ),
                   const SizedBox(height: 20),
                   const SubTitleText(text: 'Продолжительность путевки:'),
@@ -137,6 +139,7 @@ class _SankurScreenState extends State<SankurScreen> {
                     controller: duration,
                     hintText: 'Выберите',
                     type: TextInputType.number,
+                    bottomTitleText: 'Выберите количество дней',
                     chooses: durationList,
                   ),
                   const SizedBox(height: 20),
@@ -156,6 +159,7 @@ class _SankurScreenState extends State<SankurScreen> {
                           errorText: '',
                           controller: restObject,
                           hintText: 'Выберите',
+                          bottomTitleText: 'Выберите санаторий',
                           type: TextInputType.number,
                           chooses: List.generate(
                             state.sanprofList.length,
@@ -175,6 +179,7 @@ class _SankurScreenState extends State<SankurScreen> {
                     errorText: '',
                     controller: numberClass,
                     hintText: 'Выберите',
+                    bottomTitleText: 'Выберите класс',
                     type: TextInputType.number,
                     chooses: classTypes,
                   ),
@@ -345,7 +350,10 @@ class _SankurScreenState extends State<SankurScreen> {
                                   isCheckedAgreement &&
                                   state is! SankurSendLoading) {
                                 SankurForm sankurForm = SankurForm(
-                                  period: int.parse(period.text),
+                                  period: int.parse(months.entries
+                                      .firstWhere((element) =>
+                                          element.value == period.text)
+                                      .key),
                                   year: int.parse('2024'),
                                   days: int.parse(duration.text),
                                   filename: '',

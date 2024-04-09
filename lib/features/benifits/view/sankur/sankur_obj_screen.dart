@@ -13,31 +13,31 @@ class SankurObjectsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const CustomNotificationsAppBar(appbarText: 'Объекты для отдыха'),
-      bottomNavigationBar: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          Expanded(
-            child: Container(
-              height: 50,
-              margin: EdgeInsets.symmetric(
-                  vertical: 12,
-                  horizontal: MediaQuery.of(context).size.width * 0.3),
-              padding: const EdgeInsets.symmetric(vertical: 14),
-              decoration: BoxDecoration(
-                  boxShadow: const [
-                    BoxShadow(
-                      color: Color.fromRGBO(13, 43, 65, 0.1),
-                      offset: Offset(0, 4),
-                      blurRadius: 14,
-                    ),
-                  ],
-                  color: ColorsUI.mainWhite,
-                  borderRadius: BorderRadius.circular(16)),
-              child: const Center(child: SubTitleText(text: 'Фильтр')),
-            ),
-          ),
-        ],
-      ),
+      // bottomNavigationBar: Row(
+      //   crossAxisAlignment: CrossAxisAlignment.center,
+      //   children: [
+      //     Expanded(
+      //       child: Container(
+      //         height: 50,
+      //         margin: EdgeInsets.symmetric(
+      //             vertical: 12,
+      //             horizontal: MediaQuery.of(context).size.width * 0.3),
+      //         padding: const EdgeInsets.symmetric(vertical: 14),
+      //         decoration: BoxDecoration(
+      //             boxShadow: const [
+      //               BoxShadow(
+      //                 color: Color.fromRGBO(13, 43, 65, 0.1),
+      //                 offset: Offset(0, 4),
+      //                 blurRadius: 14,
+      //               ),
+      //             ],
+      //             color: ColorsUI.mainWhite,
+      //             borderRadius: BorderRadius.circular(16)),
+      //         child: const Center(child: SubTitleText(text: 'Фильтр')),
+      //       ),
+      //     ),
+      //   ],
+      // ),
       body: SingleChildScrollView(
         child: Column(
           children: [

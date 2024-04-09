@@ -80,7 +80,7 @@ class ContainerButton extends StatelessWidget {
       },
       child: Container(
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
+        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 14),
         decoration: BoxDecoration(
             color: color ?? ColorsUI.backgroundRed,
             borderRadius: BorderRadius.circular(16.0),

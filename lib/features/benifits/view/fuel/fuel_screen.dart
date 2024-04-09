@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/extensions.dart';
 import 'package:rzd/core/validators.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
@@ -177,6 +178,7 @@ class _FuelScreenState extends State<FuelScreen> {
                         return ChooseInput(
                           errorText: '',
                           hintText: 'Выберите',
+                          bottomTitleText: 'Выберите вид топлива',
                           controller: fuelNumberType,
                           chooses: state.fuels.values.toList(),
                         );
@@ -232,8 +234,9 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 10),
                   ChooseInput(
                     errorText: '',
+                    bottomTitleText: 'Выберите материал стен',
                     controller: wallMaterial,
-                    chooses: ['Дерево', 'Крипич'],
+                    chooses: const ['Дерево', 'Крипич'],
                     hintText: 'Выберите',
                   ),
                   const SizedBox(height: 20),
@@ -314,7 +317,8 @@ class _FuelScreenState extends State<FuelScreen> {
                   const SizedBox(height: 20),
                   const SubTitleText(text: 'Приложите документы'),
                   const SizedBox(height: 10),
-                  if (file != null) ContentText(text: file?.path ?? '-'),
+                  if (file != null)
+                    ContentText(text: file?.path.parseDocumentPath() ?? '-'),
                   ContainerButton(
                     text: 'Выбрать файлы',
                     color: ColorsUI.inactiveRedLight,

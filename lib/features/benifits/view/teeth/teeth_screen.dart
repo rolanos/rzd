@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/extensions.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/benifits/model/teeth_form.dart';
@@ -137,6 +138,7 @@ class _TeethScreenState extends State<TeethScreen> {
                           return ChooseInput(
                             errorText: '',
                             controller: serviceType,
+                            bottomTitleText: 'Выберите лечебное учреждение',
                             chooses: List.generate(
                               state.services.values.length,
                               (index) => state.services.values
@@ -191,7 +193,7 @@ class _TeethScreenState extends State<TeethScreen> {
                   if (methodForGetCheckbox2)
                     ContainerFilePicker(
                       text: document_contract != null
-                          ? document_contract?.path ?? ''
+                          ? document_contract?.path.parseDocumentPath() ?? ''
                           : 'Выбрать файл',
                       color: document_contract != null
                           ? ColorsUI.containerBackground
@@ -231,7 +233,7 @@ class _TeethScreenState extends State<TeethScreen> {
                   if (methodForGetCheckbox2)
                     ContainerFilePicker(
                       text: document_act != null
-                          ? document_act?.path ?? ''
+                          ? document_act?.path.parseDocumentPath() ?? ''
                           : 'Выбрать файл',
                       color: document_act != null
                           ? ColorsUI.containerBackground
@@ -273,7 +275,7 @@ class _TeethScreenState extends State<TeethScreen> {
                   if (methodForGetCheckbox2)
                     ContainerFilePicker(
                       text: document_tickets != null
-                          ? document_tickets?.path ?? ''
+                          ? document_tickets?.path.parseDocumentPath() ?? ''
                           : 'Выбрать файл',
                       color: document_tickets != null
                           ? ColorsUI.containerBackground
@@ -314,7 +316,7 @@ class _TeethScreenState extends State<TeethScreen> {
                   if (methodForGetCheckbox2)
                     ContainerFilePicker(
                       text: document_other != null
-                          ? document_other?.path ?? ''
+                          ? document_other?.path.parseDocumentPath() ?? ''
                           : 'Выбрать файл',
                       color: document_other != null
                           ? ColorsUI.containerBackground
