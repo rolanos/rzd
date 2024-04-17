@@ -61,13 +61,22 @@ class _NewScreenState extends State<NewScreen> {
                     physics: const NeverScrollableScrollPhysics(),
                     padding: EdgeInsets.zero,
                     itemCount: bufferList.length,
-                    separatorBuilder: (context, index) => const Column(
+                    separatorBuilder: (context, index) => Column(
                       children: [
-                        SizedBox(height: 20),
-                        Divider(
-                          height: 0,
+                        const SizedBox(height: 20),
+                        Container(
+                          width: MediaQuery.of(context).size.width,
+                          height: 4,
+                          decoration: const BoxDecoration(
+                            gradient: RadialGradient(
+                              colors: [
+                                Color.fromRGBO(226, 232, 240, 1),
+                                Color.fromRGBO(226, 232, 240, 0),
+                              ],
+                            ),
+                          ),
                         ),
-                        SizedBox(height: 20),
+                        const SizedBox(height: 20),
                       ],
                     ),
                     itemBuilder: (context, index) => NewsContent(

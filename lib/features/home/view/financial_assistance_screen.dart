@@ -18,14 +18,15 @@ import 'package:rzd/features/menu/app_bar.dart';
 
 import 'widget/title_text.dart';
 
-class AppealBfScreen extends StatefulWidget {
-  const AppealBfScreen({super.key});
+class FinansialAssistanceScreen extends StatefulWidget {
+  const FinansialAssistanceScreen({super.key});
 
   @override
-  State<AppealBfScreen> createState() => _AppealBfScreenState();
+  State<FinansialAssistanceScreen> createState() =>
+      _FinansialAssistanceScreenState();
 }
 
-class _AppealBfScreenState extends State<AppealBfScreen> {
+class _FinansialAssistanceScreenState extends State<FinansialAssistanceScreen> {
   final MaskTextInputFormatter maskFormatter = MaskTextInputFormatter(
     mask: '+7 ### ###-##-##',
     filter: {"#": RegExp(r'[0-9]')},
@@ -116,10 +117,12 @@ class _AppealBfScreenState extends State<AppealBfScreen> {
                   hintText: 'Выберите тему',
                   controller: topic,
                   errorText: '',
-                  chooses: [
-                    'Получение благотворительной помощи',
-                    'Досылка документов',
-                    'Запрос статуса рассмотрения',
+                  chooses: const [
+                    'Необходима помощь волонтера',
+                    'Изменение анкетных данных',
+                    'Изменение выплатных реквизитов',
+                    'Предоставление справки с места жительства',
+                    'Вопрос в БФ «Почет»',
                   ],
                 ),
                 const SizedBox(height: 20),
@@ -128,19 +131,6 @@ class _AppealBfScreenState extends State<AppealBfScreen> {
                 InputForm(
                   hintText: '',
                   controller: request,
-                ),
-                const SizedBox(height: 20),
-                const TitleText('Телефон для связи'),
-                const SizedBox(height: 10),
-                InputForm(
-                  hintText: 'Номер телефона',
-                  controller: phone,
-                  textInputType: TextInputType.phone,
-                  errorText: 'Укажите номер телефона',
-                  validator: NameValidator(),
-                  inputFormatters: [
-                    maskFormatter,
-                  ],
                 ),
                 const SizedBox(height: 20),
                 const TitleText('Документы'),
@@ -168,9 +158,9 @@ class _AppealBfScreenState extends State<AppealBfScreen> {
                     Flexible(
                       child: Text(
                         '''1. Размер загружаемого файла после сжатия не должен превышать 5 Мб.
-    2. В имени прикладываемого файла должно быть не более 100 символов.
-    3. Общее количество загружаемых файлов не должно превышать 3.
-    4. Общий размер комплекта со всеми вложениями не должен превышать 10 Мб.''',
+2. В имени прикладываемого файла должно быть не более 100 символов.
+3. Общее количество загружаемых файлов не должно превышать 3.
+4. Общий размер комплекта со всеми вложениями не должен превышать 10 Мб.''',
                         style: TextStyle(
                           fontSize: 14,
                           fontFamily: 'Inter',
@@ -212,7 +202,7 @@ class _AppealBfScreenState extends State<AppealBfScreen> {
                               form: FormBfMaterialDescription(
                                 topic: topic.text,
                                 request: request.text,
-                                phone: phone.text,
+                                phone: null,
                                 file: file,
                               ),
                             ),

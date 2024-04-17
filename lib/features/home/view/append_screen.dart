@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
+import 'package:rzd/core/extensions.dart';
 import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/benifits/view/form_widgets/inputs.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
@@ -66,7 +67,8 @@ class _AppendScreenState extends State<AppendScreen> {
                 const SizedBox(height: 20),
                 const SubTitleText(text: 'Документы'),
                 const SizedBox(height: 10),
-                if (file != null) ContentText(text: file?.path ?? '-'),
+                if (file != null)
+                  ContentText(text: file?.path.parseDocumentPath() ?? '-'),
                 const SizedBox(height: 6),
                 ContainerButton(
                   text: 'Выбрать файлы',

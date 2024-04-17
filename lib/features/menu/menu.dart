@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:rzd/features/menu/app_bar.dart';
 
 import '../../core/colors.dart';
 import 'bottom_navigation_container.dart';

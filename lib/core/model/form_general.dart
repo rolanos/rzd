@@ -8,6 +8,7 @@ String formGeneralToJson(FormGeneral data) => json.encode(data.toJson());
 class FormGeneral {
   final String formName;
   final String formKey;
+  String? image;
 
   FormGeneral({
     required this.formName,

@@ -17,3 +17,11 @@ class SendForm extends FormEvent {
 
   SendForm({required this.data});
 }
+
+class SendBfMaterialForm extends FormEvent {
+  final FormBfMaterialDescription form;
+
+  SendBfMaterialForm({
+    required this.form,
+  });
+}

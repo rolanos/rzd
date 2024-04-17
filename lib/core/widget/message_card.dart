@@ -69,15 +69,14 @@ class MessageCard extends StatelessWidget {
                   ),
                 ),
                 const Spacer(),
-                if (data.isRead == true)
-                  Padding(
-                    padding: const EdgeInsets.only(right: 6),
-                    child: SvgPicture.asset(
-                      "asset/icons/arrow_right.svg",
-                      width: 5,
-                      height: 12,
-                    ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 6),
+                  child: SvgPicture.asset(
+                    "asset/icons/arrow_right.svg",
+                    width: 5,
+                    height: 12,
                   ),
+                ),
                 if (data.isRead == false)
                   Padding(
                     padding: const EdgeInsets.only(right: 2),

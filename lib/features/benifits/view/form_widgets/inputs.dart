@@ -203,7 +203,7 @@ class ChooseInput extends StatelessWidget {
         controller.text =
             await showBottomSelect(context, chooses, bottomTitleText) ?? '';
       },
-      trailing: removeTrailing
+      trailing: !removeTrailing
           ? GestureDetector(
               onTap: () async {
                 controller.text =

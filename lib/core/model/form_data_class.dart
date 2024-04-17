@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 
@@ -115,5 +116,32 @@ class FormDescription {
       map[i.titleName] = i.controller.text.trim();
     }
     return map;
+  }
+}
+
+class FormBfMaterialDescription {
+  final String topic;
+  final String? request;
+  final String? phone;
+  final File? file;
+
+  TextEditingController controller = TextEditingController();
+
+  FormBfMaterialDescription(
+      {required this.topic,
+      required this.request,
+      required this.phone,
+      required this.file});
+
+  Map<String, dynamic> toMap() {
+    String? fileStr;
+    if (file != null) {
+      fileStr = base64Encode(file!.readAsBytesSync().toList());
+    }
+    return {
+      'subject': topic,
+      'body': request,
+      'filename': fileStr,
+    };
   }
 }

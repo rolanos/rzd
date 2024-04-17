@@ -39,7 +39,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
           shadowColor: Colors.transparent,
           foregroundColor: Colors.transparent,
           surfaceTintColor: Colors.transparent,
-          expandedHeight: AppBar().preferredSize.height * 2.5 + 8.0 + 16,
+          expandedHeight: 8 + 32 + 32 + 28,
           flexibleSpace: FlexibleSpaceBar(
             titlePadding: EdgeInsets.zero,
             expandedTitleScale: 1,
@@ -63,10 +63,11 @@ class _HistoryScreenState extends State<HistoryScreen> {
             ),
             background: Column(
               children: [
-                CustomNotificationsAppBar(appbarText: 'История'),
-                const SizedBox(
-                  height: 8.0,
+                SizedBox(
+                  height: MediaQuery.of(context).viewPadding.top / 2,
                 ),
+                const CustomNotificationsAppBar(
+                    withTopPadding: false, appbarText: 'История'),
               ],
             ),
           ),

@@ -52,7 +52,8 @@ class AuthRepositoryImpl extends AuthRepository {
           'uuid': uuid,
         },
       );
-      if (userResponse.data != null) {
+      if (userResponse.data != null &&
+          userResponse.data is Map<String, dynamic>) {
         UserProfile userProfile =
             UserProfileApi.fromMap(userResponse.data as Map<String, dynamic>);
         return userProfile;

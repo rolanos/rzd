@@ -73,7 +73,7 @@ class _HomeScreenState extends State<HomeScreen> {
               shadowColor: Colors.transparent,
               foregroundColor: Colors.transparent,
               surfaceTintColor: Colors.transparent,
-              expandedHeight: AppBar().preferredSize.height * 2.5 + 8.0 + 16,
+              expandedHeight: AppBar().preferredSize.height * 1.8 + 40,
               flexibleSpace: FlexibleSpaceBar(
                 titlePadding: EdgeInsets.zero,
                 expandedTitleScale: 1,
@@ -81,19 +81,23 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Spacer(),
                     TabRow(),
+                    SizedBox(
+                      height: 8,
+                    ),
                   ],
                 ),
                 background: Column(
                   children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).viewPadding.top / 2,
+                    ),
                     CustomAppBar(
+                      isTopPadding: false,
                       appbarText: (state is AuthSuccess &&
                               state.profile.name != null &&
                               state.profile.otch != null)
                           ? "${state.profile.name!} ${state.profile.otch!}"
                           : "",
-                    ),
-                    const SizedBox(
-                      height: 8.0,
                     ),
                   ],
                 ),
@@ -214,14 +218,27 @@ class _HomeScreenState extends State<HomeScreen> {
                                 shrinkWrap: true,
                                 itemCount: state.news.length,
                                 padding: EdgeInsets.zero,
-                                separatorBuilder: (context, index) =>
-                                    const Column(
+                                separatorBuilder: (context, index) => Column(
                                   children: [
-                                    SizedBox(height: 20),
-                                    Divider(
-                                      height: 0,
+                                    const SizedBox(height: 20),
+                                    Container(
+                                      width: MediaQuery.of(context).size.width,
+                                      height: 1,
+                                      decoration: const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          begin: Alignment.centerLeft,
+                                          end: Alignment.centerRight,
+                                          stops: [0, 0.35, 0.65, 1],
+                                          colors: [
+                                            Color.fromRGBO(226, 232, 240, 0),
+                                            Color.fromRGBO(226, 232, 240, 1),
+                                            Color.fromRGBO(226, 232, 240, 1),
+                                            Color.fromRGBO(226, 232, 240, 0),
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    SizedBox(height: 20),
+                                    const SizedBox(height: 20),
                                   ],
                                 ),
                                 physics: const NeverScrollableScrollPhysics(),

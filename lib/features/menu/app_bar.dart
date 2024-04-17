@@ -13,10 +13,12 @@ class CustomNotificationsAppBar extends StatefulWidget
     implements PreferredSizeWidget {
   final String appbarText;
   final bool withButton;
+  final bool withTopPadding;
   const CustomNotificationsAppBar({
     super.key,
     required this.appbarText,
     this.withButton = false,
+    this.withTopPadding = true,
   });
 
   @override
@@ -24,8 +26,10 @@ class CustomNotificationsAppBar extends StatefulWidget
       _CustomNotificationsAppBarState();
 
   @override
-  Size get preferredSize =>
-      Size(AppBar().preferredSize.width, AppBar().preferredSize.height * 2.5);
+  Size get preferredSize => Size(
+        AppBar().preferredSize.width,
+        AppBar().preferredSize.height * 2.5 + 8.0 + 16,
+      );
 }
 
 class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {
@@ -41,11 +45,13 @@ class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {
       child: Container(
         clipBehavior: Clip.hardEdge,
         padding: EdgeInsets.only(
-            top: AppBar().preferredSize.height,
-            left: 20.0,
-            right: 20.0,
-            bottom: 24.0),
-        height: AppBar().preferredSize.height * 2.5,
+          top: widget.withTopPadding
+              ? AppBar().preferredSize.height + 28.0
+              : 28.0,
+          left: 20.0,
+          right: 20.0,
+          bottom: 20.0,
+        ),
         width: size.width,
         decoration: const ShapeDecoration(
           color: ColorsUI.mainWhite,
@@ -130,9 +136,12 @@ class _CustomNotificationsAppBarState extends State<CustomNotificationsAppBar> {
 
 class CustomAppBar extends StatefulWidget implements PreferredSizeWidget {
   final String appbarText;
+  final bool isTopPadding;
+
   CustomAppBar({
     super.key,
     required this.appbarText,
+    this.isTopPadding = true,
   });
 
   @override
@@ -165,11 +174,13 @@ class _CustomAppBarState extends State<CustomAppBar> {
       child: Container(
         clipBehavior: Clip.hardEdge,
         padding: EdgeInsets.only(
-            top: AppBar().preferredSize.height,
+            top: widget.isTopPadding
+                ? AppBar().preferredSize.height + 28.0
+                : 28.0,
             left: 20.0,
             right: 20.0,
             bottom: 24.0),
-        height: AppBar().preferredSize.height * 2.5,
+        height: AppBar().preferredSize.height * 1.8,
         width: size.width,
         decoration: const ShapeDecoration(
           color: ColorsUI.mainWhite,
@@ -181,7 +192,7 @@ class _CustomAppBarState extends State<CustomAppBar> {
         ),
         child: Column(
           children: [
-            const Spacer(),
+            Spacer(),
             (offset > 100)
                 ? const TabRow()
                 : Row(

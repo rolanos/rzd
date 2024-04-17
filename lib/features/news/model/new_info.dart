@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:rzd/core/extensions.dart';
 
 class NewInfo {
@@ -21,17 +23,19 @@ class NewInfo {
     this.main,
   });
 
-  factory NewInfo.fromJson(Map<String, dynamic> json) => NewInfo(
-        contentId: (json["content_id"]),
-        startDate: json["start_date"] == null
-            ? null
-            : DateTime.parse(json["start_date"]),
-        endDate:
-            json["end_date"] == null ? null : DateTime.parse(json["end_date"]),
-        title: (json["title"] as String?)?.parseHtmlString(),
-        description: (json["description"] as String?)?.parseHtmlString(),
-        text: (json["text"] as String?)?.parseHtmlString(),
-        main: json["main"],
-        image: json["image"],
-      );
+  factory NewInfo.fromJson(Map<String, dynamic> json) {
+    return NewInfo(
+      contentId: (json["content_id"]),
+      startDate: json["start_date"] == null
+          ? null
+          : DateTime.parse(json["start_date"]),
+      endDate:
+          json["end_date"] == null ? null : DateTime.parse(json["end_date"]),
+      title: (json["title"] as String?)?.parseHtmlString(),
+      description: (json["description"] as String?)?.parseHtmlString(),
+      text: (json["text"] as String?)?.parseHtmlString(),
+      main: json["main"],
+      image: json["image"],
+    );
+  }
 }

@@ -82,16 +82,38 @@ class BenifitsCard extends StatelessWidget {
                 if (state is FormInitial) {
                   return ListView.separated(
                     shrinkWrap: true,
-                    itemCount: state.forms.length,
+                    itemCount: state.forms.length + 2,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => TopicCard(
-                      onTap: () {
-                        context.read<FormBloc>().add(
-                            GetFormInfo(formKey: state.forms[index].formKey));
-                        context.goNamed('form');
-                      },
-                      title: state.forms[index].formName,
-                    ),
+                    itemBuilder: (context, index) {
+                      if (index == state.forms.length) {
+                        return TopicCard(
+                          onTap: () {
+                            context.goNamed('bf');
+                          },
+                          assetPath: 'asset/images/bf.png',
+                          title: 'Обращение в БФ «Почет»',
+                        );
+                      }
+                      if (index - 1 == state.forms.length) {
+                        return TopicCard(
+                          onTap: () {
+                            context.goNamed('mat');
+                          },
+                          assetPath: 'asset/images/mat.png',
+                          title:
+                              'Обращение в комиссию по благотворительной помощи',
+                        );
+                      }
+                      return TopicCard(
+                        onTap: () {
+                          context.read<FormBloc>().add(
+                              GetFormInfo(formKey: state.forms[index].formKey));
+                          context.goNamed('form');
+                        },
+                        assetPath: state.forms[index].image,
+                        title: state.forms[index].formName,
+                      );
+                    },
                     separatorBuilder: (context, _) => const SizedBox(
                       height: 16.0,
                     ),

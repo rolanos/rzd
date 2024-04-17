@@ -18,56 +18,60 @@ class TabRow extends StatelessWidget {
         padding: const EdgeInsets.only(
           left: 8.0,
         ),
-        margin: const EdgeInsets.only(bottom: 12.0),
-        child: Row(
-          children: [
-            GestureDetector(
-              onTap: () => controller.goToBenifits(),
-              child: TabContainer(
-                key: controller.benefitsTab,
-                name: 'Льготы',
-                isSelected:
-                    controller.category == Category.benefits ? true : false,
+        child: Align(
+          alignment: Alignment.bottomCenter,
+          child: Row(
+            children: [
+              GestureDetector(
+                onTap: () => controller.goToBenifits(),
+                child: TabContainer(
+                  key: controller.benefitsTab,
+                  name: 'Льготы',
+                  isSelected:
+                      controller.category == Category.benefits ? true : false,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 8.0,
-            ),
-            GestureDetector(
-              onTap: () => controller.goToReferences(),
-              child: TabContainer(
-                key: controller.referencesTab,
-                name: 'Справки и обращения',
-                isSelected:
-                    controller.category == Category.references ? true : false,
+              const SizedBox(
+                width: 8.0,
               ),
-            ),
-            const SizedBox(
-              width: 8.0,
-            ),
-            GestureDetector(
-              onTap: () => controller.goToFaqs(),
-              child: TabContainer(
-                key: controller.faqTab,
-                name: 'Ответы на вопросы',
-                isSelected: controller.category == Category.faq ? true : false,
+              GestureDetector(
+                onTap: () => controller.goToReferences(),
+                child: TabContainer(
+                  key: controller.referencesTab,
+                  name: 'Справки и обращения',
+                  isSelected:
+                      controller.category == Category.references ? true : false,
+                ),
               ),
-            ),
-            const SizedBox(
-              width: 8.0,
-            ),
-            GestureDetector(
-              onTap: () => controller.goToNews(),
-              child: TabContainer(
-                key: controller.newsTab,
-                name: 'Новости и события',
-                isSelected: controller.category == Category.news ? true : false,
+              const SizedBox(
+                width: 8.0,
               ),
-            ),
-            const SizedBox(
-              width: 8.0,
-            ),
-          ],
+              GestureDetector(
+                onTap: () => controller.goToFaqs(),
+                child: TabContainer(
+                  key: controller.faqTab,
+                  name: 'Ответы на вопросы',
+                  isSelected:
+                      controller.category == Category.faq ? true : false,
+                ),
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+              GestureDetector(
+                onTap: () => controller.goToNews(),
+                child: TabContainer(
+                  key: controller.newsTab,
+                  name: 'Новости и события',
+                  isSelected:
+                      controller.category == Category.news ? true : false,
+                ),
+              ),
+              const SizedBox(
+                width: 8.0,
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -92,41 +96,43 @@ class TabRowHistory extends StatelessWidget {
       padding: const EdgeInsets.only(
         left: 8.0,
       ),
-      margin: const EdgeInsets.only(bottom: 12.0),
-      child: Row(
-        children: [
-          const SizedBox(
-            width: 8.0,
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                changeFirst();
-              },
-              child: TabContainer(
-                name: 'Обращения',
-                isSelected: isAppeals,
+      child: Align(
+        alignment: Alignment.bottomCenter,
+        child: Row(
+          children: [
+            const SizedBox(
+              width: 8.0,
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  changeFirst();
+                },
+                child: TabContainer(
+                  name: 'Обращения',
+                  isSelected: isAppeals,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 8.0,
-          ),
-          Expanded(
-            child: GestureDetector(
-              onTap: () {
-                changeSecond();
-              },
-              child: TabContainer(
-                name: 'Льготы',
-                isSelected: !isAppeals,
+            const SizedBox(
+              width: 8.0,
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  changeSecond();
+                },
+                child: TabContainer(
+                  name: 'Льготы',
+                  isSelected: !isAppeals,
+                ),
               ),
             ),
-          ),
-          const SizedBox(
-            width: 8.0,
-          ),
-        ],
+            const SizedBox(
+              width: 8.0,
+            ),
+          ],
+        ),
       ),
     );
   }

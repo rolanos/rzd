@@ -11,6 +11,7 @@ import 'package:rzd/features/benifits/view/sankur/sankur_screen.dart';
 import 'package:rzd/features/benifits/view/teeth/teeth_screen.dart';
 import 'package:rzd/features/documents/view/documents_screen.dart';
 import 'package:rzd/features/history/view/history_screen.dart';
+import 'package:rzd/features/home/view/appeal_bf_screen.dart';
 import 'package:rzd/features/home/view/append_screen.dart';
 import 'package:rzd/features/home/view/form_screen.dart';
 import 'package:rzd/features/home/view/home_screen.dart';
@@ -22,6 +23,8 @@ import 'package:rzd/features/news/model/new_info.dart';
 import 'package:rzd/features/news/view/new_screen.dart';
 import 'package:rzd/features/profile/view/faq_screen.dart';
 import 'package:rzd/features/profile/view/profile_screen.dart';
+
+import '../features/home/view/financial_assistance_screen.dart';
 
 GoRouter getRouter(BuildContext context) {
   final GoRouter router = GoRouter(
@@ -88,6 +91,17 @@ GoRouter getRouter(BuildContext context) {
                     path: 'form',
                     name: 'form',
                     builder: (context, state) => const FormScreen(),
+                  ),
+                  GoRoute(
+                    path: 'bf',
+                    name: 'bf',
+                    builder: (context, state) => const AppealBfScreen(),
+                  ),
+                  GoRoute(
+                    path: 'mat',
+                    name: 'mat',
+                    builder: (context, state) =>
+                        const FinansialAssistanceScreen(),
                   ),
                   GoRoute(
                     path: 'privilege',

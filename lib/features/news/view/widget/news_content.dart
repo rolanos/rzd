@@ -64,7 +64,7 @@ class NewsContent extends StatelessWidget {
             ),
           ),
           const SizedBox(
-            height: 2,
+            height: 10,
           ),
           Text(
             newInfo.title ?? "-",
@@ -93,6 +93,13 @@ class NewsContent extends StatelessWidget {
                 const SizedBox(height: 20),
                 ContainerButton(
                   text: 'Читать',
+                  height: 50,
+                  padding: EdgeInsets.zero,
+                  textStyle: const TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: ColorsUI.mainText,
+                  ),
                   onTap: () {
                     if (onTap != null) {
                       onTap!();

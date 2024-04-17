@@ -62,13 +62,20 @@ class ContainerButton extends StatelessWidget {
   final Color? textColor;
   final String text;
   final Function()? onTap;
+  final double? height;
+  final TextStyle? textStyle;
+  final EdgeInsets? padding;
+
   const ContainerButton(
       {super.key,
       this.color,
       this.textColor,
       required this.text,
       this.onTap,
-      this.borderColor});
+      this.borderColor,
+      this.height,
+      this.textStyle,
+      this.padding});
 
   @override
   Widget build(BuildContext context) {
@@ -79,8 +86,10 @@ class ContainerButton extends StatelessWidget {
         }
       },
       child: Container(
+        height: height,
         width: MediaQuery.of(context).size.width,
-        padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 14),
+        padding: padding ??
+            const EdgeInsets.symmetric(vertical: 20.0, horizontal: 14),
         decoration: BoxDecoration(
             color: color ?? ColorsUI.backgroundRed,
             borderRadius: BorderRadius.circular(16.0),
@@ -89,9 +98,10 @@ class ContainerButton extends StatelessWidget {
         child: Center(
           child: Text(
             text,
-            style: Theme.of(context).textTheme.bodySmall!.copyWith(
-                  color: textColor ?? ColorsUI.activeRed,
-                ),
+            style: textStyle ??
+                Theme.of(context).textTheme.bodySmall!.copyWith(
+                      color: textColor ?? ColorsUI.activeRed,
+                    ),
           ),
         ),
       ),
