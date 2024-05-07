@@ -5,6 +5,7 @@ import 'package:rzd/core/widget/container_button.dart';
 import 'package:rzd/features/auth/view/logic/auth_bloc.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/features/benifits/view/form_widgets/titles.dart';
+import 'package:rzd/features/history/view/bloc/appeal_bloc.dart';
 import 'package:rzd/features/home/data/model/card_data.dart';
 import 'package:rzd/features/home/domain/entity/privilege_info.dart';
 import 'package:rzd/features/home/view/bloc/bloc/app_info_bloc.dart';
@@ -126,7 +127,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               context.read<PrivilegeBloc>().add(
                                   GetPrivilegeInfo(
                                       type: state.privileges[index].id));
-                              context.goNamed('privilege');
+                              context.goNamed(
+                                'privilege',
+                                extra: state.privileges[index].id,
+                              );
                             },
                           ),
                         ),

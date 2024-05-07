@@ -13,7 +13,7 @@ class AppendBloc extends Bloc<AppendEvent, AppendState> {
   AppendBloc() : super(AppendEmpty()) {
     on<AppendGet>((event, emit) async {
       try {
-        final list = await AppendRepository().getAppendList();
+        final list = await AppendRepository().getAppendList(event.type);
         emit(AppendInitital(appends: list));
       } catch (e) {
         log(e.toString());
@@ -25,7 +25,6 @@ class AppendBloc extends Bloc<AppendEvent, AppendState> {
         await AppendRepository()
             .sendRequest(event.id, event.comment, event.file);
         emit(AppendSended());
-        add(AppendGet());
       } catch (e) {
         log(e.toString());
       }

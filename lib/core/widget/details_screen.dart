@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/extensions.dart';
@@ -13,6 +14,7 @@ class DetailScreenData {
   final String? title;
   final String? body;
   final bool? isRead;
+  final String? subtext;
 
   final String? appbarTitle;
   final String? status;
@@ -23,6 +25,7 @@ class DetailScreenData {
     this.body,
     this.status,
     this.appbarTitle,
+    this.subtext,
   });
 }
 
@@ -84,7 +87,7 @@ class DetailsScreen extends StatelessWidget {
                               ),
                             if (data.status != null)
                               const SizedBox(
-                                height: 10,
+                                width: 10,
                               ),
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -123,18 +126,28 @@ class DetailsScreen extends StatelessWidget {
                       const SizedBox(height: 10),
                       Row(
                         children: [
-                          Flexible(
-                            child: Text(
-                              data.body ?? "Нет данных",
-                              style: const TextStyle(
-                                color: ColorsUI.otpBorder,
-                                fontSize: 14,
-                                fontWeight: FontWeight.w400,
+                          if (data.body != null)
+                            Flexible(
+                              child: Text(
+                                data.body!,
+                                style: const TextStyle(
+                                  color: ColorsUI.otpBorder,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
                               ),
                             ),
-                          ),
                         ],
                       ),
+                      if (data.subtext != null)
+                        SingleChildScrollView(
+                          child: Html(data: data.subtext, style: {
+                            "body": Style(
+                              padding: HtmlPaddings.all(0),
+                              margin: Margins.all(0),
+                            )
+                          }),
+                        ),
                     ],
                   ),
                 ),

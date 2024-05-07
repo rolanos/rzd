@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:rzd/core/colors.dart';
 import 'package:rzd/core/widget/add_info_container.dart';
 import 'package:rzd/core/widget/container_button.dart';
+import 'package:rzd/features/home/view/bloc/bloc/append_bloc.dart';
 
 class TitleContainerSankur extends StatelessWidget {
   const TitleContainerSankur(
@@ -10,8 +12,9 @@ class TitleContainerSankur extends StatelessWidget {
       this.text,
       this.title,
       this.privilegeName,
-      required this.appbarTitle});
-
+      required this.appbarTitle,
+      required this.id});
+  final String id;
   final String appbarTitle;
   final String? title;
   final String? text;
@@ -66,7 +69,10 @@ class TitleContainerSankur extends StatelessWidget {
               title == 'Изготовление и ремонт зубных протезов')
             ContainerButton(
               text: 'Добавить документы',
-              onTap: () => context.pushNamed('append', extra: appbarTitle),
+              onTap: () {
+                context.read<AppendBloc>().add(AppendGet(type: id));
+                context.pushNamed('append', extra: appbarTitle);
+              },
               textColor: ColorsUI.activeRed,
               color: ColorsUI.inactiveRedLight,
             ),

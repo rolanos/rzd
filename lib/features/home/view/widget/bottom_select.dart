@@ -52,6 +52,7 @@ Future<String?> showBottomSelect(BuildContext context, List<String> select,
                               setState(() {
                                 selectedIndex = index;
                               });
+                              Navigator.of(context).pop();
                             },
                             child: Row(
                               children: [

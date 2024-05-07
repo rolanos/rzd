@@ -106,7 +106,9 @@ GoRouter getRouter(BuildContext context) {
                   GoRoute(
                     path: 'privilege',
                     name: 'privilege',
-                    builder: (context, state) => const PrivilegeScreen(),
+                    builder: (context, state) => PrivilegeScreen(
+                      type: (state.extra as String?) ?? '',
+                    ),
                     routes: [
                       GoRoute(
                         path: 'sankur',

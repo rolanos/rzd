@@ -6,38 +6,46 @@ import 'package:rzd/features/menu/app_bar.dart';
 
 import 'sankur/widget/info_container.dart';
 import 'sankur/widget/title_container.dart';
-import 'sankur/widget/warning_container.dart';
 
 class PrivilegeScreen extends StatelessWidget {
-  const PrivilegeScreen({super.key});
+  const PrivilegeScreen({super.key, required this.type});
+
+  final String type;
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<PrivilegeBloc, PrivilegeState>(
       builder: (context, state) {
         if (state is PrivilegeInitial) {
-          return SingleChildScrollView(
-            padding: const EdgeInsets.only(bottom: 32),
-            child: Wrap(
-              runSpacing: 8,
-              crossAxisAlignment: WrapCrossAlignment.start,
-              children: [
-                const CustomNotificationsAppBar(appbarText: "Услуга"),
-                TitleContainerSankur(
-                  appbarTitle: state.privilegeInfo.title ?? '',
-                  text: state.privilegeInfo.chapters.firstOrNull?.description ??
-                      '',
-                  title: state.privilegeInfo.title,
-                ),
-                InfoContainer(chapters: [
-                  ...state.privilegeInfo.chapters
-                      .sublist(1, state.privilegeInfo.chapters.length - 2)
-                ]),
-                //WarningContainer(),
-                OrderContainer(
-                  chapter: state.privilegeInfo.chapters.last,
-                ),
-              ],
+          return SafeArea(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.only(bottom: 32),
+              child: Wrap(
+                runSpacing: 8,
+                crossAxisAlignment: WrapCrossAlignment.start,
+                children: [
+                  const CustomNotificationsAppBar(
+                    appbarText: "Услуга",
+                    withTopPadding: false,
+                  ),
+                  TitleContainerSankur(
+                    id: type,
+                    appbarTitle: state.privilegeInfo.title ?? '',
+                    text:
+                        state.privilegeInfo.chapters.firstOrNull?.description ??
+                            '',
+                    title: state.privilegeInfo.title,
+                  ),
+                  InfoContainer(chapters: [
+                    ...state.privilegeInfo.chapters
+                        .sublist(1, state.privilegeInfo.chapters.length - 2)
+                  ]),
+                  //WarningContainer(),
+                  OrderContainer(
+                    chapter: state.privilegeInfo.chapters.last,
+                  ),
+                ],
+              ),
             ),
           );
         }

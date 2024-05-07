@@ -89,7 +89,7 @@ class MyApp extends StatelessWidget {
             create: (context) => SupportBloc(),
           ),
           BlocProvider(
-            create: (context) => AppendBloc()..add(AppendGet()),
+            create: (context) => AppendBloc(),
           ),
           BlocProvider(
             create: (context) => TeethBloc()..add(const TeethGet()),

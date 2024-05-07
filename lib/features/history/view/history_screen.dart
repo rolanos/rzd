@@ -100,6 +100,7 @@ class _HistoryScreenState extends State<HistoryScreen> {
                               date: state.appeals[index].moment,
                               title: state.appeals[index].subject,
                               body: state.appeals[index].comment,
+                              subtext: state.appeals[index].application,
                             ),
                           ),
                         );

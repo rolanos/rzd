@@ -9,7 +9,7 @@ import 'package:rzd/core/shared_manager.dart';
 import 'package:rzd/features/home/data/model/append.dart';
 
 class AppendRepository {
-  Future<List<Append>> getAppendList() async {
+  Future<List<Append>> getAppendList(String type) async {
     String? uuid = await SharedManager.getuuid();
     String? cookie = await SharedManager.getCookie();
     Dio dio = Dio(
@@ -24,6 +24,7 @@ class AppendRepository {
         appendListUrl,
         queryParameters: {
           'uuid': uuid,
+          'type': type,
         },
       );
       final data = response.data as Map<String, dynamic>;

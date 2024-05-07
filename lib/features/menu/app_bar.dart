@@ -9,6 +9,132 @@ import 'package:provider/provider.dart';
 import 'package:rzd/features/messages/model/message.dart';
 import 'package:rzd/features/messages/view/bloc/message_bloc.dart';
 
+class CustomNotificationsShortAppBar extends StatefulWidget
+    implements PreferredSizeWidget {
+  final String appbarText;
+  final bool withButton;
+  final bool withTopPadding;
+  const CustomNotificationsShortAppBar({
+    super.key,
+    required this.appbarText,
+    this.withButton = false,
+    this.withTopPadding = true,
+  });
+
+  @override
+  State<CustomNotificationsShortAppBar> createState() =>
+      _CustomNotificationsShortAppBarState();
+
+  @override
+  Size get preferredSize => Size(
+        AppBar().preferredSize.width,
+        AppBar().preferredSize.height * 2.5 + 8.0 + 16,
+      );
+}
+
+class _CustomNotificationsShortAppBarState
+    extends State<CustomNotificationsShortAppBar> {
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return ClipRRect(
+      clipBehavior: Clip.antiAlias,
+      borderRadius: const BorderRadius.vertical(
+        bottom: Radius.circular(24.0),
+      ),
+      child: Container(
+        clipBehavior: Clip.hardEdge,
+        padding: EdgeInsets.only(
+          top: widget.withTopPadding
+              ? AppBar().preferredSize.height + 28.0
+              : 28.0,
+          left: 20.0,
+          right: 20.0,
+          bottom: 20.0,
+        ),
+        width: size.width,
+        decoration: const ShapeDecoration(
+          color: ColorsUI.mainWhite,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(
+              bottom: Radius.circular(24.0),
+            ),
+          ),
+        ),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            context.canPop() == true
+                ? GestureDetector(
+                    onTap: () {
+                      if (context.canPop()) {
+                        context.pop();
+                      }
+                    },
+                    child: Container(
+                      height: 18,
+                      width: 20,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                      ),
+                      child: SvgPicture.asset("asset/icons/back_arrow.svg"),
+                    ),
+                  )
+                : SizedBox(),
+            const SizedBox(
+              width: 22.0,
+            ),
+            Flexible(
+              child: Text(
+                widget.appbarText,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: Theme.of(context)
+                    .textTheme
+                    .bodyMedium
+                    ?.copyWith(fontWeight: FontWeight.w500),
+              ),
+            ),
+            if (widget.withButton) const Spacer(),
+            if (widget.withButton)
+              BlocBuilder<MessageBloc, MessageState>(
+                builder: (context, state) {
+                  return InkWell(
+                    onTap: () {
+                      if (state is! MessageLoading) {
+                        context.read<MessageBloc>().add(TickAllMessages());
+                      }
+                    },
+                    child: Container(
+                      constraints: BoxConstraints(
+                          maxHeight: AppBar().preferredSize.height * 0.65),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 6),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          border: Border.all(color: ColorsUI.boxLightBorder)),
+                      child: const Center(
+                        child: Text(
+                          "Прочитать все",
+                          style: TextStyle(
+                            color: ColorsUI.mainText,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              )
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 class CustomNotificationsAppBar extends StatefulWidget
     implements PreferredSizeWidget {
   final String appbarText;

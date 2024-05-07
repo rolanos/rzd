@@ -54,6 +54,7 @@ class _AppendScreenState extends State<AppendScreen> {
                     if (state is AppendInitital) {
                       return ChooseInput(
                         errorText: '',
+                        bottomTitleText: 'Выберите заявку',
                         hintText: 'Выберите заявку',
                         controller: widget.application,
                         chooses: List.generate(state.appends.length,

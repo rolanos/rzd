@@ -7,7 +7,11 @@ sealed class AppendEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class AppendGet extends AppendEvent {}
+class AppendGet extends AppendEvent {
+  final String type;
+
+  const AppendGet({required this.type});
+}
 
 class AppendSend extends AppendEvent {
   final String id;

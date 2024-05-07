@@ -23,112 +23,115 @@ class _ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return BlocBuilder<AuthBloc, AuthState>(
       builder: (context, state) {
-        return SingleChildScrollView(
-          child: Column(
-            children: [
-              CustomAppBar(
-                appbarText: (state is AuthSuccess &&
-                        state.profile.name != null &&
-                        state.profile.otch != null)
-                    ? "${state.profile.name!} ${state.profile.otch!}"
-                    : "",
-              ),
-              const SizedBox(
-                height: 8.0,
-              ),
-              if (state is AuthSuccess)
-                UserDataWidget(
-                  title: 'Ваши анкетные данные',
-                  subTitle:
-                      'Данные для выплат подтверждены на ${state.profile.pmg} год',
-                  data: [
-                    DataTile(
-                      title: 'ФИО',
-                      text:
-                          '${state.profile.fam ?? ''} ${state.profile.name ?? ''} ${state.profile.otch ?? ''}',
-                    ),
-                    DataTile(
-                      title: 'Дата рождения',
-                      text: state.profile.birthDate ?? '',
-                    ),
-                    DataTile(
-                      title: 'Серия и номер паспорта',
-                      text: state.profile.passport ?? '',
-                    ),
-                    DataTile(
-                      title: 'СНИЛС',
-                      text: state.profile.snils ?? '',
-                    ),
-                    DataTile(
-                      title: 'Адрес',
-                      text: state.profile.address ?? '',
-                    ),
-                    DataTile(
-                      title: 'Электронная почта',
-                      text: state.profile.email ?? '',
-                    ),
-                    DataTile(
-                      title: 'Дата увольнения',
-                      text: state.profile.retirementDate != null
-                          ? DateFormat('dd.MM.yyyy')
-                              .format(state.profile.retirementDate!)
-                          : '',
-                    ),
-                    DataTile(
-                      title: 'Стаж',
-                      text: state.profile.experience ?? '',
-                    ),
-                  ],
+        return SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                CustomAppBar(
+                  isTopPadding: false,
+                  appbarText: (state is AuthSuccess &&
+                          state.profile.name != null &&
+                          state.profile.otch != null)
+                      ? "${state.profile.name!} ${state.profile.otch!}"
+                      : "",
                 ),
-              const SizedBox(
-                height: 8,
-              ),
-              if (state is AuthSuccess)
-                BankDataWidget(
-                  title: 'Ваши банковские реквизиты',
-                  data: [
-                    DataTile(
-                      title: 'БИК',
-                      text: state.profile.bankAccount?.bic ?? '',
-                    ),
-                    DataTile(
-                      title: ' Наименование банка',
-                      text: state.profile.bankAccount?.bankName ?? '',
-                    ),
-                    DataTile(
-                      title: 'Номер счета',
-                      text: state.profile.bankAccount?.account ?? '',
-                    ),
-                  ],
+                const SizedBox(
+                  height: 8.0,
                 ),
-              const SizedBox(
-                height: 8,
-              ),
-              if (state is AuthSuccess)
-                UsefulMaterials(
-                  mainTitle: 'Полезные материалы',
-                  cardData: [
-                    CardData(
-                      onTap: () => context.goNamed('faq'),
-                      title: 'Ответы на частые вопросы ',
-                      assetPath: 'asset/images/human_5.png',
-                    ),
-                    CardData(
-                      onTap: () => context.goNamed('support'),
-                      title: 'Форма для обратной связи',
-                      assetPath: 'asset/images/notes.png',
-                    ),
-                    CardData(
-                      onTap: () => context.pushNamed('docs'),
-                      title: 'Нормативные документы',
-                      assetPath: 'asset/images/books.png',
-                    ),
-                  ],
+                if (state is AuthSuccess)
+                  UserDataWidget(
+                    title: 'Ваши анкетные данные',
+                    subTitle:
+                        'Данные для выплат подтверждены на ${state.profile.pmg} год',
+                    data: [
+                      DataTile(
+                        title: 'ФИО',
+                        text:
+                            '${state.profile.fam ?? ''} ${state.profile.name ?? ''} ${state.profile.otch ?? ''}',
+                      ),
+                      DataTile(
+                        title: 'Дата рождения',
+                        text: state.profile.birthDate ?? '',
+                      ),
+                      DataTile(
+                        title: 'Серия и номер паспорта',
+                        text: state.profile.passport ?? '',
+                      ),
+                      DataTile(
+                        title: 'СНИЛС',
+                        text: state.profile.snils ?? '',
+                      ),
+                      DataTile(
+                        title: 'Адрес',
+                        text: state.profile.address ?? '',
+                      ),
+                      DataTile(
+                        title: 'Электронная почта',
+                        text: state.profile.email ?? '',
+                      ),
+                      DataTile(
+                        title: 'Дата увольнения',
+                        text: state.profile.retirementDate != null
+                            ? DateFormat('dd.MM.yyyy')
+                                .format(state.profile.retirementDate!)
+                            : '',
+                      ),
+                      DataTile(
+                        title: 'Стаж',
+                        text: state.profile.experience ?? '',
+                      ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 8,
                 ),
-              const SizedBox(
-                height: 48,
-              ),
-            ],
+                if (state is AuthSuccess)
+                  BankDataWidget(
+                    title: 'Ваши банковские реквизиты',
+                    data: [
+                      DataTile(
+                        title: 'БИК',
+                        text: state.profile.bankAccount?.bic ?? '',
+                      ),
+                      DataTile(
+                        title: ' Наименование банка',
+                        text: state.profile.bankAccount?.bankName ?? '',
+                      ),
+                      DataTile(
+                        title: 'Номер счета',
+                        text: state.profile.bankAccount?.account ?? '',
+                      ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 8,
+                ),
+                if (state is AuthSuccess)
+                  UsefulMaterials(
+                    mainTitle: 'Полезные материалы',
+                    cardData: [
+                      CardData(
+                        onTap: () => context.goNamed('faq'),
+                        title: 'Ответы на частые вопросы ',
+                        assetPath: 'asset/images/human_5.png',
+                      ),
+                      CardData(
+                        onTap: () => context.goNamed('support'),
+                        title: 'Форма для обратной связи',
+                        assetPath: 'asset/images/notes.png',
+                      ),
+                      CardData(
+                        onTap: () => context.pushNamed('docs'),
+                        title: 'Нормативные документы',
+                        assetPath: 'asset/images/books.png',
+                      ),
+                    ],
+                  ),
+                const SizedBox(
+                  height: 48,
+                ),
+              ],
+            ),
           ),
         );
       },

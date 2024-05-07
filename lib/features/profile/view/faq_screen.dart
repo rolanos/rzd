@@ -10,43 +10,46 @@ class FaqScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppBar(
-            appbarText: 'Ответы на вопросы',
-          ),
-          const SizedBox(
-            height: 8,
-          ),
-          Container(
-            padding: const EdgeInsets.all(20),
-            decoration: BoxDecoration(
-              color: ColorsUI.scaffoldColor,
-              borderRadius: BorderRadius.circular(24),
+    return SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomNotificationsAppBar(
+              appbarText: 'Ответы на вопросы',
+              withTopPadding: false,
             ),
-            child: BlocBuilder<FaqBloc, FaqState>(
-              builder: (context, state) {
-                if (state is FaqInitial) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    padding: EdgeInsets.zero,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemCount: state.faqs.length,
-                    itemBuilder: (context, index) => FaqExpansion(
-                      title: state.faqs[index].question ?? "",
-                      content: state.faqs[index].answer ?? "",
-                    ),
+            const SizedBox(
+              height: 8,
+            ),
+            Container(
+              padding: const EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: ColorsUI.scaffoldColor,
+                borderRadius: BorderRadius.circular(24),
+              ),
+              child: BlocBuilder<FaqBloc, FaqState>(
+                builder: (context, state) {
+                  if (state is FaqInitial) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      padding: EdgeInsets.zero,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemCount: state.faqs.length,
+                      itemBuilder: (context, index) => FaqExpansion(
+                        title: state.faqs[index].question ?? "",
+                        content: state.faqs[index].answer ?? "",
+                      ),
+                    );
+                  }
+                  return const Center(
+                    child: CircularProgressIndicator(),
                   );
-                }
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              },
+                },
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
