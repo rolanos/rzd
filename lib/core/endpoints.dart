@@ -1,4 +1,4 @@
-const String baseUrl = 'https://test-dev.pochet.ru/ru/api';
+const String baseUrl = 'https://portal.pochet.ru/ru/api';
 
 const String fileUrl = 'portal.pochet.ru';
 
